@@ -2,9 +2,10 @@ package problem;
 
 import java.io.IOException;
 
-import com.sun.xml.internal.ws.org.objectweb.asm.ClassReader;
-import com.sun.xml.internal.ws.org.objectweb.asm.ClassVisitor;
-import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.Opcodes;
+
 
 public class DesignParser {
 
