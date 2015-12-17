@@ -111,7 +111,20 @@ public class DotGraphDesign implements IGraphDesign {
 	}
 	
 	private void addExtensionAndImplementsCode(HashMap<String, String> items) {
+		String name = items.get("className");
+		String superName = items.get("extends");
+		String interFacesString = items.get("implements");
+		String[] interFaces = interFacesString.substring(1, interFacesString.length() - 1).split(",");
 		
+		if (superName != "") {
+			sb.append(name + " -> " + superName + " [arrowhead='onormal', style='solid'" + "];");
+		}
+		
+		for (String interFace: interFaces) {
+			sb.append(name + " -> " + interFace.trim() + " [arrowhead='onormal', style='dashed'" + "];");
+		}
+		
+		sb.append("}");
 	}
 	
 }
