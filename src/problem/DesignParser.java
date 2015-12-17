@@ -11,7 +11,7 @@ import org.objectweb.asm.Opcodes;
 public class DesignParser {
 	private HashMap<String, String> parsedCode;
 	
-	public void parse(String[] args) throws IOException{
+	public void parse(String[] args, IGraphDesign graphDesigner) throws IOException{
 		for(String className : args) {
 			parsedCode = new HashMap<>();
 			
@@ -24,12 +24,15 @@ public class DesignParser {
 			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, parsedCode);
 			
 			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
+			
+			graphDesigner.addGraphCode(parsedCode);
 		}
 	}
 
 	public static void main(String[] args) throws IOException {
 		DesignParser dp = new DesignParser();
-		dp.parse(args);	
+		IGraphDesign graphDesigner = new DotGraphDesign();
+		dp.parse(args, graphDesigner);	
 	}
 
 }
