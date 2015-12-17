@@ -37,8 +37,8 @@ public class ClassMethodVisitor extends ClassVisitor{
 			stypes.add(t.getClassName());
 		}
 		
-		this.parsedCode.put("method" + this.methodCounter, access + ", " + name + ", "
-				+ stypes.toString() + ", " + returnType);		
+		this.parsedCode.put("method" + this.methodCounter, access + "," + name + ","
+				+ stypes.toString() + "," + returnType);		
 //		if((access & Opcodes.ACC_PUBLIC) != 0) {
 //			symbol="+";
 //		}
