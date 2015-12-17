@@ -11,6 +11,7 @@ import org.objectweb.asm.Type;
 
 public class ClassMethodVisitor extends ClassVisitor{
 	private HashMap<String, String> parsedCode;
+	private int methodCounter = 0;
 
 	public ClassMethodVisitor(int arg0, HashMap<String, String> parsedCode) {
 		super(arg0);
@@ -36,14 +37,12 @@ public class ClassMethodVisitor extends ClassVisitor{
 			stypes.add(t.getClassName());
 		}
 		
-		String symbol ="";
-		
-		if((access & Opcodes.ACC_PUBLIC) != 0) {
-			symbol="+";
-		}
-		
-		System.out.println("   method "+symbol+" "+returnType+" "+name +" "+stypes.toString());
-		
+		this.parsedCode.put("method" + this.methodCounter, access + ", " + name + ", "
+				+ stypes.toString() + ", " + returnType);		
+//		if((access & Opcodes.ACC_PUBLIC) != 0) {
+//			symbol="+";
+//		}
+		this.methodCounter++;		
 		
 		return toDecorate;
 	}

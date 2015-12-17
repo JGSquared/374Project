@@ -8,6 +8,7 @@ import org.objectweb.asm.Type;
 
 public class ClassFieldVisitor extends ClassVisitor{
 	private HashMap<String, String> parsedCode;
+	private int fieldCounter = 0;
 
 	public ClassFieldVisitor(int arg0, HashMap<String, String> parsedCode) {
 		super(arg0);
@@ -21,11 +22,11 @@ public class ClassFieldVisitor extends ClassVisitor{
 	
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
 		FieldVisitor toDecorate = super.visitField(access, name, desc, signature, value);
-		
-		
-		
+
 		String type = Type.getType(desc).getClassName();
-		System.out.println("    "+type+" "+name);
+		this.parsedCode.put("field" + this.fieldCounter, access + ", " + name + ", " + type);
+				
+		this.fieldCounter++;
 		
 		return toDecorate;
 	}

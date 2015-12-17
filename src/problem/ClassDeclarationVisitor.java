@@ -26,6 +26,7 @@ public class ClassDeclarationVisitor extends ClassVisitor{
 		this.parsedCode.put("extends", superName);
 		this.parsedCode.put("implements", Arrays.toString(interfaces));
 		
+		System.out.println("Class: "+name+" extends "+superName+" implements"+Arrays.toString(interfaces));
 		super.visit(version, access, name, signature, superName, interfaces);
 	}
 }
