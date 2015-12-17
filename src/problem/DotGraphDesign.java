@@ -1,5 +1,9 @@
 package problem;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,7 +18,6 @@ public class DotGraphDesign implements IGraphDesign {
 		addFieldCode(items);
 		addMethodCode(items);
 		addExtensionAndImplementsCode(items);
-		System.out.println(sb.toString());
 	}
 
 	@Override
@@ -24,9 +27,10 @@ public class DotGraphDesign implements IGraphDesign {
 	}
 
 	@Override
-	public void generateGraph() {
-		// TODO Auto-generated method stub
-		
+	public void generateGraph() throws IOException {
+		OutputStream out = new FileOutputStream("./input_output/graph.ps"); 
+		out.write(sb.toString().getBytes());
+		out.close();
 	}
 	
 	public void addDeclarationCode(HashMap<String, String> items) {
