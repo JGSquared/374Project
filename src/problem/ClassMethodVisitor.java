@@ -1,6 +1,7 @@
 package problem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.objectweb.asm.ClassVisitor;
@@ -9,13 +10,16 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 public class ClassMethodVisitor extends ClassVisitor{
+	private HashMap<String, String> parsedCode;
 
-	public ClassMethodVisitor(int arg0) {
+	public ClassMethodVisitor(int arg0, HashMap<String, String> parsedCode) {
 		super(arg0);
+		this.parsedCode = parsedCode;
 	}
 
-	public ClassMethodVisitor(int arg0, ClassVisitor arg1) {
+	public ClassMethodVisitor(int arg0, ClassVisitor arg1, HashMap<String, String> parsedCode) {
 		super(arg0, arg1);
+		this.parsedCode = parsedCode;
 	}
 	
 	@Override
