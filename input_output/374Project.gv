@@ -1,0 +1,24 @@
+digraph G{
+rankdir=BT;
+ClassDeclarationVisitor [
+shape="record",
+label = "{ClassDeclarationVisitor|- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visit(int, int, String, String, String, String) : void\l}"
+];ClassDeclarationVisitor -> ClassVisitor [arrowhead="onormal", style="solid"];ClassFieldVisitor [
+shape="record",
+label = "{ClassFieldVisitor|- fieldCounter : int\l- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitField(int, String, String, String, Object) : FieldVisitor\l}"
+];ClassFieldVisitor -> ClassVisitor [arrowhead="onormal", style="solid"];ClassMethodVisitor [
+shape="record",
+label = "{ClassMethodVisitor|- methodCounter : int\l- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitMethod(int, String, String, String, String) : MethodVisitor\l}"
+];ClassMethodVisitor -> ClassVisitor [arrowhead="onormal", style="solid"];DesignParser [
+shape="record",
+label = "{DesignParser|- parsedCode : HashMap\l| main(String) : void\l+ parse(String, IGraphDesign) : void\l}"
+];DesignParser -> Object [arrowhead="onormal", style="solid"];DotGraphDesign [
+shape="record",
+label = "{DotGraphDesign|- cp : FileProperties\l- sb : StringBuilder\l|- getAccessSymbol(int) : String\l- addExtensionAndImplementsCode(HashMap) : void\l+ addMethodCode(HashMap) : void\l+ addFieldCode(HashMap) : void\l+ addDeclarationCode(HashMap) : void\l+ generateGraph() : void\l+ closeGraph() : void\l+ initializeGraph() : void\l+ addGraphCode(HashMap) : void\l- getName(String, String) : String\l+ getGraphStringBuilder() : StringBuilder\l}"
+];DotGraphDesign -> Object [arrowhead="onormal", style="solid"];DotGraphDesign -> IGraphDesign [arrowhead="onormal", style="dashed"];FileProperties [
+shape="record",
+label = "{FileProperties|+ fileOut : String\l+ fileIn : String\l+ flags : String\l+ graphVizPath : String\l|}"
+];FileProperties -> Object [arrowhead="onormal", style="solid"];IGraphDesign [
+shape="record",
+label = "{IGraphDesign|| addGraphCode(HashMap) : void\l generateGraph() : void\l closeGraph() : void\l initializeGraph() : void\l}"
+];IGraphDesign -> Object [arrowhead="onormal", style="solid"];}

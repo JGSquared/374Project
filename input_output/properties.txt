@@ -1,4 +1,4 @@
 graphVizPath-> C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot
 flags-> -Tpng
-fileIn-> .\\input_output\\graph.gv
-fileOut-> .\\input_output\\graph1.png
+fileIn-> .\\input_output\\374Project.gv
+fileOut-> .\\input_output\\374Project_UML.png
