@@ -38,13 +38,14 @@ public class ClassMethodVisitor extends ClassVisitor{
 		}
 		
 		this.parsedCode.put("method" + this.methodCounter, access + ":" + name + ":"
-				+ stypes.toString() + ":" + returnType);		
-//		if((access & Opcodes.ACC_PUBLIC) != 0) {
-//			symbol="+";
-//		}
+				+ stypes.toString() + ":" + returnType);
 		this.methodCounter++;		
 		
 		return toDecorate;
+	}
+	
+	public HashMap<String, String> getParsedCode() {
+		return this.parsedCode;
 	}
 
 }

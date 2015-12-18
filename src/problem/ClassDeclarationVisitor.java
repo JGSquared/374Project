@@ -28,4 +28,8 @@ public class ClassDeclarationVisitor extends ClassVisitor{
 		
 		super.visit(version, access, name, signature, superName, interfaces);
 	}
+	
+	public HashMap<String, String> getParsedCode() {
+		return this.parsedCode;
+	}
 }

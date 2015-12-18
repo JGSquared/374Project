@@ -2,5 +2,5 @@ digraph G{
 rankdir=BT;
 ClassFieldVisitor [
 shape="record",
-label = "{ClassFieldVisitor|- fieldCounter : int\l- parsedCode : HashMap\l|+ visitField(int, String, String, String, Object) : FieldVisitor\l}"
+label = "{ClassFieldVisitor|- fieldCounter : int\l- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitField(int, String, String, String, Object) : FieldVisitor\l}"
 ];ClassFieldVisitor -> ClassVisitor [arrowhead="onormal", style="solid"];}

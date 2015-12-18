@@ -30,4 +30,8 @@ public class ClassFieldVisitor extends ClassVisitor{
 		
 		return toDecorate;
 	}
+	
+	public HashMap<String, String> getParsedCode() {
+		return this.parsedCode;
+	}
 }
