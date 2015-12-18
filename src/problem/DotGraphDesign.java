@@ -81,7 +81,7 @@ public class DotGraphDesign implements IGraphDesign {
 		sb.append("|");
 	}
 	
-	private void addMethodCode(HashMap<String, String> items) {
+	public void addMethodCode(HashMap<String, String> items) {
 		for(String s : items.keySet()) {
 			if (s.contains("method")) {
 				String method = items.get(s);
