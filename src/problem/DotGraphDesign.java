@@ -25,7 +25,7 @@ public class DotGraphDesign implements IGraphDesign {
 	@Override
 	public void initializeGraph() {
 		sb.append("digraph G{\n");
-		sb.append("rankdir=BT\n");
+		sb.append("rankdir=BT;\n");
 	}
 
 	@Override
@@ -39,9 +39,11 @@ public class DotGraphDesign implements IGraphDesign {
 	}
 	
 	public void addDeclarationCode(HashMap<String, String> items) {
-		sb.append(items.get("className") + " [\n");
-		sb.append("shape='record',\n");
-		sb.append("label = '{");
+		String className = getName(items.get("className"), "/");
+		
+		sb.append(className + " [\n");
+		sb.append("shape=\"record\",\n");
+		sb.append("label = \"{");
 		
 		int access = Integer.parseInt(items.get("access"));
 		
@@ -49,7 +51,7 @@ public class DotGraphDesign implements IGraphDesign {
 			sb.append("\\<\\<interface\\>\\>\\n");
 		}
 		
-		sb.append(items.get("className") + "|");
+		sb.append(className + "|");
 	}
 	
 	public void addFieldCode(HashMap<String, String> items) {
@@ -59,23 +61,13 @@ public class DotGraphDesign implements IGraphDesign {
 				String[] fieldProperties = field.split(":");
 				int access = Integer.parseInt(fieldProperties[0]);
 				String name = fieldProperties[1];
-				String type = fieldProperties[2];
-				
-				//TODO: put switch in separate method
-				switch(access) {
-					case Opcodes.ACC_PUBLIC: 
-						sb.append("+ ");
-						break;
-					case Opcodes.ACC_PRIVATE:
-						sb.append("- ");
-						break;
-					case Opcodes.ACC_PROTECTED:
-						sb.append("# ");
-						break;
-					default:
-						sb.append(" ");
-						break;
+				if (name.equals("<init>")) {
+					//Bad field, causes errors in GraphViz
+					continue;
 				}
+				String type = getName(fieldProperties[2], "\\.");
+				
+				sb.append(getAccessSymbol(access) + " ");
 				
 				sb.append(name + " : " + type + "\\l");
 			}
@@ -91,49 +83,67 @@ public class DotGraphDesign implements IGraphDesign {
 				
 				int access = Integer.parseInt(methodProps[0]);
 				String name = methodProps[1];
-				String argTypesString = methodProps[2];
-				argTypesString = argTypesString.replaceAll("\\[","\\(");
-				argTypesString = argTypesString.replaceAll("\\]", "\\)");
-				String returnType = methodProps[3];
+				if (name.equals("<init>")) {
+					//Bad method, causes errors in GraphViz
+					continue;
+				}
+				String argTypesString = methodProps[2];				
+				argTypesString = argTypesString.replaceAll("\\[","");
+				argTypesString = argTypesString.replaceAll("\\]", "");
 				
-				//TODO: put switch in separate method
-				switch(access) {
-				case Opcodes.ACC_PUBLIC: 
-					sb.append("+ ");
-					break;
-				case Opcodes.ACC_PRIVATE:
-					sb.append("- ");
-					break;
-				case Opcodes.ACC_PROTECTED:
-					sb.append("# ");
-					break;
-				default:
-					sb.append(" ");
-					break;
+				String[] splitArgs = argTypesString.split(",");
+				ArrayList<String> argTypes = new ArrayList<String>();
+				for (int i = 0; i < splitArgs.length; i++) {
+					argTypes.add(getName(splitArgs[i].trim(), "\\."));
 				}
 				
-				sb.append(name + argTypesString + " : " + returnType + "\\l");
+				String returnType = getName(methodProps[3], "\\.");
+				
+				sb.append(getAccessSymbol(access) + " ");
+				
+				sb.append(name + argTypes.toString().replaceAll("\\[","(").replaceAll("\\]", ")") + " : " + returnType + "\\l");
 			}
 		}
 		
-		sb.append("}'\n];");
+		sb.append("}\"\n];");
 	}
 	
 	private void addExtensionAndImplementsCode(HashMap<String, String> items) {
-		String name = items.get("className");
-		String superName = items.get("extends");
+		String name = getName(items.get("className"), "/");
+		String superName = getName(items.get("extends"), "/");
 		String interFacesString = items.get("implements");
 		String[] interFaces = interFacesString.substring(1, interFacesString.length() - 1).split(",");
 		
 		if (superName != "") {
-			sb.append(name + " -> " + superName + " [arrowhead='onormal', style='solid'" + "];");
+			sb.append(name + " -> " + superName + " [arrowhead=\"onormal\", style=\"solid\"" + "];");
 		}
 		if (!interFacesString.equals("[]")) {
 			for (String interFace: interFaces) {
-				sb.append(name + " -> " + interFace + " [arrowhead='onormal', style='dashed'" + "];");
+				sb.append(name + " -> " + interFace.replaceAll("/", ".") + " [arrowhead=\"onormal\", style=\"dashed\"" + "];");
 			}
 		}
 		sb.append("}");
+	}
+	
+	private String getAccessSymbol(int access) {
+		//returns the proper symbol (e.g. '+', '-', etc.) given an access int
+		switch(access) {
+		case Opcodes.ACC_PUBLIC: 
+			return "+";
+		case Opcodes.ACC_PRIVATE:
+			return "-";
+		case Opcodes.ACC_PROTECTED:
+			return "#";
+		default:
+			return "";
+		}
+	}
+	
+	private String getName(String path, String separator) {
+		// takes a path to a class name (e.g. problem/DotGraphDesign) and returns the name with no path (e.g. DotGraphDesign)
+		String[] paths = path.split(separator);
+		
+		return paths[paths.length - 1];
 	}
 	
 }

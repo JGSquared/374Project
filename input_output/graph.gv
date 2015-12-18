@@ -2,5 +2,5 @@ digraph G{
 rankdir=BT;
 ClassFieldVisitor [
 shape="record",
-label = "{ClassFieldVisitor|- fieldCounter : int\l- parsedCode : java.util.HashMap\l|+ (int, org.objectweb.asm.ClassVisitor, java.util.HashMap) : void\l+ visitField(int, java.lang.String, java.lang.String, java.lang.String, java.lang.Object) : org.objectweb.asm.FieldVisitor\l+ (int, java.util.HashMap) : void\l}"
+label = "{ClassFieldVisitor|- fieldCounter : int\l- parsedCode : HashMap\l|+ visitField(int, String, String, String, Object) : FieldVisitor\l}"
 ];ClassFieldVisitor -> ClassVisitor [arrowhead="onormal", style="solid"];}
