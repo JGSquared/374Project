@@ -12,6 +12,8 @@ public class DesignParser {
 	private HashMap<String, String> parsedCode;
 	
 	public void parse(String[] args, IGraphDesign graphDesigner) throws IOException{
+		graphDesigner.initializeGraph();
+		
 		for(String className : args) {
 			parsedCode = new HashMap<>();
 			
@@ -27,7 +29,8 @@ public class DesignParser {
 			
 			graphDesigner.addGraphCode(parsedCode);
 		}
-		
+	
+		graphDesigner.closeGraph();
 		graphDesigner.generateGraph();
 	}
 
