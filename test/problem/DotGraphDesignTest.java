@@ -37,4 +37,18 @@ public class DotGraphDesignTest {
 		
 	}
 	
+	@Test
+	public final void testaddMethodCode() {
+		graph = new DotGraphDesign();
+		HashMap<String, String> items = new HashMap<String, String>();
+		items.put("className", "ClassTest");
+		items.put("method" + 0, 1 + ":" + "methodTest" + ":"
+				+ "argumentTest" + ":" + "returnTypeTest");
+		graph.addMethodCode(items);
+		String expected = "+ methodTest(argumentTest) : returnTypeTest\\l}\"\n];";
+		String actual = graph.getGraphStringBuilder().toString();
+		Assert.assertEquals(expected, actual);
+		
+	}
+	
 }

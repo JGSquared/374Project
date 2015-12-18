@@ -119,9 +119,9 @@ public class DotGraphDesign implements IGraphDesign {
 		}
 		sb.append("|");
 	}
-
-	private void addMethodCode(HashMap<String, String> items) {
-		for (String s : items.keySet()) {
+	
+	public void addMethodCode(HashMap<String, String> items) {
+		for(String s : items.keySet()) {
 			if (s.contains("method")) {
 				String method = items.get(s);
 				String[] methodProps = method.split(":");
