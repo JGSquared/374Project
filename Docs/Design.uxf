@@ -1,97 +1,165 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="11.5.1">
-  <zoom_level>10</zoom_level>
+  <zoom_level>9</zoom_level>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>170</x>
-      <y>120</y>
-      <w>190</w>
-      <h>130</h>
-    </coordinates>
-    <panel_attributes>DesginParser
---
-+ designString: StringBuilder</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>270</x>
+      <x>675</x>
       <y>0</y>
-      <w>100</w>
-      <h>30</h>
+      <w>288</w>
+      <h>72</h>
     </coordinates>
-    <panel_attributes>GraphMaker</panel_attributes>
+    <panel_attributes>ClassDeclarationVisitor
+--
+- parseCode: HashMap&lt;String, String&gt;
+--
++ visit(int, int, String, String, String, String[]): void
++ getParsedCode(): HashMap&lt;String, String&gt;
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>460</x>
-      <y>100</y>
-      <w>160</w>
-      <h>110</h>
+      <x>675</x>
+      <y>153</y>
+      <w>288</w>
+      <h>72</h>
     </coordinates>
-    <panel_attributes>ClassVisitor</panel_attributes>
+    <panel_attributes>ClassFieldVisitor
+--
+- parseCode: HashMap&lt;String, String&gt;
+--
++ visitField(int, String, String, String, Object): void
++ getParsedCode(): HashMap&lt;String, String&gt;
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>460</x>
-      <y>250</y>
-      <w>160</w>
-      <h>130</h>
+      <x>675</x>
+      <y>324</y>
+      <w>306</w>
+      <h>81</h>
     </coordinates>
-    <panel_attributes>ClassVisitor</panel_attributes>
+    <panel_attributes>ClassMethodVisitor
+--
+- parseCode: HashMap&lt;String, String&gt;
+--
++ visitMethod(int, String, String, String, String[]): void
++ getParsedCode(): HashMap&lt;String, String&gt;
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>650</x>
-      <y>100</y>
-      <w>160</w>
-      <h>110</h>
+      <x>153</x>
+      <y>162</y>
+      <w>288</w>
+      <h>72</h>
     </coordinates>
-    <panel_attributes>FieldVisitor</panel_attributes>
+    <panel_attributes>DesignParser
+--
+- parsedCode: HashMap&lt;String, String&gt;
+--
++ parse(String[], IGraphDesign): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>650</x>
-      <y>250</y>
-      <w>170</w>
-      <h>130</h>
+      <x>72</x>
+      <y>666</y>
+      <w>396</w>
+      <h>198</h>
     </coordinates>
-    <panel_attributes>MethodVisitor</panel_attributes>
+    <panel_attributes>DotGraphDesign
+--
+- sb: StringBuilder
+--
++ addGraphCode(HashMap&lt;String, String&gt;): void
++ initializeGraph(): void
++ generateGraph(): void
++ addDeclarationCode(HashMap&lt;String, String&gt;): void
++ addFieldCode(HashMap&lt;String, String&gt;): void
++ addMethodCode(HashMap&lt;String, String&gt;): void
++ addExtensionAndImplementsCode(HashMap&lt;String, String&gt;): void
++ getAccessSymbol(int): String
++ getName(String, String): String
++ getGraphStringBuilder(): StringBuilder</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>100</x>
-      <y>330</y>
-      <w>170</w>
-      <h>80</h>
+      <x>135</x>
+      <y>468</y>
+      <w>288</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
-/GraphConverter/
---</panel_attributes>
+IGraphDesign
+--
++ addGraphCode(HashMap&lt;String, String&gt;): void
++ initializeGraph(): void
++ generateGraph(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.Class</type>
+    <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>100</x>
-      <y>430</y>
-      <w>170</w>
-      <h>80</h>
+      <x>243</x>
+      <y>531</y>
+      <w>44</w>
+      <h>152</h>
     </coordinates>
-    <panel_attributes>DotGraphConverter
---</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>27;27;27;135</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>414</x>
+      <y>9</y>
+      <w>278</w>
+      <h>188</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>27;171;117;171;117;27;261;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>414</x>
+      <y>171</y>
+      <w>278</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>27;27;261;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>414</x>
+      <y>189</y>
+      <w>278</w>
+      <h>197</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>27;27;117;27;117;180;261;180</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>261</x>
+      <y>207</y>
+      <w>44</w>
+      <h>278</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>27;27;27;261</additional_attributes>
   </element>
 </diagram>

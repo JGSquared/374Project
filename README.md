@@ -1,4 +1,5 @@
 # 374Project
+# Group: Josh Green (greenjm), Josh Gayso (gaysojj)
 
 ### DESIGN ###
 
@@ -6,21 +7,27 @@
 	generate a HashMap that contains all of the properties needed to parse into GVEdit syntax (more on these properties in
 	MORE INFO). Each HashMap created by DesignParser is sent to an implementation of IGraphDesign. IGraphDesign is an
 	interface for generating proper GVEdit code from a HashMap. Currently our design has one implementation of this
-	interface, DotGraphDesign, but more can be added. IGraphDesign handles generating the code and outputting the graph, which
-	then completes the program's functionality. 
+	interface, DotGraphDesign, but more can be added. IGraphDesign handles generating the code and outputting the graph PNG
+	file, which	then completes the program's functionality. 
 
 
 ### CONTRIBUTORS ###
 
 Josh Gayso:
 
-M1:	Created IGraphDesign interface along with one implementation, DotGraphDesign. DotGraphDesign code split approximately 50/50
-	with Josh Green. Setup initial DesignParser and visitors.
+M1:	Created IGraphDesign interface along with one implementation, DotGraphDesign.
+	Implemented initializeCode(), generateCode(), addDeclarationCode(), addFieldCode(), and generateGraph() in DotGraphDesign.
+	Setup initial DesignParser and visitors. 
+	Implemented 50% of tests.
+	
 
 Josh Green:
 
-M1:	Rewrote visitors to add fields to HashMap rather than building a string. Moved parse functionality from main to a parse 
-	method in DesignParser. Implemented about 50% of code in DotGraphDesign.
+M1:	Rewrote visitors to add fields to HashMap rather than building a string.
+	Moved parse functionality from main to a parse method in DesignParser. 
+	Implemented addMethodCode(), addExtensionAndImplementsCode(), getAccessSymbol(), and getName() in DotGraphDesign.
+	Implemented 50% of tests.
+	Created Design UML.
 
 
 ### INSTRUCTIONS ###
