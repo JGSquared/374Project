@@ -16,6 +16,7 @@ import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 
 public class DotGraphDesign implements IGraphDesign {
 	private StringBuilder sb = new StringBuilder();
+	private FileProperties cp = new FileProperties();
 
 	@Override
 	public void addGraphCode(HashMap<String, String> items) {
@@ -38,45 +39,14 @@ public class DotGraphDesign implements IGraphDesign {
 
 	@Override
 	public void generateGraph() throws IOException {
-		OutputStream out = new FileOutputStream("./input_output/graph.gv");
+		OutputStream out = new FileOutputStream(cp.fileIn);
 		out.write(sb.toString().getBytes());
 		out.close();
-
-		String graphVizPath = "";
-		String flags = "";
-		String fileIn = "";
-		String fileOut = "";
-		// Read in properties
-		try (BufferedReader br = new BufferedReader(new FileReader(
-				"./input_output/properties.txt"))) {
-			String line;
-			while ((line = br.readLine()) != null) {
-				String[] lineArray = line.split("->");
-				switch (lineArray[0]) {
-				case "graphVizPath":
-					graphVizPath = lineArray[1].trim();
-					break;
-				case "flags":
-					flags = lineArray[1].trim();
-					break;
-				case "fileIn":
-					fileIn = lineArray[1].trim();
-					break;
-				case "fileOut":
-					fileOut = lineArray[1].trim();
-					break;
-				default:
-					break;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 		Runtime rt = Runtime.getRuntime();
 		Process pr = rt
 				.exec(new String[] {
-						"cmd.exe", "/k", "\"" + graphVizPath + "\" " + flags + " " + fileIn + " > " + fileOut});
+						"cmd.exe", "/k", "\"" + cp.graphVizPath + "\" " + cp.flags + " " + cp.fileIn + " > " + cp.fileOut});
 //						"\"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot\" -Tpng "
 //								+ "C:\\Users\\gaysojj\\git\\374Project\\input_output\\graph.gv > "
 //								+ "C:\\Users\\gaysojj\\git\\374Project\\input_output\\graph1.png" });
