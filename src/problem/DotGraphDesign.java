@@ -152,4 +152,8 @@ public class DotGraphDesign implements IGraphDesign {
 		return paths[paths.length - 1];
 	}
 	
+	public StringBuilder getGraphStringBuilder() {
+		return sb;
+	}
+	
 }
