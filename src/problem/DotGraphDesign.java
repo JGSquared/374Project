@@ -34,7 +34,13 @@ public class DotGraphDesign implements IGraphDesign {
 		out.write(sb.toString().getBytes());
 		out.close();
 		
-//		String command = "C:\\ProgramFiles (x86)\\Graphviz2.38\\bin\\dot.exe";
+		Runtime rt = Runtime.getRuntime();
+		Process pr = rt.exec(new String[] {
+				"cmd.exe",
+				"/k",
+				"\"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot\" -Tpng "
+				+ "C:\\Users\\gaysojj\\git\\374Project\\input_output\\graph.gv > "
+				+ "C:\\Users\\gaysojj\\git\\374Project\\input_output\\graph1.png"});
 		
 	}
 	
