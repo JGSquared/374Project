@@ -1,5 +1,6 @@
 package problem;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class DotGraphDesign implements IGraphDesign {
 	
 	@Override
 	public void addGraphCode(HashMap<String, String> items) {
+		initializeGraph();
 		addDeclarationCode(items);
 		addFieldCode(items);
 		addMethodCode(items);
@@ -28,9 +30,12 @@ public class DotGraphDesign implements IGraphDesign {
 
 	@Override
 	public void generateGraph() throws IOException {
-		OutputStream out = new FileOutputStream("./input_output/graph.ps"); 
+		OutputStream out = new FileOutputStream("./input_output/graph.gv"); 
 		out.write(sb.toString().getBytes());
 		out.close();
+		
+//		String command = "C:\\ProgramFiles (x86)\\Graphviz2.38\\bin\\dot.exe";
+		
 	}
 	
 	public void addDeclarationCode(HashMap<String, String> items) {
@@ -123,11 +128,11 @@ public class DotGraphDesign implements IGraphDesign {
 		if (superName != "") {
 			sb.append(name + " -> " + superName + " [arrowhead='onormal', style='solid'" + "];");
 		}
-		
-		for (String interFace: interFaces) {
-			sb.append(name + " -> " + interFace.trim() + " [arrowhead='onormal', style='dashed'" + "];");
+		if (!interFacesString.equals("[]")) {
+			for (String interFace: interFaces) {
+				sb.append(name + " -> " + interFace + " [arrowhead='onormal', style='dashed'" + "];");
+			}
 		}
-		
 		sb.append("}");
 	}
 	

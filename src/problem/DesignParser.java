@@ -27,6 +27,8 @@ public class DesignParser {
 			
 			graphDesigner.addGraphCode(parsedCode);
 		}
+		
+		graphDesigner.generateGraph();
 	}
 
 	public static void main(String[] args) throws IOException {
