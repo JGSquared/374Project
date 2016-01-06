@@ -1,29 +1,25 @@
 package problem;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
+import problem.api.IGraphCode;
+import problem.api.IGraphDesign;
 
 public class DotGraphDesign implements IGraphDesign {
 	private StringBuilder sb = new StringBuilder();
 	private FileProperties cp = new FileProperties();
+	private List<IGraphCode> codeGetters = new ArrayList<IGraphCode>();
 
 	@Override
 	public void addGraphCode(HashMap<String, String> items) {
-		addDeclarationCode(items);
-		addFieldCode(items);
-		addMethodCode(items);
-		addExtensionAndImplementsCode(items);
+		for (int i = 0; i < codeGetters.size(); i++) {
+			sb.append(codeGetters.get(i).getCode(items));
+		}
 	}
 
 	@Override
@@ -47,129 +43,138 @@ public class DotGraphDesign implements IGraphDesign {
 		Process pr = rt
 				.exec(new String[] {
 						"cmd.exe", "/k", "\"" + cp.graphVizPath + "\" " + cp.flags + " " + cp.fileIn + " > " + cp.fileOut});
-//						"\"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot\" -Tpng "
-//								+ "C:\\Users\\gaysojj\\git\\374Project\\input_output\\graph.gv > "
-//								+ "C:\\Users\\gaysojj\\git\\374Project\\input_output\\graph1.png" });
 
 	}
 
-	public void addDeclarationCode(HashMap<String, String> items) {
-		String className = getName(items.get("className"), "/");
-
-		sb.append(className + " [\n");
-		sb.append("shape=\"record\",\n");
-		sb.append("label = \"{");
-
-		int access = Integer.parseInt(items.get("access"));
-
-		if (access == Opcodes.ACC_INTERFACE) {
-			sb.append("\\<\\<interface\\>\\>\\n");
-		}
-
-		sb.append(className + "|");
+	@Override
+	public void addCodeGetter(IGraphCode getter) {
+		this.codeGetters.add(getter);
 	}
 
-	public void addFieldCode(HashMap<String, String> items) {
-		for (String s : items.keySet()) {
-			if (s.contains("field")) {
-				String field = items.get(s);
-				String[] fieldProperties = field.split(":");
-				int access = Integer.parseInt(fieldProperties[0]);
-				String name = fieldProperties[1];
-				if (name.equals("<init>")) {
-					// Bad field, causes errors in GraphViz
-					continue;
-				}
-				String type = getName(fieldProperties[2], "\\.");
-
-				sb.append(getAccessSymbol(access) + " ");
-
-				sb.append(name + " : " + type + "\\l");
-			}
-		}
-		sb.append("|");
+	@Override
+	public void removeCodeGetter(IGraphCode getter) {
+		this.codeGetters.remove(getter);		
 	}
 	
-	public void addMethodCode(HashMap<String, String> items) {
-		for(String s : items.keySet()) {
-			if (s.contains("method")) {
-				String method = items.get(s);
-				String[] methodProps = method.split(":");
+	
 
-				int access = Integer.parseInt(methodProps[0]);
-				String name = methodProps[1];
-				if (name.equals("<init>")) {
-					// Bad method, causes errors in GraphViz
-					continue;
-				}
-				String argTypesString = methodProps[2];
-				argTypesString = argTypesString.replaceAll("\\[", "");
-				argTypesString = argTypesString.replaceAll("\\]", "");
+//	public void addDeclarationCode(HashMap<String, String> items) {
+//		String className = getName(items.get("className"), "/");
+//
+//		sb.append(className + " [\n");
+//		sb.append("shape=\"record\",\n");
+//		sb.append("label = \"{");
+//
+//		int access = Integer.parseInt(items.get("access"));
+//
+//		if (access == Opcodes.ACC_INTERFACE) {
+//			sb.append("\\<\\<interface\\>\\>\\n");
+//		}
+//
+//		sb.append(className + "|");
+//	}
 
-				String[] splitArgs = argTypesString.split(",");
-				ArrayList<String> argTypes = new ArrayList<String>();
-				for (int i = 0; i < splitArgs.length; i++) {
-					argTypes.add(getName(splitArgs[i].trim(), "\\."));
-				}
+//	public void addFieldCode(HashMap<String, String> items) {
+//		for (String s : items.keySet()) {
+//			if (s.contains("field")) {
+//				String field = items.get(s);
+//				String[] fieldProperties = field.split(":");
+//				int access = Integer.parseInt(fieldProperties[0]);
+//				String name = fieldProperties[1];
+//				if (name.equals("<init>")) {
+//					// Bad field, causes errors in GraphViz
+//					continue;
+//				}
+//				String type = getName(fieldProperties[2], "\\.");
+//
+//				sb.append(getAccessSymbol(access) + " ");
+//
+//				sb.append(name + " : " + type + "\\l");
+//			}
+//		}
+//		sb.append("|");
+//	}
+	
+//	public void addMethodCode(HashMap<String, String> items) {
+//		for(String s : items.keySet()) {
+//			if (s.contains("method")) {
+//				String method = items.get(s);
+//				String[] methodProps = method.split(":");
+//
+//				int access = Integer.parseInt(methodProps[0]);
+//				String name = methodProps[1];
+//				if (name.equals("<init>")) {
+//					// Bad method, causes errors in GraphViz
+//					continue;
+//				}
+//				String argTypesString = methodProps[2];
+//				argTypesString = argTypesString.replaceAll("\\[", "");
+//				argTypesString = argTypesString.replaceAll("\\]", "");
+//
+//				String[] splitArgs = argTypesString.split(",");
+//				ArrayList<String> argTypes = new ArrayList<String>();
+//				for (int i = 0; i < splitArgs.length; i++) {
+//					argTypes.add(getName(splitArgs[i].trim(), "\\."));
+//				}
+//
+//				String returnType = getName(methodProps[3], "\\.");
+//
+//				sb.append(getAccessSymbol(access) + " ");
+//
+//				sb.append(name
+//						+ argTypes.toString().replaceAll("\\[", "(")
+//								.replaceAll("\\]", ")") + " : " + returnType
+//						+ "\\l");
+//			}
+//		}
+//
+//		sb.append("}\"\n];");
+//	}
 
-				String returnType = getName(methodProps[3], "\\.");
+//	private void addExtensionAndImplementsCode(HashMap<String, String> items) {
+//		String name = getName(items.get("className"), "/");
+//		String superName = getName(items.get("extends"), "/");
+//		String interFacesString = items.get("implements");
+//		String[] interFaces = interFacesString.substring(1,
+//				interFacesString.length() - 1).split(",");
+//
+//		if (superName != "") {
+//			sb.append(name + " -> " + superName
+//					+ " [arrowhead=\"onormal\", style=\"solid\"" + "];");
+//		}
+//		if (!interFacesString.equals("[]")) {
+//			for (String interFace : interFaces) {
+//				String interFaceName = getName(interFace, "/");
+//				sb.append(name + " -> " + interFaceName
+//						+ " [arrowhead=\"onormal\", style=\"dashed\"" + "];");
+//			}
+//		}
+//	}
 
-				sb.append(getAccessSymbol(access) + " ");
-
-				sb.append(name
-						+ argTypes.toString().replaceAll("\\[", "(")
-								.replaceAll("\\]", ")") + " : " + returnType
-						+ "\\l");
-			}
-		}
-
-		sb.append("}\"\n];");
-	}
-
-	private void addExtensionAndImplementsCode(HashMap<String, String> items) {
-		String name = getName(items.get("className"), "/");
-		String superName = getName(items.get("extends"), "/");
-		String interFacesString = items.get("implements");
-		String[] interFaces = interFacesString.substring(1,
-				interFacesString.length() - 1).split(",");
-
-		if (superName != "") {
-			sb.append(name + " -> " + superName
-					+ " [arrowhead=\"onormal\", style=\"solid\"" + "];");
-		}
-		if (!interFacesString.equals("[]")) {
-			for (String interFace : interFaces) {
-				String interFaceName = getName(interFace, "/");
-				sb.append(name + " -> " + interFaceName
-						+ " [arrowhead=\"onormal\", style=\"dashed\"" + "];");
-			}
-		}
-	}
-
-	private String getAccessSymbol(int access) {
-		// returns the proper symbol (e.g. '+', '-', etc.) given an access int
-		switch (access) {
-		case Opcodes.ACC_PUBLIC:
-			return "+";
-		case Opcodes.ACC_PRIVATE:
-			return "-";
-		case Opcodes.ACC_PROTECTED:
-			return "#";
-		default:
-			return "";
-		}
-	}
-
-	private String getName(String path, String separator) {
-		// takes a path to a class name (e.g. problem/DotGraphDesign) and
-		// returns the name with no path (e.g. DotGraphDesign)
-		String[] paths = path.split(separator);
-
-		return paths[paths.length - 1];
-	}
-
-	public StringBuilder getGraphStringBuilder() {
-		return sb;
-	}
+//	private String getAccessSymbol(int access) {
+//		// returns the proper symbol (e.g. '+', '-', etc.) given an access int
+//		switch (access) {
+//		case Opcodes.ACC_PUBLIC:
+//			return "+";
+//		case Opcodes.ACC_PRIVATE:
+//			return "-";
+//		case Opcodes.ACC_PROTECTED:
+//			return "#";
+//		default:
+//			return "";
+//		}
+//	}
+//
+//	private String getName(String path, String separator) {
+//		// takes a path to a class name (e.g. problem/DotGraphDesign) and
+//		// returns the name with no path (e.g. DotGraphDesign)
+//		String[] paths = path.split(separator);
+//
+//		return paths[paths.length - 1];
+//	}
+//
+//	public StringBuilder getGraphStringBuilder() {
+//		return sb;
+//	}
 
 }

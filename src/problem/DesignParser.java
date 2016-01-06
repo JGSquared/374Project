@@ -7,6 +7,8 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
+import problem.api.IGraphDesign;
+
 
 public class DesignParser {
 	private HashMap<String, String> parsedCode;
@@ -37,6 +39,11 @@ public class DesignParser {
 	public static void main(String[] args) throws IOException {
 		DesignParser dp = new DesignParser();
 		IGraphDesign graphDesigner = new DotGraphDesign();
+		graphDesigner.addCodeGetter(new GraphDeclarationCode());
+		graphDesigner.addCodeGetter(new GraphFieldCode());
+		graphDesigner.addCodeGetter(new GraphMethodCode());
+		graphDesigner.addCodeGetter(new GraphClassCloserCode());
+		graphDesigner.addCodeGetter(new GraphExtensionAndImplementCode());
 		dp.parse(args, graphDesigner);	
 	}
 

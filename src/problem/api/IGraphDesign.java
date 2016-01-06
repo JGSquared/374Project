@@ -1,4 +1,4 @@
-package problem;
+package problem.api;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,4 +9,6 @@ public interface IGraphDesign {
 	public void initializeGraph();
 	public void closeGraph();
 	public void generateGraph() throws IOException;
+	public void addCodeGetter(IGraphCode getter);
+	public void removeCodeGetter(IGraphCode getter);
 }
