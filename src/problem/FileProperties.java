@@ -2,12 +2,15 @@ package problem;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileProperties {
 	public String graphVizPath = "";
 	public String flags = "";
 	public String fileIn = "";
 	public String fileOut = "";
+	public List<String> whiteList = new ArrayList<String>();
 	
 	public FileProperties() {
 		// Read in properties
@@ -28,6 +31,12 @@ public class FileProperties {
 					break;
 				case "fileOut":
 					fileOut = lineArray[1].trim();
+					break;
+				case "whiteList":
+					String[] temp = lineArray[1].trim().split(",");
+					for (String s: temp) {
+						whiteList.add(s);
+					}
 					break;
 				default:
 					break;

@@ -12,7 +12,7 @@ import problem.api.IGraphDesign;
 
 public class DotGraphDesign implements IGraphDesign {
 	private StringBuilder sb = new StringBuilder();
-	private FileProperties cp = new FileProperties();
+	private FileProperties fp = new FileProperties();
 	private List<IGraphCode> codeGetters = new ArrayList<IGraphCode>();
 
 	@Override
@@ -35,14 +35,14 @@ public class DotGraphDesign implements IGraphDesign {
 
 	@Override
 	public void generateGraph() throws IOException {
-		OutputStream out = new FileOutputStream(cp.fileIn);
+		OutputStream out = new FileOutputStream(fp.fileIn);
 		out.write(sb.toString().getBytes());
 		out.close();
 
 		Runtime rt = Runtime.getRuntime();
 		Process pr = rt
 				.exec(new String[] {
-						"cmd.exe", "/k", "\"" + cp.graphVizPath + "\" " + cp.flags + " " + cp.fileIn + " > " + cp.fileOut});
+						"cmd.exe", "/k", "\"" + fp.graphVizPath + "\" " + fp.flags + " " + fp.fileIn + " > " + fp.fileOut});
 
 	}
 
