@@ -18,7 +18,6 @@ public class GraphUsesCode extends IGraphCode {
 		StringBuilder sb = new StringBuilder();
 		FileProperties fp = new FileProperties();
 		List<String> usesList = new ArrayList<String>();
-		
 		String name = getName(items.get("className"), "/");
 		
 		for (String s : items.keySet()) {
