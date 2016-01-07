@@ -1,56 +1,49 @@
 package problem;
 
-import java.util.HashMap;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import problem.DotGraphDesign;
-
-
-
+import problem.api.IGraphCode;
 
 public class DotGraphDesignTest {
 	DotGraphDesign graph;
 
 	@Test
-	public final void testaddDeclarationCode() {
+	public final void testaddCodeGetter() {
 		graph = new DotGraphDesign();
-		HashMap<String, String> items = new HashMap<String, String>();
-		items.put("className", "ClassTest");
-		items.put("access", "1");
-		graph.addDeclarationCode(items);
-		String expected = "ClassTest [\nshape=\"record\","
-				+ "\nlabel = \"{ClassTest|";
-		String actual = graph.getGraphStringBuilder().toString();
-		Assert.assertEquals(expected, actual);
+		IGraphCode getter = new GraphFieldCode();
+		
+		graph.addCodeGetter(getter);
+		
+		Assert.assertTrue(graph.getCodeGetters().contains(getter));
 	}
 	
 	@Test
-	public final void testaddFieldCode() {
+	public final void testRemoveCodeGetter() {
 		graph = new DotGraphDesign();
-		HashMap<String, String> items = new HashMap<String, String>();
-		items.put("className", "ClassTest");
-		items.put("field" + 0, 1 + ":" + "fieldTest" + ":" + "typeTest");
-		graph.addFieldCode(items);
-		String expected = "+ fieldTest : typeTest\\l|";
-		String actual = graph.getGraphStringBuilder().toString();
-		Assert.assertEquals(expected, actual);
+		IGraphCode getter1 = new GraphFieldCode();
+		IGraphCode getter2 = new GraphFieldCode();
+		graph.addCodeGetter(getter1);
+		graph.addCodeGetter(getter2);
+		graph.removeCodeGetter(getter2);
 		
+		Assert.assertTrue(!graph.getCodeGetters().contains(getter2));
+		Assert.assertTrue(graph.getCodeGetters().contains(getter1));
 	}
 	
 	@Test
-	public final void testaddMethodCode() {
+	public final void testGraphInitializer() {
 		graph = new DotGraphDesign();
-		HashMap<String, String> items = new HashMap<String, String>();
-		items.put("className", "ClassTest");
-		items.put("method" + 0, 1 + ":" + "methodTest" + ":"
-				+ "argumentTest" + ":" + "returnTypeTest");
-		graph.addMethodCode(items);
-		String expected = "+ methodTest(argumentTest) : returnTypeTest\\l}\"\n];";
-		String actual = graph.getGraphStringBuilder().toString();
-		Assert.assertEquals(expected, actual);
-		
+		graph.initializeGraph();
+		String expected = "digraph G{\nrankdir=BT;\n";
+		Assert.assertTrue(graph.getGraphStringBuilder().toString().contains(expected));
 	}
 	
+	@Test
+	public final void testGraphCloser() {
+		graph = new DotGraphDesign();
+		graph.closeGraph();
+		String expected = "}";
+		Assert.assertTrue(graph.getGraphStringBuilder().toString().contains(expected));
+	}
 }
