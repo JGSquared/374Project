@@ -51,4 +51,80 @@ public class IGraphCodeTest {
 		assertEquals(expected.toString(), codeGetter.getCode(items));
 	}
 	
+	@Test
+	public final void testGraphFieldCode() {
+		IGraphCode codeGetter = new GraphFieldCode();
+		HashMap<String, String> items = new HashMap<String, String>();
+		StringBuilder expected = new StringBuilder();
+		expected.append("|");
+		
+		items.put("field1", "1:<init>:TestType");
+		items.put("className", "Test");
+		
+		//Test bad method name
+		assertEquals(expected.toString(), codeGetter.getCode(items));
+		items = new HashMap<String, String>();
+		expected = new StringBuilder();
+		items.put("field2", "1:Test:String");
+		expected.append("+ Test : String\\l|");
+		
+		assertEquals(expected.toString(), codeGetter.getCode(items));
+	}
+	
+	@Test
+	public final void testGraphExtensionAndImplementationCode() {
+		IGraphCode codeGetter = new GraphExtensionAndImplementCode();
+		HashMap<String, String> items = new HashMap<String, String>();
+		StringBuilder expected = new StringBuilder();
+		
+		items.put("extends", "");
+		items.put("className", "TestClass");
+		items.put("implements", "[]");
+
+		assertEquals(expected.toString(), codeGetter.getCode(items));
+		
+		items = new HashMap<String, String>();
+		items.put("extends", "TestExtenderClass");
+		items.put("className", "TestClass");
+		items.put("implements", "[]");
+		
+		expected.append("TestClass -> TestExtenderClass"
+					+ " [arrowhead=\"onormal\", style=\"solid\"" + "];");
+		assertEquals(expected.toString(), codeGetter.getCode(items));
+		
+		items = new HashMap<String, String>();
+		expected = new StringBuilder();
+		
+		items.put("extends", "");
+		items.put("className", "TestClass");
+		items.put("implements", "[TestInterface]");
+		
+		expected.append("TestClass -> TestInterface"
+				+ " [arrowhead=\"onormal\", style=\"dashed\"" + "];");
+		assertEquals(expected.toString(), codeGetter.getCode(items));
+	}
+	
+	@Test
+	public final void testGraphDeclarationCode() {
+		IGraphCode codeGetter = new GraphDeclarationCode();
+		HashMap<String, String> items = new HashMap<String, String>();
+		StringBuilder expected = new StringBuilder();
+		
+		items.put("className", "TestClass");
+		items.put("access", "1");
+		expected.append("TestClass [\nshape=\"record\",\nlabel = \"{TestClass|");
+		
+		assertEquals(expected.toString(), codeGetter.getCode(items));
+	}
+	
+	@Test
+	public final void testGraphCloserCode() {
+		IGraphCode codeGetter = new GraphClassCloserCode();
+		HashMap<String, String> items = new HashMap<String, String>();
+		StringBuilder expected = new StringBuilder();
+		
+		expected.append("}\"\n];");
+		
+		assertEquals(expected.toString(), codeGetter.getCode(items));
+	}
 }
