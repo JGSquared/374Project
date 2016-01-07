@@ -64,4 +64,14 @@ public class DotGraphDesign implements IGraphDesign {
 		return sb;
 	}
 
+	@Override
+	public void useDefault() {
+		addCodeGetter(new GraphDeclarationCode());
+		addCodeGetter(new GraphFieldCode());
+		addCodeGetter(new GraphMethodCode());
+		addCodeGetter(new GraphClassCloserCode());
+		addCodeGetter(new GraphExtensionAndImplementCode());
+		addCodeGetter(new GraphUsesCode());
+	}
+
 }

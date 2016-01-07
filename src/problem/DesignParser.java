@@ -39,12 +39,7 @@ public class DesignParser {
 	public static void main(String[] args) throws IOException {
 		DesignParser dp = new DesignParser();
 		IGraphDesign graphDesigner = new DotGraphDesign();
-		graphDesigner.addCodeGetter(new GraphDeclarationCode());
-		graphDesigner.addCodeGetter(new GraphFieldCode());
-		graphDesigner.addCodeGetter(new GraphMethodCode());
-		graphDesigner.addCodeGetter(new GraphClassCloserCode());
-		graphDesigner.addCodeGetter(new GraphExtensionAndImplementCode());
-		graphDesigner.addCodeGetter(new GraphUsesCode());
+		graphDesigner.useDefault();
 		dp.parse(args, graphDesigner);	
 	}
 
