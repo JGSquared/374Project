@@ -35,7 +35,11 @@ M1:	Rewrote visitors to add fields to HashMap rather than building a string.
 	When running this program, pass any number of Java classes as arguments. A main method should construct a new DesignParser
 	and a new IGraphDesign. Main should then call the parse method of DesignParser, passing in the array of Java classes and
 	the IGraphDesign. DesignParser will then generate graph code one class at a time using the IGraphDesign passed in. Any
-	implementation of IGraphDesign has access to the <Key, Value> pairs described in MORE INFO. Also, in order to properly 	generate a png file containing the auto-generated graph, the user needs to modify the properties file, located in 	input_output. The user needs to include the location of the graphviz executable. The user can also choose a different location 	for the output file including the contents of the graphviz code. The user can define a white list in the properties file that 	will eliminate 	extraneous classes from being drawn in the graph.
+	implementation of IGraphDesign has access to the <Key, Value> pairs described in MORE INFO. Also, in order to properly 	
+	generate a png file containing the auto-generated graph, the user needs to modify the properties file, located in 	input_output.
+	The user needs to include the location of the graphviz executable. The user can also choose a different location
+	for the output file including the contents of the graphviz code. The user can define a white list in the properties file that
+	will eliminate 	extraneous classes from being drawn in the graph.
 	
 
 ### MORE INFO ###

@@ -21,7 +21,7 @@ public class GraphExtensionAndImplementCode extends IGraphCode {
 		String[] interFaces = interFacesString.substring(1,
 				interFacesString.length() - 1).split(",");
 		
-		if (superName != "" && !fp.whiteList.contains(superName)) {
+		if (!superName.equals("") && !fp.whiteList.contains(superName)) {
 			sb.append(name + " -> " + superName
 					+ " [arrowhead=\"onormal\", style=\"solid\"" + "];");
 		}

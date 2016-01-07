@@ -44,6 +44,7 @@ public class DesignParser {
 		graphDesigner.addCodeGetter(new GraphMethodCode());
 		graphDesigner.addCodeGetter(new GraphClassCloserCode());
 		graphDesigner.addCodeGetter(new GraphExtensionAndImplementCode());
+		graphDesigner.addCodeGetter(new GraphUsesCode());
 		dp.parse(args, graphDesigner);	
 	}
 
