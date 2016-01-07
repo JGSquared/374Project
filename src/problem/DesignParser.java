@@ -27,7 +27,9 @@ public class DesignParser {
 			
 			ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, parsedCode);
 			
-			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
+			ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, parsedCode);
+			
+			reader.accept(usesVisitor, ClassReader.EXPAND_FRAMES);
 			
 			graphDesigner.addGraphCode(parsedCode);
 		}

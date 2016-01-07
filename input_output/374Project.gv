@@ -1,27 +1,6 @@
 digraph G{
 rankdir=BT;
-ClassDeclarationVisitor [
+DotGraphDesign [
 shape="record",
-label = "{ClassDeclarationVisitor|- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visit(int, int, String, String, String, String) : void\l}"
-];ClassDeclarationVisitor -> ClassVisitor [arrowhead="onormal", style="solid"];ClassFieldVisitor [
-shape="record",
-label = "{ClassFieldVisitor|- fieldCounter : int\l- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitField(int, String, String, String, Object) : FieldVisitor\l}"
-];ClassFieldVisitor -> ClassVisitor [arrowhead="onormal", style="solid"];ClassFieldVisitor -> FieldVisitor [arrowhead="open", style="dashed"];ClassMethodVisitor [
-shape="record",
-label = "{ClassMethodVisitor|- methodCounter : int\l- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitMethod(int, String, String, String, String) : MethodVisitor\l}"
-];ClassMethodVisitor -> ClassVisitor [arrowhead="onormal", style="solid"];ClassMethodVisitor -> MethodVisitor [arrowhead="open", style="dashed"];DesignParser [
-shape="record",
-label = "{DesignParser|- parsedCode : HashMap\l| main(String) : void\l+ parse(String, IGraphDesign) : void\l}"
-];DesignParser -> IGraphDesign [arrowhead="open", style="dashed"];DotGraphDesign [
-shape="record",
-label = "{DotGraphDesign|- codeGetters : List\l- fp : FileProperties\l- sb : StringBuilder\l|+ removeCodeGetter(IGraphCode) : void\l+ addCodeGetter(IGraphCode) : void\l+ generateGraph() : void\l+ closeGraph() : void\l+ initializeGraph() : void\l+ addGraphCode(HashMap) : void\l}"
-];DotGraphDesign -> IGraphDesign [arrowhead="onormal", style="dashed"];DotGraphDesign -> IGraphCode [arrowhead="open", style="dashed"];FileProperties [
-shape="record",
-label = "{FileProperties|+ whiteList : List\l+ fileOut : String\l+ fileIn : String\l+ flags : String\l+ graphVizPath : String\l|}"
-];IGraphDesign [
-shape="record",
-label = "{IGraphDesign|| addGraphCode(HashMap) : void\l removeCodeGetter(IGraphCode) : void\l addCodeGetter(IGraphCode) : void\l generateGraph() : void\l closeGraph() : void\l initializeGraph() : void\l}"
-];IGraphDesign -> IGraphCode [arrowhead="open", style="dashed"];IGraphCode [
-shape="record",
-label = "{IGraphCode||# getAccessSymbol(int) : String\l# getName(String, String) : String\l getCode(HashMap) : String\l}"
-];}
+label = "{DotGraphDesign|- codeGetters : List\l- fp : FileProperties\l- sb : StringBuilder\l|+ useDefault() : void\l+ getGraphStringBuilder() : StringBuilder\l+ getCodeGetters() : List\l+ removeCodeGetter(IGraphCode) : void\l+ addCodeGetter(IGraphCode) : void\l+ generateGraph() : void\l+ closeGraph() : void\l+ initializeGraph() : void\l+ addGraphCode(HashMap) : void\l}"
+];DotGraphDesign -> IGraphDesign [arrowhead="onormal", style="dashed"];DotGraphDesign -> StringBuilder [arrowhead="open", style="dashed"];DotGraphDesign -> List [arrowhead="open", style="dashed"];DotGraphDesign -> IGraphCode [arrowhead="open", style="dashed"];}
