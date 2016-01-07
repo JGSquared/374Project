@@ -34,7 +34,7 @@ public class GraphMethodCode extends IGraphCode {
 				for (int i = 0; i < splitArgs.length; i++) {
 					argTypes.add(getName(splitArgs[i].trim(), "\\."));
 				}
-
+				
 				String returnType = getName(methodProps[3], "\\.");
 
 				sb.append(getAccessSymbol(access) + " ");
