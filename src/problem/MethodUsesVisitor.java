@@ -24,7 +24,7 @@ public class MethodUsesVisitor extends MethodVisitor {
 	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
 		super.visitMethodInsn(opcode, owner, name, desc, itf);
 		
-		this.parsedCode.put("uses" + this.usesCounter, owner);
+		this.parsedCode.put("uses" + this.usesCounter++, owner);
 	}
 
 }
