@@ -24,7 +24,10 @@ public class ClassFieldVisitor extends ClassVisitor{
 		FieldVisitor toDecorate = super.visitField(access, name, desc, signature, value);
 
 		String type = Type.getType(desc).getClassName();
-		String parsedSignature = Type.getType(signature).getClassName();
+		String parsedSignature = "EMPTY";
+		if (signature != null) {
+			parsedSignature = Type.getType(signature).getClassName();
+		}
 		this.parsedCode.put("field" + this.fieldCounter, access + ":" + name + ":" + type + ":" + parsedSignature);
 		
 		this.fieldCounter++;

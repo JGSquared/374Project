@@ -19,7 +19,28 @@ public class GraphUsesCode extends GraphCode {
 		FileProperties fp = new FileProperties();
 		List<String> usesList = new ArrayList<String>();
 		String name = getName(items.get("className"), "/");
-		
+		for (String s : items.keySet()) {
+			if (s.contains("associated")) {
+				String type = getName(items.get(s), "\\.");
+				if (!type.equals("") && !fp.whiteList.contains(type) && !usesList.contains(type)) {
+					sb.append(name + " -> " + type
+							+ " [arrowhead=\"open\", style=\"solid\"" + "];");
+					usesList.add(type);
+				}
+			}
+			else if (s.contains("field")) {
+				String field = items.get(s);
+				String[] fieldProps = field.split(":");
+				String signature = getName(fieldProps[3], "\\.");
+				if (!fieldProps[3].equals("EMPTY")) {
+					if (!signature.equals("") && !fp.whiteList.contains(signature) && !usesList.contains(signature)) {
+						sb.append(name + " -> " + signature
+								+ " [arrowhead=\"open\", style=\"solid\"" + "];");
+						usesList.add(signature);
+					}
+				}
+			}
+		}
 		for (String s : items.keySet()) {
 			if (s.contains("method")) {
 				String method = items.get(s);
