@@ -14,7 +14,6 @@ public class GraphUsesCode extends AbstractGraphCode {
 
 	@Override
 	public String getCode(HashMap<String, String> items) {
-		// TODO: Figure out how to do concrete pointers (ASK THE LEGEND)
 		StringBuilder sb = new StringBuilder();
 		FileProperties fp = new FileProperties();
 		List<String> usesList = new ArrayList<String>();
@@ -71,6 +70,7 @@ public class GraphUsesCode extends AbstractGraphCode {
 			}
 			else if (s.contains("uses")) {
 				String owner = getName(items.get(s), "/");
+				//System.out.println("OWNER: " + owner);
 				if (!owner.equals("") && !fp.whiteList.contains(owner) && !usesList.contains(owner) && !owner.equals(name)) {
 					sb.append(name + " -> " + owner
 							+ " [arrowhead=\"open\", style=\"dashed\"" + "];");
