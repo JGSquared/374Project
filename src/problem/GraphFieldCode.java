@@ -2,9 +2,9 @@ package problem;
 
 import java.util.HashMap;
 
-import problem.api.GraphCode;
+import problem.api.AbstractGraphCode;
 
-public class GraphFieldCode extends GraphCode {
+public class GraphFieldCode extends AbstractGraphCode {
 
 	public GraphFieldCode() {
 		super();

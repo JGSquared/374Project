@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import problem.api.GraphCode;
+import problem.api.AbstractGraphCode;
 
-public class GraphUsesCode extends GraphCode {
+public class GraphUsesCode extends AbstractGraphCode {
 
 	public GraphUsesCode() {
 		super();

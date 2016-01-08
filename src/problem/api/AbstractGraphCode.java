@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 
-public abstract class GraphCode {
+public abstract class AbstractGraphCode {
 	
-	public GraphCode() {
+	public AbstractGraphCode() {
 		
 	}
 	

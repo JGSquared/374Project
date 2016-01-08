@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import problem.api.GraphCode;
+import problem.api.AbstractGraphCode;
 import problem.api.IGraphDesign;
 
 public class DotGraphDesign implements IGraphDesign {
 	private StringBuilder sb = new StringBuilder();
 	private FileProperties fp = new FileProperties();
-	private List<GraphCode> codeGetters = new ArrayList<GraphCode>();
+	private List<AbstractGraphCode> codeGetters = new ArrayList<AbstractGraphCode>();
 
 	@Override
 	public void addGraphCode(HashMap<String, String> items) {
@@ -47,16 +47,16 @@ public class DotGraphDesign implements IGraphDesign {
 	}
 
 	@Override
-	public void addCodeGetter(GraphCode getter) {
+	public void addCodeGetter(AbstractGraphCode getter) {
 		this.codeGetters.add(getter);
 	}
 
 	@Override
-	public void removeCodeGetter(GraphCode getter) {
+	public void removeCodeGetter(AbstractGraphCode getter) {
 		this.codeGetters.remove(getter);		
 	}
 	
-	public List<GraphCode> getCodeGetters() {
+	public List<AbstractGraphCode> getCodeGetters() {
 		return this.codeGetters;
 	}
 
