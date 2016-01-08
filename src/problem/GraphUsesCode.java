@@ -29,11 +29,11 @@ public class GraphUsesCode extends IGraphCode {
 					// Bad method, causes errors in GraphViz
 					continue;
 				}
-				
+					
 				String argTypesString = methodProps[2];
 				argTypesString = argTypesString.replaceAll("\\[", "");
 				argTypesString = argTypesString.replaceAll("\\]", "");
-
+	
 				String[] splitArgs = argTypesString.split(",");
 				ArrayList<String> argTypes = new ArrayList<String>();
 				for (int i = 0; i < splitArgs.length; i++) {
@@ -47,17 +47,16 @@ public class GraphUsesCode extends IGraphCode {
 						usesList.add(argType);
 					}
 				}
-				
-				String returnType = getName(methodProps[3], "\\.");
-				if (!fp.whiteList.contains(returnType) && !usesList.contains(returnType)) {
-					sb.append(name + " -> " + returnType
+			}
+			else if (s.contains("uses")) {
+				String owner = getName(items.get(s), "/");
+				if (!owner.equals("") && !fp.whiteList.contains(owner) && !usesList.contains(owner) && !owner.equals(name)) {
+					sb.append(name + " -> " + owner
 							+ " [arrowhead=\"open\", style=\"dashed\"" + "];");
-					usesList.add(returnType);
+					usesList.add(owner);
 				}
 			}
-		}
-		
+		}	
 		return sb.toString();
 	}
-
 }

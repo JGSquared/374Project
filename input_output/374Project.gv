@@ -1,6 +1,24 @@
 digraph G{
 rankdir=BT;
-DotGraphDesign [
+ClassDeclarationVisitor [
 shape="record",
-label = "{DotGraphDesign|- codeGetters : List\l- fp : FileProperties\l- sb : StringBuilder\l|+ useDefault() : void\l+ getGraphStringBuilder() : StringBuilder\l+ getCodeGetters() : List\l+ removeCodeGetter(IGraphCode) : void\l+ addCodeGetter(IGraphCode) : void\l+ generateGraph() : void\l+ closeGraph() : void\l+ initializeGraph() : void\l+ addGraphCode(HashMap) : void\l}"
-];DotGraphDesign -> IGraphDesign [arrowhead="onormal", style="dashed"];DotGraphDesign -> StringBuilder [arrowhead="open", style="dashed"];DotGraphDesign -> List [arrowhead="open", style="dashed"];DotGraphDesign -> IGraphCode [arrowhead="open", style="dashed"];}
+label = "{ClassDeclarationVisitor|- parsedCode : HashMap\l|+ visit(int, int, String, String, String, String) : void\l+ getParsedCode() : HashMap\l}"
+];ClassDeclarationVisitor -> ClassVisitor [arrowhead="onormal", style="solid"];ClassDeclarationVisitor -> ClassVisitor [arrowhead="open", style="dashed"];ClassFieldVisitor [
+shape="record",
+label = "{ClassFieldVisitor|- fieldCounter : int\l- parsedCode : HashMap\l|+ visitField(int, String, String, String, Object) : FieldVisitor\l+ getParsedCode() : HashMap\l}"
+];ClassFieldVisitor -> ClassVisitor [arrowhead="onormal", style="solid"];ClassFieldVisitor -> ClassVisitor [arrowhead="open", style="dashed"];ClassMethodVisitor [
+shape="record",
+label = "{ClassMethodVisitor|- methodCounter : int\l- parsedCode : HashMap\l|+ visitMethod(int, String, String, String, String) : MethodVisitor\l+ getParsedCode() : HashMap\l}"
+];ClassMethodVisitor -> ClassVisitor [arrowhead="onormal", style="solid"];ClassMethodVisitor -> ClassVisitor [arrowhead="open", style="dashed"];DesignParser [
+shape="record",
+label = "{DesignParser|- parsedCode : HashMap\l|+ parse(String, IGraphDesign) : void\l main(String) : void\l}"
+];DesignParser -> IGraphDesign [arrowhead="open", style="dashed"];DesignParser -> DotGraphDesign [arrowhead="open", style="dashed"];DesignParser -> ClassUsesVisitor [arrowhead="open", style="dashed"];DesignParser -> ClassFieldVisitor [arrowhead="open", style="dashed"];DesignParser -> ClassMethodVisitor [arrowhead="open", style="dashed"];DotGraphDesign [
+shape="record",
+label = "{DotGraphDesign|- fp : FileProperties\l- sb : StringBuilder\l- codeGetters : List\l|+ addCodeGetter(IGraphCode) : void\l+ removeCodeGetter(IGraphCode) : void\l+ getCodeGetters() : List\l+ getGraphStringBuilder() : StringBuilder\l+ addGraphCode(HashMap) : void\l+ initializeGraph() : void\l+ closeGraph() : void\l+ generateGraph() : void\l+ useDefault() : void\l}"
+];DotGraphDesign -> IGraphDesign [arrowhead="onormal", style="dashed"];DotGraphDesign -> GraphFieldCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphUsesCode [arrowhead="open", style="dashed"];DotGraphDesign -> IGraphCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphDeclarationCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphExtensionAndImplementCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphClassCloserCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphMethodCode [arrowhead="open", style="dashed"];FileProperties [
+shape="record",
+label = "{FileProperties|+ flags : String\l+ graphVizPath : String\l+ fileOut : String\l+ fileIn : String\l+ whiteList : List\l|}"
+];IGraphDesign [
+shape="record",
+label = "{IGraphDesign|| removeCodeGetter(IGraphCode) : void\l useDefault() : void\l initializeGraph() : void\l closeGraph() : void\l generateGraph() : void\l addCodeGetter(IGraphCode) : void\l addGraphCode(HashMap) : void\l}"
+];IGraphDesign -> IGraphCode [arrowhead="open", style="dashed"];}
