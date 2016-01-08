@@ -38,7 +38,9 @@ public class MethodAssociationVisitor extends MethodVisitor {
 			type = Type.getType(signature).getClassName();
 			this.parsedCode.put("associated" + this.associatedCount++, type);
 		}
-		
 	}
-
+	
+	public HashMap<String, String> getParsedCode() {
+		return this.parsedCode;
+	}
 }

@@ -26,5 +26,9 @@ public class MethodUsesVisitor extends MethodVisitor {
 		
 		this.parsedCode.put("uses" + this.usesCounter++, owner);
 	}
+	
+	public HashMap<String, String> getParsedCode() {
+		return this.parsedCode;
+	}
 
 }

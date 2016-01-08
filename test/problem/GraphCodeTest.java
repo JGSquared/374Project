@@ -10,27 +10,27 @@ import org.junit.Test;
 
 import problem.api.IGraphCode;
 
-public class IGraphCodeTest {
+public class GraphCodeTest {
 
-	@Test
-	public final void testGraphUsesCode() {
-		IGraphCode codeGetter = new GraphUsesCode();
-		HashMap<String, String> items = new HashMap<String, String>();
-		StringBuilder expected = new StringBuilder();
-		
-		items.put("method1", "1:<init>:[String,String]");
-		items.put("className", "Test");
-		
-		//Test bad method name
-		assertEquals(expected.toString(), codeGetter.getCode(items));
-		
-		items.put("method2", "1:TestMethod:[TestClass, int]:ReturnClass");
-		
-		expected.append("Test -> TestClass [arrowhead=\"open\", style=\"dashed\"" + "];");
-		expected.append("Test -> ReturnClass [arrowhead=\"open\", style=\"dashed\"" + "];");
-		
-		assertEquals(expected.toString(), codeGetter.getCode(items));
-	}
+//	@Test
+//	public final void testGraphUsesCode() {
+//		IGraphCode codeGetter = new GraphUsesCode();
+//		HashMap<String, String> items = new HashMap<String, String>();
+//		StringBuilder expected = new StringBuilder();
+//		
+//		items.put("method1", "1:<init>:[String,String]");
+//		items.put("className", "Test");
+//		
+//		//Test bad method name
+//		assertEquals(expected.toString(), codeGetter.getCode(items));
+//		
+//		items.put("method2", "1:TestMethod:[TestClass, int]:ReturnClass");
+//		
+//		expected.append("Test -> TestClass [arrowhead=\"open\", style=\"dashed\"" + "];");
+//		expected.append("Test -> ReturnClass [arrowhead=\"open\", style=\"dashed\"" + "];");
+//		
+//		assertEquals(expected.toString(), codeGetter.getCode(items));
+//	}
 	
 	@Test
 	public final void testGraphMethodCode() {
@@ -124,6 +124,63 @@ public class IGraphCodeTest {
 		StringBuilder expected = new StringBuilder();
 		
 		expected.append("}\"\n];");
+		
+		assertEquals(expected.toString(), codeGetter.getCode(items));
+	}
+	
+	@Test
+	public final void testGraphUsesCode() {
+		IGraphCode codeGetter = new GraphUsesCode();
+		HashMap<String, String> items = new HashMap<String, String>();
+		StringBuilder expected = new StringBuilder();
+		
+		items.put("className", "TestClass");
+		items.put("uses", "TestOwner");
+		expected.append("TestClass -> TestOwner"
+				+ " [arrowhead=\"open\", style=\"dashed\"" + "];");
+		
+		assertEquals(expected.toString(), codeGetter.getCode(items));
+		
+		items = new HashMap<String, String>();
+		expected = new StringBuilder();
+		
+		items.put("method1", "1:<init>:[String,String]");
+		items.put("className", "Test");
+		
+		//Test bad method name
+		assertEquals(expected.toString(), codeGetter.getCode(items));
+		
+		items.put("method2", "1:TestMethod:[TestClass, AnotherTestClass]:ReturnClass");
+		
+		expected.append("Test -> TestClass [arrowhead=\"open\", style=\"dashed\"" + "];");
+		expected.append("Test -> AnotherTestClass [arrowhead=\"open\", style=\"dashed\"" + "];");
+		
+		assertEquals(expected.toString(), codeGetter.getCode(items));
+		
+	}
+	
+	@Test
+	public final void testGraphUsesCodeAssociation() {
+		IGraphCode codeGetter = new GraphUsesCode();
+		HashMap<String, String> items = new HashMap<String, String>();
+		StringBuilder expected = new StringBuilder();
+		
+		items.put("className", "TestClass");
+		items.put("associated", "TestType");
+		
+		expected.append("TestClass -> TestType"
+							+ " [arrowhead=\"open\", style=\"solid\"" + "];");
+		
+		assertEquals(expected.toString(), codeGetter.getCode(items));
+		
+		items = new HashMap<String, String>();
+		expected = new StringBuilder();
+		
+		items.put("className", "TestClass");
+		items.put("field", "1:TestField:TestType:TestSignature");
+		
+		expected.append("TestClass -> TestSignature"
+								+ " [arrowhead=\"open\", style=\"solid\"" + "];");
 		
 		assertEquals(expected.toString(), codeGetter.getCode(items));
 	}
