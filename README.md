@@ -3,12 +3,19 @@
 
 ### DESIGN ###
 
-	The design for this project consists of the Visitor and Strategy patterns. Visitors are used by DesignParser and ASM to 
+M1:	The design for this project consists of the Visitor and Strategy patterns. Visitors are used by DesignParser and ASM to 
 	generate a HashMap that contains all of the properties needed to parse into GVEdit syntax (more on these properties in
 	MORE INFO). Each HashMap created by DesignParser is sent to an implementation of IGraphDesign. IGraphDesign is an
 	interface for generating proper GVEdit code from a HashMap. Currently our design has one implementation of this
 	interface, DotGraphDesign, but more can be added. IGraphDesign handles generating the code and outputting the graph PNG
-	file, which	then completes the program's functionality. 
+	file, which	then completes the program's functionality.
+	
+M2: The design for this project stuck to the Visitor and Strategy patterns. The major change made to the design was to abstract
+	the code which generated GraphViz strings into a new abstract class, GraphCode. In M1, all of this was encapsulated in IGraphDesign,
+	meaning any implementation of that interface also needed to implement parsing the HashMap data into usable GraphViz code. Now, they 
+	can simply call the getCode method of each GraphCode object given. Outside of this design overhaul, two new ClassVisitors and 
+	two MethodVisitors were created, and FileProperties received a whiteList field to better filter out undesired classes from a 
+	generated UML.
 
 
 ### CONTRIBUTORS ###
@@ -20,6 +27,8 @@ M1:	Created IGraphDesign interface along with one implementation, DotGraphDesign
 	Setup initial DesignParser and visitors. 
 	Implemented 50% of tests.
 	
+M2: Implemented all new test cases.
+	Implemented code to generate Uses and Associated arrows.
 
 Josh Green:
 

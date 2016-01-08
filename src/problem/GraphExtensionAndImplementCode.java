@@ -2,9 +2,9 @@ package problem;
 
 import java.util.HashMap;
 
-import problem.api.IGraphCode;
+import problem.api.GraphCode;
 
-public class GraphExtensionAndImplementCode extends IGraphCode {
+public class GraphExtensionAndImplementCode extends GraphCode {
 
 	public GraphExtensionAndImplementCode() {
 		super();
