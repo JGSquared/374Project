@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 
-import problem.api.IGraphCode;
+import problem.api.GraphCode;
 
-public class GraphDeclarationCode extends IGraphCode {
+public class GraphDeclarationCode extends GraphCode {
 	
 	public GraphDeclarationCode() {
 		super();

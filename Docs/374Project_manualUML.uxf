@@ -4,7 +4,7 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>702</x>
+      <x>1008</x>
       <y>0</y>
       <w>288</w>
       <h>72</h>
@@ -21,7 +21,7 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>702</x>
+      <x>1008</x>
       <y>153</y>
       <w>288</w>
       <h>72</h>
@@ -38,7 +38,7 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>702</x>
+      <x>1008</x>
       <y>324</y>
       <w>306</w>
       <h>81</h>
@@ -55,7 +55,7 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>180</x>
+      <x>486</x>
       <y>162</y>
       <w>288</w>
       <h>72</h>
@@ -70,7 +70,7 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>99</x>
+      <x>405</x>
       <y>666</y>
       <w>396</w>
       <h>198</h>
@@ -94,7 +94,7 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>162</x>
+      <x>468</x>
       <y>468</y>
       <w>288</w>
       <h>90</h>
@@ -110,7 +110,7 @@ IGraphDesign
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>270</x>
+      <x>576</x>
       <y>531</y>
       <w>44</w>
       <h>152</h>
@@ -121,7 +121,7 @@ IGraphDesign
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>441</x>
+      <x>747</x>
       <y>9</y>
       <w>278</w>
       <h>188</h>
@@ -132,7 +132,7 @@ IGraphDesign
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>441</x>
+      <x>747</x>
       <y>171</y>
       <w>278</w>
       <h>44</h>
@@ -143,7 +143,7 @@ IGraphDesign
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>441</x>
+      <x>747</x>
       <y>189</y>
       <w>278</w>
       <h>197</h>
@@ -154,7 +154,7 @@ IGraphDesign
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>288</x>
+      <x>594</x>
       <y>207</y>
       <w>44</w>
       <h>278</h>
@@ -165,7 +165,7 @@ IGraphDesign
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>630</x>
+      <x>936</x>
       <y>693</y>
       <w>252</w>
       <h>117</h>
@@ -181,12 +181,24 @@ IGraphDesign
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>468</x>
+      <x>774</x>
       <y>711</y>
-      <w>179</w>
-      <h>44</h>
+      <w>171</w>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>27;27;162;27</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>45</x>
+      <y>342</y>
+      <w>306</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>/IGraphCode/
+</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
