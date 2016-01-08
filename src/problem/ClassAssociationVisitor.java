@@ -26,5 +26,8 @@ public class ClassAssociationVisitor extends ClassVisitor {
 				
 		return associationVisitor;
 	}
-
+	
+	public HashMap<String, String> getParsedCode() {
+		return this.parsedCode;
+	}
 }
