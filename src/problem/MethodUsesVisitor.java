@@ -8,7 +8,6 @@ import com.sun.xml.internal.ws.org.objectweb.asm.Type;
 
 public class MethodUsesVisitor extends MethodVisitor {
 	private HashMap<String, String> parsedCode;
-	private int usesCounter = 0;
 
 	public MethodUsesVisitor(int arg0, HashMap<String, String> parsedCode) {
 		super(arg0);
@@ -23,9 +22,8 @@ public class MethodUsesVisitor extends MethodVisitor {
 	@Override
 	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
 		super.visitMethodInsn(opcode, owner, name, desc, itf);
-		
-		//System.out.println("Name: " + name + ". Owner: " + owner);
-		this.parsedCode.put("uses" + this.usesCounter++, owner);
+
+		this.parsedCode.put("uses" + owner, owner);
 	}
 	
 	public HashMap<String, String> getParsedCode() {

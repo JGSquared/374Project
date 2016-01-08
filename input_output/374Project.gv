@@ -1,6 +1,9 @@
 digraph G{
 rankdir=BT;
-ClassAssociationVisitor [
+DesignParser [
+shape="record",
+label = "{DesignParser|- parsedCode : HashMap\l| main(String) : void\l+ parse(String, IGraphDesign) : void\l}"
+];DesignParser -> ClassUsesVisitor [arrowhead="open", style="dashed"];DesignParser -> ClassFieldVisitor [arrowhead="open", style="dashed"];DesignParser -> DotGraphDesign [arrowhead="open", style="dashed"];DesignParser -> IGraphDesign [arrowhead="open", style="dashed"];DesignParser -> ClassAssociationVisitor [arrowhead="open", style="dashed"];DesignParser -> ClassMethodVisitor [arrowhead="open", style="dashed"];DesignParser -> ClassDeclarationVisitor [arrowhead="open", style="dashed"];ClassAssociationVisitor [
 shape="record",
 label = "{ClassAssociationVisitor|- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitMethod(int, String, String, String, String) : MethodVisitor\l}"
 ];ClassAssociationVisitor -> MethodAssociationVisitor [arrowhead="open", style="dashed"];ClassDeclarationVisitor [
@@ -15,13 +18,10 @@ label = "{ClassMethodVisitor|- methodCounter : int\l- parsedCode : HashMap\l|+ g
 ];ClassUsesVisitor [
 shape="record",
 label = "{ClassUsesVisitor|- parsedCode : HashMap\l|+ visitMethod(int, String, String, String, String) : MethodVisitor\l}"
-];ClassUsesVisitor -> MethodUsesVisitor [arrowhead="open", style="dashed"];DesignParser [
-shape="record",
-label = "{DesignParser|- parsedCode : HashMap\l| main(String) : void\l+ parse(String, IGraphDesign) : void\l}"
-];DesignParser -> IGraphDesign [arrowhead="open", style="dashed"];DesignParser -> DotGraphDesign [arrowhead="open", style="dashed"];DesignParser -> ClassAssociationVisitor [arrowhead="open", style="dashed"];DesignParser -> ClassUsesVisitor [arrowhead="open", style="dashed"];DesignParser -> ClassMethodVisitor [arrowhead="open", style="dashed"];DesignParser -> ClassFieldVisitor [arrowhead="open", style="dashed"];DotGraphDesign [
+];ClassUsesVisitor -> MethodUsesVisitor [arrowhead="open", style="dashed"];DotGraphDesign [
 shape="record",
 label = "{DotGraphDesign|- codeGetters : List\l- fp : FileProperties\l- sb : StringBuilder\l|+ useDefault() : void\l+ getGraphStringBuilder() : StringBuilder\l+ getCodeGetters() : List\l+ removeCodeGetter(AbstractGraphCode) : void\l+ addCodeGetter(AbstractGraphCode) : void\l+ generateGraph() : void\l+ closeGraph() : void\l+ initializeGraph() : void\l+ addGraphCode(HashMap) : void\l}"
-];DotGraphDesign -> IGraphDesign [arrowhead="onormal", style="dashed"];DotGraphDesign -> FileProperties [arrowhead="open", style="solid"];DotGraphDesign -> AbstractGraphCode [arrowhead="open", style="solid"];DotGraphDesign -> GraphFieldCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphDeclarationCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphClassCloserCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphMethodCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphExtensionAndImplementCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphUsesCode [arrowhead="open", style="dashed"];FileProperties [
+];DotGraphDesign -> IGraphDesign [arrowhead="onormal", style="dashed"];DotGraphDesign -> FileProperties [arrowhead="open", style="solid"];DotGraphDesign -> AbstractGraphCode [arrowhead="open", style="solid"];DotGraphDesign -> GraphUsesCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphDeclarationCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphClassCloserCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphExtensionAndImplementCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphFieldCode [arrowhead="open", style="dashed"];DotGraphDesign -> GraphMethodCode [arrowhead="open", style="dashed"];FileProperties [
 shape="record",
 label = "{FileProperties|+ whiteList : List\l+ fileOut : String\l+ fileIn : String\l+ flags : String\l+ graphVizPath : String\l|}"
 ];GraphClassCloserCode [
@@ -30,24 +30,24 @@ label = "{GraphClassCloserCode||+ getCode(HashMap) : String\l}"
 ];GraphClassCloserCode -> AbstractGraphCode [arrowhead="onormal", style="solid"];GraphClassCloserCode -> AbstractGraphCode [arrowhead="open", style="dashed"];GraphDeclarationCode [
 shape="record",
 label = "{GraphDeclarationCode||+ getCode(HashMap) : String\l}"
-];GraphDeclarationCode -> AbstractGraphCode [arrowhead="onormal", style="solid"];GraphExtensionAndImplementCode [
+];GraphDeclarationCode -> AbstractGraphCode [arrowhead="onormal", style="solid"];GraphDeclarationCode -> AbstractGraphCode [arrowhead="open", style="dashed"];GraphExtensionAndImplementCode [
 shape="record",
 label = "{GraphExtensionAndImplementCode||+ getCode(HashMap) : String\l}"
-];GraphExtensionAndImplementCode -> AbstractGraphCode [arrowhead="onormal", style="solid"];GraphExtensionAndImplementCode -> FileProperties [arrowhead="open", style="dashed"];GraphFieldCode [
+];GraphExtensionAndImplementCode -> AbstractGraphCode [arrowhead="onormal", style="solid"];GraphExtensionAndImplementCode -> AbstractGraphCode [arrowhead="open", style="dashed"];GraphExtensionAndImplementCode -> FileProperties [arrowhead="open", style="dashed"];GraphFieldCode [
 shape="record",
 label = "{GraphFieldCode||+ getCode(HashMap) : String\l}"
-];GraphFieldCode -> AbstractGraphCode [arrowhead="onormal", style="solid"];GraphMethodCode [
+];GraphFieldCode -> AbstractGraphCode [arrowhead="onormal", style="solid"];GraphFieldCode -> AbstractGraphCode [arrowhead="open", style="dashed"];GraphMethodCode [
 shape="record",
 label = "{GraphMethodCode||+ getCode(HashMap) : String\l}"
-];GraphMethodCode -> AbstractGraphCode [arrowhead="onormal", style="solid"];GraphUsesCode [
+];GraphMethodCode -> AbstractGraphCode [arrowhead="onormal", style="solid"];GraphMethodCode -> AbstractGraphCode [arrowhead="open", style="dashed"];GraphUsesCode [
 shape="record",
 label = "{GraphUsesCode||+ getCode(HashMap) : String\l}"
-];GraphUsesCode -> AbstractGraphCode [arrowhead="onormal", style="solid"];GraphUsesCode -> FileProperties [arrowhead="open", style="dashed"];MethodAssociationVisitor [
+];GraphUsesCode -> AbstractGraphCode [arrowhead="onormal", style="solid"];GraphUsesCode -> AbstractGraphCode [arrowhead="open", style="dashed"];GraphUsesCode -> FileProperties [arrowhead="open", style="dashed"];MethodAssociationVisitor [
 shape="record",
-label = "{MethodAssociationVisitor|- associatedCount : int\l- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitLocalVariable(String, String, String, Label, Label, int) : void\l+ visitFieldInsn(int, String, String, String) : void\l}"
+label = "{MethodAssociationVisitor|- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitLocalVariable(String, String, String, Label, Label, int) : void\l+ visitFieldInsn(int, String, String, String) : void\l}"
 ];MethodUsesVisitor [
 shape="record",
-label = "{MethodUsesVisitor|- usesCounter : int\l- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitMethodInsn(int, String, String, String, boolean) : void\l}"
+label = "{MethodUsesVisitor|- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitMethodInsn(int, String, String, String, boolean) : void\l}"
 ];AbstractGraphCode [
 shape="record",
 label = "{AbstractGraphCode||# getAccessSymbol(int) : String\l# getName(String, String) : String\l getCode(HashMap) : String\l}"

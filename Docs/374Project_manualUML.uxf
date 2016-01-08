@@ -126,8 +126,8 @@ IGraphDesign
     <coordinates>
       <x>1665</x>
       <y>9</y>
-      <w>279</w>
-      <h>279</h>
+      <w>278</w>
+      <h>278</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>27;261;117;261;117;27;261;27</additional_attributes>
@@ -137,8 +137,8 @@ IGraphDesign
     <coordinates>
       <x>1665</x>
       <y>99</y>
-      <w>279</w>
-      <h>198</h>
+      <w>278</w>
+      <h>197</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>27;180;135;180;135;27;261;27</additional_attributes>
@@ -148,8 +148,8 @@ IGraphDesign
     <coordinates>
       <x>1665</x>
       <y>261</y>
-      <w>270</w>
-      <h>45</h>
+      <w>269</w>
+      <h>44</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>27;27;117;27;252;27</additional_attributes>
@@ -339,7 +339,6 @@ IGraphDesign
     <panel_attributes>MethodAssociationVisitor
 --
 - parsedCode: HashMap&lt;String, String&gt;
-- associatedCount: int
 --
 + visitFieldInsn(int, String, String, String): void
 + visitLocalVariable(String, String, String, Label, Label, int): void
@@ -357,7 +356,6 @@ IGraphDesign
     <panel_attributes>MethodUsesVisitor
 --
 - parsedCode: HashMap&lt;String, String&gt;
-- usesCounter: int
 --
 + visitMethodInsn(int, String, String, String, boolean): void
 </panel_attributes>
@@ -368,8 +366,8 @@ IGraphDesign
     <coordinates>
       <x>621</x>
       <y>180</y>
-      <w>206</w>
-      <h>152</h>
+      <w>207</w>
+      <h>153</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>189;135;126;135;126;27;27;27</additional_attributes>
@@ -379,8 +377,8 @@ IGraphDesign
     <coordinates>
       <x>621</x>
       <y>261</y>
-      <w>206</w>
-      <h>98</h>
+      <w>207</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>189;81;108;81;108;27;27;27</additional_attributes>
@@ -390,8 +388,8 @@ IGraphDesign
     <coordinates>
       <x>621</x>
       <y>360</y>
-      <w>206</w>
-      <h>44</h>
+      <w>207</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>189;27;27;27</additional_attributes>
@@ -401,8 +399,8 @@ IGraphDesign
     <coordinates>
       <x>621</x>
       <y>405</y>
-      <w>206</w>
-      <h>107</h>
+      <w>207</w>
+      <h>108</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>189;27;81;27;81;90;27;90</additional_attributes>
@@ -412,8 +410,8 @@ IGraphDesign
     <coordinates>
       <x>621</x>
       <y>441</y>
-      <w>206</w>
-      <h>143</h>
+      <w>207</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>189;27;99;27;99;126;27;126</additional_attributes>
@@ -423,8 +421,8 @@ IGraphDesign
     <coordinates>
       <x>621</x>
       <y>486</y>
-      <w>206</w>
-      <h>188</h>
+      <w>207</w>
+      <h>189</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>189;27;126;27;126;171;27;171</additional_attributes>
@@ -434,8 +432,8 @@ IGraphDesign
     <coordinates>
       <x>1665</x>
       <y>270</y>
-      <w>270</w>
-      <h>198</h>
+      <w>269</w>
+      <h>197</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>27;27;135;27;135;180;252;180</additional_attributes>
@@ -445,8 +443,8 @@ IGraphDesign
     <coordinates>
       <x>1665</x>
       <y>279</y>
-      <w>270</w>
-      <h>297</h>
+      <w>269</w>
+      <h>296</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>27;27;117;27;117;279;252;279</additional_attributes>
@@ -489,8 +487,8 @@ IGraphDesign
     <coordinates>
       <x>261</x>
       <y>630</y>
-      <w>98</w>
-      <h>296</h>
+      <w>99</w>
+      <h>297</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>81;27;27;27;27;279;81;279</additional_attributes>
@@ -500,8 +498,8 @@ IGraphDesign
     <coordinates>
       <x>243</x>
       <y>351</y>
-      <w>116</w>
-      <h>602</h>
+      <w>117</w>
+      <h>603</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>99;27;27;27;27;585;99;585</additional_attributes>

@@ -9,7 +9,6 @@ import com.sun.xml.internal.ws.org.objectweb.asm.Type;
 
 public class MethodAssociationVisitor extends MethodVisitor {
 	private HashMap<String, String> parsedCode;
-	private int associatedCount = 0;
 
 	public MethodAssociationVisitor(int arg0, HashMap<String, String> parsedCode) {
 		super(arg0);
@@ -27,7 +26,7 @@ public class MethodAssociationVisitor extends MethodVisitor {
 		
 		String type = Type.getType(desc).getClassName();
 		
-		this.parsedCode.put("associated" + this.associatedCount++, type);
+		this.parsedCode.put("associated" + type, type);
 	}
 	
 	@Override
@@ -36,7 +35,7 @@ public class MethodAssociationVisitor extends MethodVisitor {
 		String type = "";
 		if (signature != null) { 
 			type = Type.getType(signature).getClassName();
-			this.parsedCode.put("associated" + this.associatedCount++, type);
+			this.parsedCode.put("associated" + type, type);
 		}
 	}
 	
