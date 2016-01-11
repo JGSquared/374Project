@@ -21,7 +21,7 @@ public class GraphUsesCode extends AbstractGraphCode {
 		for (String s : items.keySet()) {
 			if (s.contains("associated")) {
 				String type = getName(items.get(s), "\\.");
-				if (!type.equals("") && !fp.whiteList.contains(type) && !usesList.contains(type)) {
+				if (!type.equals("") && !fp.whiteList.contains(type) && !usesList.contains(type) && !type.equals(name)) {
 					sb.append(name + " -> " + type
 							+ " [arrowhead=\"open\", style=\"solid\"" + "];");
 					usesList.add(type);
