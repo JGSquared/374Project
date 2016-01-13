@@ -7,6 +7,8 @@ import java.util.HashMap;
 import org.junit.Test;
 import org.objectweb.asm.Opcodes;
 
+import problem.visitor.MethodAssociationVisitor;
+
 public class MethodAssociationVisitorTest {
 	
 	@Test

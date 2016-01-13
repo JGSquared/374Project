@@ -1,6 +1,6 @@
 package problem;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -8,12 +8,15 @@ import java.util.HashMap;
 import org.junit.Test;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-import headfirst.factory.pizzaaf.NYPizzaIngredientFactory;
-import headfirst.factory.pizzaaf.PizzaIngredientFactory;
 import problem.api.AbstractGraphCode;
+import problem.code.GraphUsesCode;
+import problem.visitor.ClassAssociationVisitor;
+import problem.visitor.ClassDeclarationVisitor;
+import problem.visitor.ClassFieldVisitor;
+import problem.visitor.ClassMethodVisitor;
+import problem.visitor.ClassUsesVisitor;
 
 public class TrickFactoryPatternTest {
 	

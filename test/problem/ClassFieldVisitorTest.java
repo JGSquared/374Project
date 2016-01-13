@@ -1,13 +1,13 @@
 package problem;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 
 import org.junit.Test;
 import org.objectweb.asm.Opcodes;
 
-import problem.ClassFieldVisitor;
+import problem.visitor.ClassFieldVisitor;
 
 public class ClassFieldVisitorTest {
 

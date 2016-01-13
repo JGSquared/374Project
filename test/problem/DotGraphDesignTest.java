@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import problem.api.AbstractGraphCode;
+import problem.code.GraphFieldCode;
 
 public class DotGraphDesignTest {
 	DotGraphDesign graph;

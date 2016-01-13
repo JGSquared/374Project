@@ -2,4 +2,4 @@ graphVizPath-> C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot
 flags-> -Tpng
 fileIn-> .\\input_output\\374Project.gv
 fileOut-> .\\input_output\\374Project_UML.png
-whiteList-> String,Object,void,int,char,double,float,long,boolean,HashMap,FileReader,BufferedReader,Throwable,Exception,Type,List,ArrayList,Arrays,Runtime,StringBuilder,ClassReader,PrintStream,StringBuffer,ClassVisitor,Label,Set,Iterator,Integer,MethodVisitor,FileOutputStream,OutputStream
+whiteList-> String,Object,void,int,char,double,float,long,boolean,HashMap,FileReader,BufferedReader,Throwable,Exception,Type,List,ArrayList,Arrays,Runtime,StringBuilder,ClassReader,PrintStream,StringBuffer,ClassVisitor,Label,Set,Iterator,Integer,MethodVisitor,FileOutputStream,OutputStream,InterruptedException,Thread,Queue,LinkedList

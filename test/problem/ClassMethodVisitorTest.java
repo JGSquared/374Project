@@ -1,13 +1,13 @@
 package problem;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 
 import org.junit.Test;
 import org.objectweb.asm.Opcodes;
 
-import problem.ClassMethodVisitor;
+import problem.visitor.ClassMethodVisitor;
 
 public class ClassMethodVisitorTest {
 
