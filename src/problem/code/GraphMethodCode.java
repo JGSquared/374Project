@@ -1,4 +1,4 @@
-package problem;
+package problem.code;
 
 import java.util.ArrayList;
 import java.util.HashMap;

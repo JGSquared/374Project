@@ -1,9 +1,10 @@
-package problem;
+package problem.code;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import problem.FileProperties;
 import problem.api.AbstractGraphCode;
 
 public class GraphUsesCode extends AbstractGraphCode {

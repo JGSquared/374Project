@@ -1,10 +1,12 @@
-package problem;
+package problem.visitor;
 
 import java.util.HashMap;
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+
+import problem.visitor.MethodUsesVisitor;
 
 public class ClassUsesVisitor extends ClassVisitor {
 	private HashMap<String, String> parsedCode;

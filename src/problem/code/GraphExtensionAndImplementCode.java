@@ -1,7 +1,8 @@
-package problem;
+package problem.code;
 
 import java.util.HashMap;
 
+import problem.FileProperties;
 import problem.api.AbstractGraphCode;
 
 public class GraphExtensionAndImplementCode extends AbstractGraphCode {

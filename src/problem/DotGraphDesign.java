@@ -9,6 +9,12 @@ import java.util.List;
 
 import problem.api.AbstractGraphCode;
 import problem.api.IGraphDesign;
+import problem.code.GraphClassCloserCode;
+import problem.code.GraphDeclarationCode;
+import problem.code.GraphExtensionAndImplementCode;
+import problem.code.GraphFieldCode;
+import problem.code.GraphMethodCode;
+import problem.code.GraphUsesCode;
 
 public class DotGraphDesign implements IGraphDesign {
 	private StringBuilder sb = new StringBuilder();

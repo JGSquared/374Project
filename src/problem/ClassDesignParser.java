@@ -7,10 +7,16 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
+import problem.api.IDesignParser;
 import problem.api.IGraphDesign;
+import problem.visitor.ClassAssociationVisitor;
+import problem.visitor.ClassDeclarationVisitor;
+import problem.visitor.ClassFieldVisitor;
+import problem.visitor.ClassMethodVisitor;
+import problem.visitor.ClassUsesVisitor;
 
 
-public class DesignParser {
+public class ClassDesignParser implements IDesignParser {
 	private HashMap<String, String> parsedCode;
 	
 	public void parse(String[] args, IGraphDesign graphDesigner) throws IOException{
@@ -38,13 +44,6 @@ public class DesignParser {
 	
 		graphDesigner.closeGraph();
 		graphDesigner.generateGraph();
-	}
-
-	public static void main(String[] args) throws IOException {
-		DesignParser dp = new DesignParser();
-		IGraphDesign graphDesigner = new DotGraphDesign();
-		graphDesigner.useDefault();
-		dp.parse(args, graphDesigner);	
 	}
 
 }

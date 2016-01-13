@@ -1,4 +1,4 @@
-package problem;
+package problem.visitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
