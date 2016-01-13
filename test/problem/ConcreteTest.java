@@ -1,6 +1,6 @@
 package problem;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,6 +11,12 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
 import problem.api.AbstractGraphCode;
+import problem.code.GraphUsesCode;
+import problem.visitor.ClassAssociationVisitor;
+import problem.visitor.ClassDeclarationVisitor;
+import problem.visitor.ClassFieldVisitor;
+import problem.visitor.ClassMethodVisitor;
+import problem.visitor.ClassUsesVisitor;
 
 public class ConcreteTest {
 	

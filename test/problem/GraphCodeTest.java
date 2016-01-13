@@ -1,14 +1,18 @@
 package problem;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
-
-import junit.framework.Assert;
 
 import org.junit.Test;
 
 import problem.api.AbstractGraphCode;
+import problem.code.GraphClassCloserCode;
+import problem.code.GraphDeclarationCode;
+import problem.code.GraphExtensionAndImplementCode;
+import problem.code.GraphFieldCode;
+import problem.code.GraphMethodCode;
+import problem.code.GraphUsesCode;
 
 public class GraphCodeTest {
 	
