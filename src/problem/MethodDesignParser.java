@@ -31,22 +31,26 @@ public class MethodDesignParser implements IDesignParser {
 		String[] methodSig = args[0].split(",");
 		String className = methodSig[0];
 		String methodName = methodSig[1];
-		if (methodSig[2] != null) {
+		if (methodSig.length > 2) {
 			String[] paramTypes = Arrays.copyOfRange(methodSig, 2,
 					methodSig.length);
 		}
 		
 		callDepth = DEFAULT_DEPTH;
-		if (args[2] != null) {
-			callDepth = Integer.parseInt(args[2]);
+		if (args[1] != null) {
+			callDepth = Integer.parseInt(args[1]);
 		}
 		
 		ClassReader reader = new ClassReader(className);
 		
-		ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5);
+		ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth, methodName);
 		
 		reader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
 
+	}
+	
+	public HashMap<String, String> getParsedCode() {
+		return this.parsedCode;
 	}
 
 }

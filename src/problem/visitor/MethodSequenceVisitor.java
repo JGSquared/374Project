@@ -17,4 +17,7 @@ public class MethodSequenceVisitor extends MethodVisitor {
 		this.parsedCode = parsedCode;
 	}
 
+	public HashMap<String, String> getParsedCode() {
+		return this.parsedCode;
+	}
 }
