@@ -39,9 +39,7 @@ public class MethodSequenceVisitor extends MethodVisitor {
 	@Override
 	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
 		super.visitMethodInsn(opcode, owner, name, desc, itf);
-
-		this.parsedCode.put("sequenceNode" + counter++, owner + ":nonHidden");
-
+		
 		this.parsedCode.put("sequenceNode" + MethodDesignParser.count++, owner + ":nonHidden");
 
 		Type[] argTypes = Type.getArgumentTypes(desc);
@@ -51,9 +49,6 @@ public class MethodSequenceVisitor extends MethodVisitor {
 			stypes.add(t.getClassName());
 		}
 		
-
-		this.parsedCode.put("sequenceMethod" + counter++, className + ":" + owner + ":" + name + ":" + stypes.toString());
-
 		this.parsedCode.put("sequenceMethod" + MethodDesignParser.count++, className + ":" + owner + ":" + name + ":" + stypes.toString());
 		
 		if (callDepth != 0) {
