@@ -46,7 +46,7 @@ public class SequenceGraphDesign implements IGraphDesign {
 		String[] outputFile = fp.fileOut.split("\\.");
 		Process pr = rt
 				.exec(new String[] {
-						"cmd.exe", "/k", "" + fp.sdEditPath + " -o " + fp.fileOut + " -t " + outputFile[outputFile.length - 1] + " --threaded=false " + fp.fileIn});
+						"cmd.exe", "", "" + fp.sdEditPath + " -o " + fp.fileOut + " -t " + outputFile[outputFile.length - 1] + " " + fp.fileIn});
 
 	}
 

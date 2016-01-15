@@ -12,6 +12,9 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import problem.MethodDesignParser;
+import problem.SequenceGraphDesign;
+
 import com.sun.xml.internal.ws.org.objectweb.asm.Type;
 
 public class MethodSequenceVisitor extends MethodVisitor {
@@ -39,14 +42,14 @@ public class MethodSequenceVisitor extends MethodVisitor {
 	@Override
 	public void visitTypeInsn(int opcode, String type) {
 		super.visitTypeInsn(opcode, type);
-		this.parsedCode.put("sequenceNode" + counter++, type+ ":hidden" );
-		this.parsedCode.put("sequenceMethod" + counter++, className + ":" + type + ":new");
+		this.parsedCode.put("sequenceNode" + MethodDesignParser.count++, type+ ":hidden" );
+		this.parsedCode.put("sequenceMethod" + MethodDesignParser.count++, className + ":" + type + ":new");
 	}
 	
 	@Override
 	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
 		super.visitMethodInsn(opcode, owner, name, desc, itf);
-		this.parsedCode.put("sequenceNode" + counter++, owner + ":nonHidden");
+		this.parsedCode.put("sequenceNode" + MethodDesignParser.count++, owner + ":nonHidden");
 		
 		Type[] argTypes = Type.getArgumentTypes(desc);
 		List<String> stypes = new ArrayList<String>();
@@ -55,7 +58,7 @@ public class MethodSequenceVisitor extends MethodVisitor {
 			stypes.add(t.getClassName());
 		}
 		
-		this.parsedCode.put("sequenceMethod" + counter++, className + ":" + owner + ":" + name + ":" + stypes.toString());
+		this.parsedCode.put("sequenceMethod" + MethodDesignParser.count++, className + ":" + owner + ":" + name + ":" + stypes.toString());
 		
 		if (callDepth != 0) {
 			ClassReader reader;

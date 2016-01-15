@@ -29,6 +29,8 @@ M1:	Created IGraphDesign interface along with one implementation, DotGraphDesign
 	
 M2: Implemented all new test cases.
 	Implemented code to generate Uses and Associated arrows.
+	
+M3: Implemented new ASM visitors to populate HashMap with Sequence diagram information.
 
 Josh Green:
 
@@ -40,6 +42,8 @@ M1:	Rewrote visitors to add fields to HashMap rather than building a string.
 	
 M2: Refactored DotGraphDesign, moving all code generators under new abstract class, IGraphCode.
 	Implemented new ASM visitors.
+	
+M3: Implemented new codeGetters to generate SDEdit code.
 
 
 ### INSTRUCTIONS ###
@@ -60,7 +64,7 @@ M2: Refactored DotGraphDesign, moving all code generators under new abstract cla
 
 Current <Key, Value> pairs found inside DesignParser HashMap<String, String>:
 	
-	Key: Value
+	Key: Value for ClassDesignParser (UML)
 	
 	className: The name of the Java class visited.
 	access: String representation of the int access value (i.e. Opcodes.ACC_PUBLIC). Use Integer.parseInt to get the value.
@@ -75,3 +79,11 @@ Current <Key, Value> pairs found inside DesignParser HashMap<String, String>:
 	uses<i>: i is some int. The value is a String representation of a Java class, which the Class [className] uses.
 	associated<i>: i is some int. The value is a String representation of a Java class, which the Class [className] is associated with,
 				   either through aggregation or composition.
+				   
+	Key: Value for MethodDesignParser (Sequence)
+	
+	sequenceNode<i>: i is an int representing the order in which this sequenceNode is used. the value is a repesentation of a node
+					 in a sequence diagram as [className]:[hidden] where [className] is the node's class and [hidden] has either the
+					 value "hidden" or "nonhidden", depending on the node's initial state.
+	sequenceMethod<i>: i is an int representing the order in which this method is called. The value is a representation of the method
+					   call as [caller]:[callee]:[method]:[args]
