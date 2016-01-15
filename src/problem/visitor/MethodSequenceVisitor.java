@@ -1,12 +1,16 @@
 package problem.visitor;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.sound.midi.Sequence;
 
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import com.sun.xml.internal.ws.org.objectweb.asm.Type;
 
@@ -52,6 +56,19 @@ public class MethodSequenceVisitor extends MethodVisitor {
 		}
 		
 		this.parsedCode.put("sequenceMethod" + counter++, className + ":" + owner + ":" + name + ":" + stypes.toString());
+		
+		if (callDepth != 0) {
+			ClassReader reader;
+			try {
+				reader = new ClassReader(owner);
+				ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth - 1, name, counter);
+				
+				reader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public HashMap<String, String> getParsedCode() {
