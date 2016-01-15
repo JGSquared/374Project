@@ -40,7 +40,7 @@ public class MethodSequenceVisitor extends MethodVisitor {
 	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
 		super.visitMethodInsn(opcode, owner, name, desc, itf);
 		
-		this.parsedCode.put("sequenceNode" + MethodDesignParser.count++, owner + ":nonHidden");
+		this.parsedCode.put("sequenceNode" + MethodDesignParser.count++, owner);
 
 		Type[] argTypes = Type.getArgumentTypes(desc);
 		List<String> stypes = new ArrayList<String>();

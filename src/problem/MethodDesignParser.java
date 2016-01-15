@@ -38,7 +38,7 @@ public class MethodDesignParser implements IDesignParser {
 		}
 		
 		className = className.replaceAll("\\.", "/");
-		this.parsedCode.put("sequenceNode" + count++, className + ":nonhidden");
+		this.parsedCode.put("sequenceNode" + count++, className);
 		
 		ClassReader reader = new ClassReader(className);
 		
