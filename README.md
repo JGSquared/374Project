@@ -53,7 +53,7 @@ M2: Refactored DotGraphDesign, moving all code generators under new abstract cla
 	Implemented new ASM visitors.
 	
 M3: Implemented new codeGetters to generate SDEdit code.
-	Updated README
+	Created Sequence diagrams.
 
 
 ### INSTRUCTIONS ###
