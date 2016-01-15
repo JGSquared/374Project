@@ -54,6 +54,10 @@ public class SequenceGraphDesign implements IGraphDesign {
 	public void addCodeGetter(AbstractGraphCode getter) {
 		this.codeGetters.add(getter);
 	}
+	
+	public List<AbstractGraphCode> getCodeGetters() {
+		return this.codeGetters;
+	}
 
 	@Override
 	public void removeCodeGetter(AbstractGraphCode getter) {
