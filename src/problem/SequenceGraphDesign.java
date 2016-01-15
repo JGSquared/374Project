@@ -22,7 +22,6 @@ public class SequenceGraphDesign implements IGraphDesign {
 		for (int i = 0; i < codeGetters.size(); i++) {
 			sb.append(codeGetters.get(i).getCode(items));
 		}
-		System.out.println(sb.toString());
 	}
 
 	@Override
