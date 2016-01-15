@@ -41,13 +41,16 @@ public class MethodDesignParser implements IDesignParser {
 			callDepth = Integer.parseInt(args[1]);
 		}
 		
-		this.parsedCode.put("sequenceNode" + counter++, className);
+		className = className.replaceAll("\\.", "/");
+		this.parsedCode.put("sequenceNode" + counter++, className + ":nonhidden");
 		
 		ClassReader reader = new ClassReader(className);
 		
 		ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth, methodName, counter);
 		
 		reader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
+		
+		graphDesigner.addGraphCode(parsedCode);
 
 	}
 	

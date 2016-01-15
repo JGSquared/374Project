@@ -1,5 +1,8 @@
 package problem.api;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
@@ -32,5 +35,26 @@ public abstract class AbstractGraphCode {
 		default:
 			return "";
 		}
+	}
+	
+	protected String getCamelCase(String name) {
+		//Takes the name of a class (or anything), and returns the value
+		//With the first character set to lower case.
+		String firstLetter = name.substring(0, 1);
+		return firstLetter.toLowerCase() + name.substring(1);
+	}
+	
+	protected void sortListByNum(ArrayList<String> list, final int nameLength) {
+		//Takes a list with strings in the format <String>+<int> and sorts it
+		//by the <int>. nameLength tells the sort how to substring list items.
+		Collections.sort(list, new Comparator<String>() {
+
+			@Override
+			public int compare(String o1, String o2) {
+				Integer i1 = Integer.parseInt(o1.substring(nameLength));
+				Integer i2 = Integer.parseInt(o2.substring(nameLength));
+				return i1.compareTo(i2);
+			}
+		});
 	}
 }
