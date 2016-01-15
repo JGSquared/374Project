@@ -27,7 +27,7 @@ public class MethodSequenceVisitorTest {
 		methodVisitor.visitMethodInsn(1, "java/util/List", "TestMethod", "(Ljava/lang/Object;JJJ)Z", true);
 		
 		assertTrue(visitor.getParsedCode().containsKey("sequenceNode0"));
-		assertTrue(visitor.getParsedCode().containsValue("java/util/List:nonHidden"));
+		assertTrue(visitor.getParsedCode().containsValue("java/util/List"));
 	}
 	
 	
