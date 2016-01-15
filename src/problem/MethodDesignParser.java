@@ -16,7 +16,7 @@ public class MethodDesignParser implements IDesignParser {
 	private HashMap<String, String> parsedCode;
 	private int callDepth;
 	private static final int DEFAULT_DEPTH = 5;
-
+	private int counter = 0;
 	@Override
 	public void parse(String[] args, IGraphDesign graphDesigner)
 			throws IOException {
@@ -41,9 +41,11 @@ public class MethodDesignParser implements IDesignParser {
 			callDepth = Integer.parseInt(args[1]);
 		}
 		
+		this.parsedCode.put("sequenceNode" + counter++, className);
+		
 		ClassReader reader = new ClassReader(className);
 		
-		ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth, methodName);
+		ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth, methodName, counter);
 		
 		reader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
 
