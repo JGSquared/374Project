@@ -96,13 +96,12 @@ Current <Key, Value> pairs found inside DesignParser HashMap<String, String>:
 			   where [access] is as defined in <access>, [name] is the method name, [stypes] is the method argument types represented
 			   as [<type>, <type>, ...], and [returnType] is the method's return Type. 
 	uses<i>: i is some int. The value is a String representation of a Java class, which the Class [className] uses.
-	associated<i>: i is some int. The value is a String representation of a Java class, which the Class [className] is associated with,
+	associated<i>: i is some int. The value is a String representation of a Java class, wh,ich the Class [className] is associated with,
 				   either through aggregation or composition.
 				   
 	Key: Value for MethodDesignParser (Sequence)
 	
 	sequenceNode<i>: i is an int representing the order in which this sequenceNode is used. the value is a repesentation of a node
-					 in a sequence diagram as [className]:[hidden] where [className] is the node's class and [hidden] has either the
-					 value "hidden" or "nonhidden", depending on the node's initial state.
+					 in a sequence diagram as [className], where [className] is the node's class.
 	sequenceMethod<i>: i is an int representing the order in which this method is called. The value is a representation of the method
 					   call as [caller]:[callee]:[method]:[args]

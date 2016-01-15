@@ -32,16 +32,11 @@ public class GraphSequenceNodeCode extends AbstractGraphCode {
 			String nodeKey = nodeNames.get(i);
 			String nodeValue = items.get(nodeKey);
 			
-			String[] nodeParams = nodeValue.split(":");
-			String className = getName(nodeParams[0], "/");
+			String className = getName(nodeValue, "/");
 			if (usedNodes.contains(className)) {
 				continue;
 			}
-			String isHidden = nodeParams[1];
 			
-			if (isHidden.equals("hidden")) {
-				sb.append("/");
-			}
 			sb.append(getCamelCase(className) + ":" + className + "\n");
 			usedNodes.add(className);
 		}
