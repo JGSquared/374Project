@@ -28,8 +28,10 @@ public class ClassSequenceVisitor extends ClassVisitor {
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
-		//MethodAssociationVisitor associationVisitor = new MethodAssociationVisitor(Opcodes.ASM5, toDecorate, this.parsedCode);
-		System.out.println("Method Name: " + name + "\nMethodDesc: "+ desc + "\nMethodSig: " + signature);
+		if (name.equals(methodName)) {
+			MethodSequenceVisitor sequenceVisitor = new MethodSequenceVisitor(Opcodes.ASM5, toDecorate, parsedCode, callDepth);
+			return sequenceVisitor;
+		}
 		return toDecorate;
 	}
 
