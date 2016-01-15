@@ -1,6 +1,8 @@
 package problem;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,19 +27,26 @@ public class SequenceGraphDesign implements IGraphDesign {
 
 	@Override
 	public void initializeGraph() {
-		//TODO
-		sb.append("\n");
+		return;
 	}
 
 	@Override
 	public void closeGraph() {
-		// TODO Auto-generated method stub
+		return;
 
 	}
 
 	@Override
 	public void generateGraph() throws IOException {
-		// TODO Auto-generated method stub
+		OutputStream out = new FileOutputStream(fp.fileIn);
+		out.write(sb.toString().getBytes());
+		out.close();
+
+		Runtime rt = Runtime.getRuntime();
+		String[] outputFile = fp.fileOut.split("\\.");
+		Process pr = rt
+				.exec(new String[] {
+						"cmd.exe", "/k", "" + fp.sdEditPath + " -o " + fp.fileOut + " -t " + outputFile[outputFile.length - 1] + " --threaded=false " + fp.fileIn});
 
 	}
 

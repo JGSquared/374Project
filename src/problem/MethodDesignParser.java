@@ -51,7 +51,8 @@ public class MethodDesignParser implements IDesignParser {
 		reader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
 		
 		graphDesigner.addGraphCode(parsedCode);
-
+		
+		graphDesigner.generateGraph();
 	}
 	
 	public HashMap<String, String> getParsedCode() {

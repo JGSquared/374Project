@@ -10,6 +10,7 @@ public class FileProperties {
 	public String flags = "";
 	public String fileIn = "";
 	public String fileOut = "";
+	public String sdEditPath = "";
 	public List<String> whiteList = new ArrayList<String>();
 	
 	public FileProperties() {
@@ -37,6 +38,9 @@ public class FileProperties {
 					for (String s: temp) {
 						whiteList.add(s);
 					}
+					break;
+				case "sdEditPath":
+					sdEditPath = lineArray[1].trim();
 					break;
 				default:
 					break;

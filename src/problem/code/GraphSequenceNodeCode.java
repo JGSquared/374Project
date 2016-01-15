@@ -34,7 +34,7 @@ public class GraphSequenceNodeCode extends AbstractGraphCode {
 			
 			String[] nodeParams = nodeValue.split(":");
 			String className = getName(nodeParams[0], "/");
-			if (fp.whiteList.contains(className) || usedNodes.contains(className)) {
+			if (usedNodes.contains(className)) {
 				continue;
 			}
 			String isHidden = nodeParams[1];

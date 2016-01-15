@@ -47,16 +47,18 @@ public class GraphSequenceMethodCode extends AbstractGraphCode {
 					argTypes.add(getName(splitTypes[i].trim(), "\\."));
 				}
 			}
-
-			sb.append(caller + ":" + callee + "." + method);
-			if (splitTypes != null) {
-				sb.append(argTypes.toString().replaceAll("\\[", "(")
-						.replaceAll("\\]", ")"));
-			} else {
-				sb.append("()");
-			}
-
-			sb.append("\n");
+			
+//			if (!fp.whiteList.contains(callee)) {
+				sb.append(getCamelCase(caller) + ":" + getCamelCase(callee) + "." + method);
+				if (splitTypes != null) {
+					sb.append(argTypes.toString().replaceAll("\\[", "(")
+							.replaceAll("\\]", ")"));
+				} else {
+					sb.append("()");
+				}
+	
+				sb.append("\n");
+//			}
 		}
 
 		return sb.toString();

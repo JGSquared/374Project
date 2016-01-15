@@ -65,7 +65,6 @@ public class MethodSequenceVisitor extends MethodVisitor {
 				
 				reader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
