@@ -16,6 +16,14 @@ M2: The design for this project stuck to the Visitor and Strategy patterns. The 
 	can simply call the getCode method of each GraphCode object given. Outside of this design overhaul, two new ClassVisitors and 
 	two MethodVisitors were created, and FileProperties received a whiteList field to better filter out undesired classes from a 
 	generated UML.
+	
+M3: The two major design changes for this milestone were extracting DesignParser as an interface with only one method, parse(), and 
+	reorganizing code into packages to better separate code based on use, such as "problem.visitor" and "problem.code". Also, the 
+	main method was moved to its own class, App, to make it easier to remember its location rather than having it inside a class
+	that served another purpose. Due to our design choices in M2, we were able to create a solution to this problem by implementing
+	already existing interfaces or the new IDesignParser interface. In total, we created one new implementation of IDesignParser,
+	one new implementation of IGraphDesign, one new ClassVisitor, one new MethodVisitor, and two new implementations of
+	AbstractGraphCode. 
 
 
 ### CONTRIBUTORS ###
@@ -31,6 +39,7 @@ M2: Implemented all new test cases.
 	Implemented code to generate Uses and Associated arrows.
 	
 M3: Implemented new ASM visitors to populate HashMap with Sequence diagram information.
+	Implemented new tests.
 
 Josh Green:
 
@@ -44,20 +53,30 @@ M2: Refactored DotGraphDesign, moving all code generators under new abstract cla
 	Implemented new ASM visitors.
 	
 M3: Implemented new codeGetters to generate SDEdit code.
+	Updated README
 
 
 ### INSTRUCTIONS ###
 
-	When running this program, pass any number of Java classes as arguments. A main method should construct a new DesignParser
+	When running this program, pass any number of Java classes as arguments. A main method should construct a new IDesignParser
 	and a new IGraphDesign. Each IGraphDesign will have a List of IGraphCode, which creates GraphViz code from the <Key, Value>
 	pairs described in MORE INFO. A default List can be used by calling the useDefault method of IGraphDesign, or a custom list
 	can be created one by one. IGraphDesign calls the getCode method of each IGraphCode in the order they are added to the List.
-	Main should then call the parse method of DesignParser, passing in the array of Java classes and the IGraphDesign. DesignParser
+	Main should then call the parse method of DesignParser, passing in the array of Java classes and the IGraphDesign. IDesignParser
 	will then generate graph code one class at a time using the IGraphDesign passed in. Any implementation of IGraphDesign has 
 	access to the <Key, Value> pairs described in MORE INFO. Also, in order to properly generate a png file containing the auto-generated
 	graph, the user needs to modify the properties file, located in input_output. The user needs to include the location of the 
 	graphviz executable. The user can also choose a different location for the output file including the contents of the graphviz code.
 	The user can define a white list in the properties file that will eliminate extraneous classes from being drawn in the graph.
+	
+	The only changes in instruction in order to create a sequence diagram are a change in command line arguments and a change in
+	the output. To run this program to generate an SDEdit code file, you should pass command line arguments in the format <className>,<method> <i>.
+	<className> is the path to a Java class, <method> is the name of a method within that class without the parameters (i.e. 
+	"methodName(String s)" should just be "methodName"), and <i> is how many levels to go down in the method calls. <i> is optional,
+	and will default to 5 if left blank. The current implementation of IGraphDesign and IDesignParser that handle creating sequence
+	diagrams are SequenceGraphDesign and MethodDesignParser, respectively. The <Key, Value> pairs that should be expected in this
+	implementation are defined in MORE INFO. Lastly, this implementation will not generate a PNG file. Rather, it will only 
+	generate a code file specified in fileIn of properties.txt. fileIn should have the extension ".sd".
 	
 
 ### MORE INFO ###
