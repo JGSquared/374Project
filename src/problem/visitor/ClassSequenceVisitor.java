@@ -6,8 +6,6 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-import com.sun.xml.internal.ws.org.objectweb.asm.Type;
-
 public class ClassSequenceVisitor extends ClassVisitor {
 	private HashMap<String, String> parsedCode;
 	private int callDepth;
@@ -48,4 +46,7 @@ public class ClassSequenceVisitor extends ClassVisitor {
 		this.className = name;
 	}
 
+	public HashMap<String, String> getParsedCode() {
+		return this.parsedCode;
+	}
 }
