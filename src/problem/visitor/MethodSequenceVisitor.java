@@ -18,38 +18,28 @@ import com.sun.xml.internal.ws.org.objectweb.asm.Type;
 public class MethodSequenceVisitor extends MethodVisitor {
 	private HashMap<String, String> parsedCode;
 	private int callDepth;
-	private int counter;
 	private String className;
 
-	public MethodSequenceVisitor(int arg0, HashMap<String, String> parsedCode, int callDepth, int counter, String className) {
+	public MethodSequenceVisitor(int arg0, HashMap<String, String> parsedCode,
+			int callDepth, String className) {
 		super(arg0);
 		this.parsedCode = parsedCode;
 		this.callDepth = callDepth;
-		this.counter = counter;
 		this.className = className;
 	}
 
-	public MethodSequenceVisitor(int arg0, MethodVisitor arg1, HashMap<String, String> parsedCode, int callDepth, int counter, String className) {
+	public MethodSequenceVisitor(int arg0, MethodVisitor arg1, HashMap<String, String> parsedCode,
+			int callDepth, String className) {
 		super(arg0, arg1);
 		this.parsedCode = parsedCode;
 		this.callDepth = callDepth;
-		this.counter = counter;
 		this.className = className;
-	}
-	
-	@Override
-	public void visitTypeInsn(int opcode, String type) {
-		super.visitTypeInsn(opcode, type);
-		this.parsedCode.put("sequenceNode" + MethodDesignParser.count++, type+ ":hidden" );
-		this.parsedCode.put("sequenceMethod" + MethodDesignParser.count++, className + ":" + type + ":new");
 	}
 	
 	@Override
 	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
 		super.visitMethodInsn(opcode, owner, name, desc, itf);
-
-		this.parsedCode.put("sequenceNode" + counter++, owner + ":nonHidden");
-
+		
 		this.parsedCode.put("sequenceNode" + MethodDesignParser.count++, owner + ":nonHidden");
 
 		Type[] argTypes = Type.getArgumentTypes(desc);
@@ -59,16 +49,13 @@ public class MethodSequenceVisitor extends MethodVisitor {
 			stypes.add(t.getClassName());
 		}
 		
-
-		this.parsedCode.put("sequenceMethod" + counter++, className + ":" + owner + ":" + name + ":" + stypes.toString());
-
 		this.parsedCode.put("sequenceMethod" + MethodDesignParser.count++, className + ":" + owner + ":" + name + ":" + stypes.toString());
 		
 		if (callDepth != 0) {
 			ClassReader reader;
 			try {
 				reader = new ClassReader(owner);
-				ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth - 1, name, counter);
+				ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth - 1, name);
 				
 				reader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
 			} catch (IOException e) {

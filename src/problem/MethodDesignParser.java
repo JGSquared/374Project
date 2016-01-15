@@ -16,13 +16,11 @@ public class MethodDesignParser implements IDesignParser {
 	private HashMap<String, String> parsedCode;
 	private int callDepth;
 	private static final int DEFAULT_DEPTH = 5;
-	private int counter = 0;
 	public static int count = 0;
 	
 	@Override
 	public void parse(String[] args, IGraphDesign graphDesigner)
 			throws IOException {
-		// TODO Auto-generated method stub
 		if (args.length > 2) {
 			throw new IOException("Too many arguments\n");
 		}
@@ -33,22 +31,18 @@ public class MethodDesignParser implements IDesignParser {
 		String[] methodSig = args[0].split(",");
 		String className = methodSig[0];
 		String methodName = methodSig[1];
-		if (methodSig.length > 2) {
-			String[] paramTypes = Arrays.copyOfRange(methodSig, 2,
-					methodSig.length);
-		}
 		
 		callDepth = DEFAULT_DEPTH;
-		if (args[1] != null) {
+		if (args.length > 1) {
 			callDepth = Integer.parseInt(args[1]);
 		}
 		
 		className = className.replaceAll("\\.", "/");
-		this.parsedCode.put("sequenceNode" + counter++, className + ":nonhidden");
+		this.parsedCode.put("sequenceNode" + count++, className + ":nonhidden");
 		
 		ClassReader reader = new ClassReader(className);
 		
-		ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth, methodName, counter);
+		ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth, methodName);
 		
 		reader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
 		
