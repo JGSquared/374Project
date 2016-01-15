@@ -18,6 +18,7 @@ public class GraphSequenceMethodCode extends AbstractGraphCode {
 		StringBuilder sb = new StringBuilder();
 		FileProperties fp = new FileProperties();
 		ArrayList<String> methodKeys = new ArrayList<>();
+		ArrayList<String> newCalls = new ArrayList<>();
 
 		for (String s : items.keySet()) {
 			if (s.contains(KEY_NAME)) {
@@ -47,18 +48,25 @@ public class GraphSequenceMethodCode extends AbstractGraphCode {
 					argTypes.add(getName(splitTypes[i].trim(), "\\."));
 				}
 			}
+
+			if (method.equals("<init>")
+					|| newCalls.contains(callee + "." + method)) {
+				continue;
+			}
+			sb.append(getCamelCase(caller) + ":" + getCamelCase(callee) + "."
+					+ method);
+			if (splitTypes != null) {
+				sb.append(argTypes.toString().replaceAll("\\[", "(")
+						.replaceAll("\\]", ")"));
+			} else {
+				sb.append("()");
+			}
 			
-//			if (!fp.whiteList.contains(callee)) {
-				sb.append(getCamelCase(caller) + ":" + getCamelCase(callee) + "." + method);
-				if (splitTypes != null) {
-					sb.append(argTypes.toString().replaceAll("\\[", "(")
-							.replaceAll("\\]", ")"));
-				} else {
-					sb.append("()");
-				}
-	
-				sb.append("\n");
-//			}
+			if (method.equals("new")) {
+				newCalls.add(callee + "." + method);
+			}
+
+			sb.append("\n");
 		}
 
 		return sb.toString();

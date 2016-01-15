@@ -17,6 +17,8 @@ public class MethodDesignParser implements IDesignParser {
 	private int callDepth;
 	private static final int DEFAULT_DEPTH = 5;
 	private int counter = 0;
+	public static int count = 0;
+	
 	@Override
 	public void parse(String[] args, IGraphDesign graphDesigner)
 			throws IOException {
