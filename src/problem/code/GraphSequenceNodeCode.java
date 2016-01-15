@@ -45,6 +45,7 @@ public class GraphSequenceNodeCode extends AbstractGraphCode {
 			sb.append(getCamelCase(className) + ":" + className + "\n");
 			usedNodes.add(className);
 		}
+		sb.append("\n");
 		
 		return sb.toString();
 	}

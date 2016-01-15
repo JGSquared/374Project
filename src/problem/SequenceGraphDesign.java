@@ -7,6 +7,7 @@ import java.util.List;
 
 import problem.api.AbstractGraphCode;
 import problem.api.IGraphDesign;
+import problem.code.GraphSequenceMethodCode;
 import problem.code.GraphSequenceNodeCode;
 
 public class SequenceGraphDesign implements IGraphDesign {
@@ -53,6 +54,7 @@ public class SequenceGraphDesign implements IGraphDesign {
 	@Override
 	public void useDefault() {
 		addCodeGetter(new GraphSequenceNodeCode());
+		addCodeGetter(new GraphSequenceMethodCode());
 	}
 
 }
