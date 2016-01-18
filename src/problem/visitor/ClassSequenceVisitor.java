@@ -1,6 +1,8 @@
 package problem.visitor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -11,6 +13,7 @@ public class ClassSequenceVisitor extends ClassVisitor {
 	private int callDepth;
 	private String methodName;
 	private String className;
+	private List<String> methodCalls = new ArrayList<String>();
 	
 	public ClassSequenceVisitor(int arg0, HashMap<String, String> parsedCode,
 			int callDepth, String methodName) {
@@ -33,7 +36,7 @@ public class ClassSequenceVisitor extends ClassVisitor {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
 
 		if (name.equals(methodName)) {
-			MethodSequenceVisitor sequenceVisitor = new MethodSequenceVisitor(Opcodes.ASM5, toDecorate, parsedCode, callDepth, className);
+			MethodSequenceVisitor sequenceVisitor = new MethodSequenceVisitor(Opcodes.ASM5, toDecorate, parsedCode, callDepth, className, methodCalls);
 			return sequenceVisitor;
 		}
 		return toDecorate;
@@ -48,5 +51,9 @@ public class ClassSequenceVisitor extends ClassVisitor {
 
 	public HashMap<String, String> getParsedCode() {
 		return this.parsedCode;
+	}
+	
+	public List<String> getMethodCalls() {
+		return this.methodCalls;
 	}
 }
