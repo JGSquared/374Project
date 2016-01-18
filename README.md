@@ -70,13 +70,15 @@ M3: Implemented new codeGetters to generate SDEdit code.
 	The user can define a white list in the properties file that will eliminate extraneous classes from being drawn in the graph.
 	
 	The only changes in instruction in order to create a sequence diagram are a change in command line arguments and a change in
-	the output. To run this program to generate an SDEdit code file, you should pass command line arguments in the format <className>,<method> <i>.
-	<className> is the path to a Java class, <method> is the name of a method within that class without the parameters (i.e. 
-	"methodName(String s)" should just be "methodName"), and <i> is how many levels to go down in the method calls. <i> is optional,
-	and will default to 5 if left blank. The current implementation of IGraphDesign and IDesignParser that handle creating sequence
-	diagrams are SequenceGraphDesign and MethodDesignParser, respectively. The <Key, Value> pairs that should be expected in this
-	implementation are defined in MORE INFO. Lastly, this implementation will not generate a PNG file. Rather, it will only 
-	generate a code file specified in fileIn of properties.txt. fileIn should have the extension ".sd".
+	the output. To run this program to generate an SDEdit code file, you should pass command line arguments in the format
+	<className>,<method>,<argTypes> <i>. <className> is the path to a Java class, and <method> is the name of a method within that
+	class without the parameters (i.e. "methodName(String s)" should just be "methodName"). <argTypes> is a comma separated list
+	of the <method>'s qualified argument types (i.e. List is java.util.List) in the order that they appear in the method declaration,
+	and <i> is how many levels to go down in the method	calls. <i> is optional, and will default to 5 if left blank. The current
+	implementation of IGraphDesign and IDesignParser that handle creating sequence diagrams are SequenceGraphDesign and
+	MethodDesignParser, respectively. The <Key, Value> pairs that should be expected in this implementation are defined in MORE INFO.
+	Lastly, this implementation will not generate a PNG file. Rather, it will only generate a code file specified in fileIn of
+	properties.txt. fileIn should have the extension ".sd".
 	
 
 ### MORE INFO ###
