@@ -35,21 +35,19 @@ public class GraphSequenceMethodCode extends AbstractGraphCode {
 			String caller = getName(methodParams[0], "/");
 			String callee = getName(methodParams[1], "/");
 			String method = methodParams[2];
-			String args;
-			String[] splitTypes = null;
+			String args = methodParams[3]
+					.replaceAll("\\[", "")
+					.replaceAll("\\]", "");
 			ArrayList<String> argTypes = new ArrayList<String>();
-			if (methodParams.length > 3) {
-				args = methodParams[3];
-				args = args.replaceAll("\\[", "");
-				args = args.replaceAll("\\]", "");
-				splitTypes = args.split(",");
-				for (int j = 0; i < splitTypes.length; i++) {
-					argTypes.add(getName(splitTypes[i].trim(), "\\."));
+			if (!args.equals("")) {
+				String[] types = args.split(",");
+				for (int j = 0; j < types.length; j++) {
+					argTypes.add(getName(types[j].trim(), "\\."));
 				}
 			}
 			sb.append(getCamelCase(caller) + ":" + getCamelCase(callee) + "."
 					+ method);
-			if (splitTypes != null) {
+			if (argTypes.size() > 0) {
 				sb.append(argTypes.toString().replaceAll("\\[", "(")
 						.replaceAll("\\]", ")"));
 			} else {

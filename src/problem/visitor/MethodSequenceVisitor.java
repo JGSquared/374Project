@@ -46,7 +46,7 @@ public class MethodSequenceVisitor extends MethodVisitor {
 		this.parsedCode.put("sequenceNode" + MethodDesignParser.count++, owner);
 
 		Type[] argTypes = Type.getArgumentTypes(desc);
-		List<String> stypes = new ArrayList<String>();
+		ArrayList<String> stypes = new ArrayList<String>();
 		
 		for (Type t: argTypes) {
 			stypes.add(t.getClassName());
@@ -59,7 +59,7 @@ public class MethodSequenceVisitor extends MethodVisitor {
 			ClassReader reader;
 			try {
 				reader = new ClassReader(owner);
-				ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth - 1, name);
+				ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth - 1, name, stypes);
 				
 				reader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
 			} catch (IOException e) {

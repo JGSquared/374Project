@@ -1,6 +1,7 @@
 package problem;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -31,6 +32,13 @@ public class MethodDesignParser implements IDesignParser {
 		String[] methodSig = args[0].split(",");
 		String className = methodSig[0];
 		String methodName = methodSig[1];
+		ArrayList<String> argTypes = new ArrayList<>();
+		if (methodSig.length > 2) {
+			String[] types = Arrays.copyOfRange(methodSig, 2, methodSig.length);
+			for (int i = 0; i < types.length; i++) {
+				argTypes.add(types[i]);
+			}
+		}
 		
 		callDepth = DEFAULT_DEPTH;
 		if (args.length > 1) {
@@ -42,7 +50,7 @@ public class MethodDesignParser implements IDesignParser {
 		
 		ClassReader reader = new ClassReader(className);
 		
-		ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth, methodName);
+		ClassVisitor classVisitor = new ClassSequenceVisitor(Opcodes.ASM5, parsedCode, callDepth, methodName, argTypes);
 		
 		reader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
 		

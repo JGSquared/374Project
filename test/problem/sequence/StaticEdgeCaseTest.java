@@ -1,6 +1,7 @@
 package problem.sequence;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.Assert;
@@ -19,7 +20,7 @@ public class StaticEdgeCaseTest {
 		HashMap<String, String> items = new HashMap<String, String>();
 		
 		ClassReader reader = new ClassReader("problem.sequence.StaticEdgeCaseTest");
-		ClassSequenceVisitor sequenceVisitor = new ClassSequenceVisitor(Opcodes.ASM5, items, 0, "testMethod");
+		ClassSequenceVisitor sequenceVisitor = new ClassSequenceVisitor(Opcodes.ASM5, items, 0, "testMethod", new ArrayList<String>());
 
 		reader.accept(sequenceVisitor, ClassReader.EXPAND_FRAMES);
 		items = sequenceVisitor.getParsedCode();
