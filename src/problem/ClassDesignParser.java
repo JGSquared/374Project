@@ -19,6 +19,7 @@ import problem.visitor.ClassUsesVisitor;
 public class ClassDesignParser implements IDesignParser {
 	private HashMap<String, String> parsedCode;
 	
+	@Override
 	public void parse(String[] args, IGraphDesign graphDesigner) throws IOException{
 		graphDesigner.initializeGraph();
 		
