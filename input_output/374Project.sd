@@ -1,0 +1,20 @@
+collections:Collections
+random:Random
+system:System
+list:List
+listIterator:ListIterator
+
+collections:random.<init>()
+random:random.seedUniquifier()
+random:system.nanoTime()
+random:random.<init>(long)
+collections:collections.shuffle(List, Random)
+collections:list.size()
+collections:random.nextInt(int)
+collections:collections.swap(List, int, int)
+collections:list.toArray()
+collections:random.nextInt(int)
+collections:collections.swap(Object, int, int)
+collections:list.listIterator()
+collections:listIterator.next()
+collections:listIterator.set(Object)

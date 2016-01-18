@@ -12,8 +12,8 @@ public class App {
 	
 	public static void main(String[] args) throws IOException {
 		
-		IDesignParser dp = new ClassDesignParser();
-		IGraphDesign graphDesigner = new DotGraphDesign();
+		IDesignParser dp = new MethodDesignParser();
+		IGraphDesign graphDesigner = new SequenceGraphDesign();
 		
 		graphDesigner.useDefault();
 		dp.parse(args, graphDesigner);
