@@ -19,21 +19,24 @@ public class MethodSequenceVisitor extends MethodVisitor {
 	private HashMap<String, String> parsedCode;
 	private int callDepth;
 	private String className;
+	private List<String> methodCalls;
 
 	public MethodSequenceVisitor(int arg0, HashMap<String, String> parsedCode,
-			int callDepth, String className) {
+			int callDepth, String className, List<String> methodCalls) {
 		super(arg0);
 		this.parsedCode = parsedCode;
 		this.callDepth = callDepth;
 		this.className = className;
+		this.methodCalls = methodCalls;
 	}
 
 	public MethodSequenceVisitor(int arg0, MethodVisitor arg1, HashMap<String, String> parsedCode,
-			int callDepth, String className) {
+			int callDepth, String className, List<String> methodCalls) {
 		super(arg0, arg1);
 		this.parsedCode = parsedCode;
 		this.callDepth = callDepth;
 		this.className = className;
+		this.methodCalls = methodCalls;
 	}
 	
 	@Override
@@ -50,6 +53,7 @@ public class MethodSequenceVisitor extends MethodVisitor {
 		}
 		
 		this.parsedCode.put("sequenceMethod" + MethodDesignParser.count++, className + ":" + owner + ":" + name + ":" + stypes.toString());
+		this.methodCalls.add(name);
 		
 		if (callDepth != 0) {
 			ClassReader reader;
@@ -67,4 +71,5 @@ public class MethodSequenceVisitor extends MethodVisitor {
 	public HashMap<String, String> getParsedCode() {
 		return this.parsedCode;
 	}
+	
 }

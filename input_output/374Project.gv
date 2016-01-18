@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+dotGraphDesign:DotGraphDesign
+list:List
+
+dotGraphDesign:list.add(Object)
+=======
 classMethodVisitor:ClassMethodVisitor
 classVisitor:ClassVisitor
 type:Type
@@ -386,3 +392,4 @@ hashMap:hashMap.indexFor()
 hashMap:object.equals()
 hashMap:hashMap$Entry.recordAccess()
 hashMap:hashMap.addEntry()
+>>>>>>> 6aef2b77b738e3371b8dfccfc99f928842636b3d

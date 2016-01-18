@@ -15,7 +15,9 @@ public class ClassSequenceVisitor extends ClassVisitor {
 	private int callDepth;
 	private String methodName;
 	private String className;
+	private List<String> methodCalls = new ArrayList<String>();
 	private ArrayList<String> argTypes;
+
 	
 	public ClassSequenceVisitor(int arg0, HashMap<String, String> parsedCode,
 			int callDepth, String methodName, ArrayList<String> argTypes) {
@@ -45,9 +47,8 @@ public class ClassSequenceVisitor extends ClassVisitor {
 		for (Type t: argTypes) {
 			stypes.add(t.getClassName());
 		}
-
 		if (name.equals(methodName) && stypes.equals(this.argTypes)) {
-			MethodSequenceVisitor sequenceVisitor = new MethodSequenceVisitor(Opcodes.ASM5, toDecorate, parsedCode, callDepth, className);
+			MethodSequenceVisitor sequenceVisitor = new MethodSequenceVisitor(Opcodes.ASM5, toDecorate, parsedCode, callDepth, className, methodCalls);
 			
 			return sequenceVisitor;
 		}
@@ -63,5 +64,9 @@ public class ClassSequenceVisitor extends ClassVisitor {
 
 	public HashMap<String, String> getParsedCode() {
 		return this.parsedCode;
+	}
+	
+	public List<String> getMethodCalls() {
+		return this.methodCalls;
 	}
 }

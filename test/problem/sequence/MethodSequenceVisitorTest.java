@@ -2,6 +2,7 @@ package problem.sequence;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.Test;
@@ -14,7 +15,7 @@ public class MethodSequenceVisitorTest {
 	
 	@Test
 	public final void testMethodSequenceVisitorEmptyEdge() {
-		ClassSequenceVisitor visitor = new ClassSequenceVisitor(Opcodes.ASM5, new HashMap<String, String>(), 2, "TestMethod");		
+		ClassSequenceVisitor visitor = new ClassSequenceVisitor(Opcodes.ASM5, new HashMap<String, String>(), 2, "TestMethod", new ArrayList<String>());		
 		
 		assertTrue(visitor.getParsedCode().keySet().isEmpty());
 		assertTrue(visitor.getParsedCode().values().isEmpty());
@@ -22,7 +23,10 @@ public class MethodSequenceVisitorTest {
 	
 	@Test
 	public final void testMethodSequenceVisitorMethodInsn() {
-		ClassSequenceVisitor visitor = new ClassSequenceVisitor(Opcodes.ASM5, new HashMap<String, String>(), 2, "TestMethod");
+		ArrayList<String> testList = new ArrayList<String>();
+		testList.add("int");
+		testList.add("java.util.HashMap");
+		ClassSequenceVisitor visitor = new ClassSequenceVisitor(Opcodes.ASM5, new HashMap<String, String>(), 2, "TestMethod", testList);
 		MethodVisitor methodVisitor = visitor.visitMethod(1, "TestMethod", "(ILjava/util/HashMap;)V", "signature", new String[] {"exception"});
 		methodVisitor.visitMethodInsn(1, "java/util/List", "TestMethod", "(Ljava/lang/Object;JJJ)Z", true);
 		
