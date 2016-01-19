@@ -18,11 +18,15 @@ public class GraphDeclarationCode implements IGraphCode {
 	@Override
 	public String getCode(HashMap<String, String> items) {
 		IPatternDetector detector = new SingletonPatternDetector(items);
+		boolean isSingleton = detector.isPattern();
 		StringBuilder sb = new StringBuilder();
 		String className = Helpers.getName(items.get("className"), "/");
 
 		sb.append(className + " [\n");
 		sb.append("shape=\"record\",\n");
+		if (isSingleton) {
+			sb.append("color=\"blue\",\n");
+		}
 		sb.append("label = \"{");
 
 		int access = Integer.parseInt(items.get("access"));
