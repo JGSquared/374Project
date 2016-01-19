@@ -1,6 +1,6 @@
 digraph G{
 rankdir=BT;
-ThreadController [
+ThreadManager [
 shape="record",
-label = "{ThreadController\n\<\<Singleton\>\>|- list : Queue\l uniqueController : ThreadController\l|+ enqueue(VirtualThread) : void\l+ beginThread() : void\l getInstance() : ThreadController\l+ getThreads() : Queue\l}"
-];ThreadController -> VirtualThread [arrowhead="open", style="solid"];}
+label = "{ThreadManager\n\<\<Singleton\>\>|- threads : Queue\l uniqueManager : ThreadManager\l|+ getThreads() : Queue\l getInstance() : ThreadManager\l+ run() : void\l+ enqueue(VirtualThread) : void\l}"
+];ThreadManager -> VirtualThread [arrowhead="open", style="solid"];}
