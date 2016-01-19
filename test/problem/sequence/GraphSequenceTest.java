@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Opcodes;
 
-import problem.api.AbstractGraphCode;
+import problem.api.IGraphCode;
 import problem.code.GraphSequenceMethodCode;
 import problem.code.GraphSequenceNodeCode;
 import problem.code.GraphUsesCode;
@@ -20,7 +20,7 @@ public class GraphSequenceTest {
 	
 	@Test
 	public final void graphSequenceNodeCodeTest() throws IOException {
-		AbstractGraphCode codeGetter = new GraphUsesCode();
+		IGraphCode codeGetter = new GraphUsesCode();
 		HashMap<String, String> items = new HashMap<String, String>();
 		StringBuilder parsedCode = new StringBuilder();
 		StringBuilder expected = new StringBuilder();
@@ -35,7 +35,7 @@ public class GraphSequenceTest {
 		reader.accept(sequenceVisitor, ClassReader.EXPAND_FRAMES);
 		items = sequenceVisitor.getParsedCode();
 		
-		AbstractGraphCode sequenceNode = new GraphSequenceNodeCode();
+		IGraphCode sequenceNode = new GraphSequenceNodeCode();
 		String generatedCode = sequenceNode.getCode(items);
 		
 		assertTrue(generatedCode.contains("collections:Collections"));
@@ -56,7 +56,7 @@ public class GraphSequenceTest {
 		reader.accept(sequenceVisitor, ClassReader.EXPAND_FRAMES);
 		items = sequenceVisitor.getParsedCode();
 		
-		AbstractGraphCode sequenceNode = new GraphSequenceMethodCode();
+		IGraphCode sequenceNode = new GraphSequenceMethodCode();
 		String generatedCode = sequenceNode.getCode(items);
 		assertTrue(!generatedCode.contains("random:system.nanoTime"));
 		
@@ -69,7 +69,7 @@ public class GraphSequenceTest {
 		reader1.accept(sequenceVisitor1, ClassReader.EXPAND_FRAMES);
 		items1 = sequenceVisitor1.getParsedCode();
 		
-		AbstractGraphCode sequenceNode1 = new GraphSequenceMethodCode();
+		IGraphCode sequenceNode1 = new GraphSequenceMethodCode();
 		String generatedCode1 = sequenceNode1.getCode(items1);
 		assertTrue(generatedCode1.contains("random:system.nanoTime"));
 		

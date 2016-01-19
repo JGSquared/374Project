@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import problem.DotGraphDesign;
 import problem.SequenceGraphDesign;
-import problem.api.AbstractGraphCode;
+import problem.api.IGraphCode;
 import problem.code.GraphFieldCode;
 import problem.code.GraphSequenceNodeCode;
 
@@ -15,7 +15,7 @@ public class SequenceGraphDesignTest {
 	@Test
 	public final void testaddCodeSequenceNode() {
 		graph = new SequenceGraphDesign();
-		AbstractGraphCode sequenceNodeCode = new GraphSequenceNodeCode();
+		IGraphCode sequenceNodeCode = new GraphSequenceNodeCode();
 		
 		graph.addCodeGetter(sequenceNodeCode);
 		
@@ -25,8 +25,8 @@ public class SequenceGraphDesignTest {
 	@Test
 	public final void testRemoveCodeSequenceNode() {
 		graph = new SequenceGraphDesign();
-		AbstractGraphCode sequenceNodeCode1 = new GraphSequenceNodeCode();
-		AbstractGraphCode sequenceNodeCode2 = new GraphSequenceNodeCode();
+		IGraphCode sequenceNodeCode1 = new GraphSequenceNodeCode();
+		IGraphCode sequenceNodeCode2 = new GraphSequenceNodeCode();
 		graph.addCodeGetter(sequenceNodeCode1);
 		graph.addCodeGetter(sequenceNodeCode2);
 		graph.removeCodeGetter(sequenceNodeCode2);

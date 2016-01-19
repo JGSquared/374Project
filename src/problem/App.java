@@ -3,7 +3,7 @@ package problem;
 import java.io.IOException;
 import java.util.HashMap;
 
-import problem.api.AbstractGraphCode;
+import problem.api.IGraphCode;
 import problem.api.IDesignParser;
 import problem.api.IGraphDesign;
 import problem.code.GraphSequenceNodeCode;

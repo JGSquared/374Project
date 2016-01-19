@@ -3,9 +3,10 @@ package problem.code;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import problem.api.AbstractGraphCode;
+import problem.Helpers;
+import problem.api.IGraphCode;
 
-public class GraphMethodCode extends AbstractGraphCode {
+public class GraphMethodCode implements IGraphCode {
 
 	public GraphMethodCode() {
 		super();
@@ -32,12 +33,12 @@ public class GraphMethodCode extends AbstractGraphCode {
 				String[] splitArgs = argTypesString.split(",");
 				ArrayList<String> argTypes = new ArrayList<String>();
 				for (int i = 0; i < splitArgs.length; i++) {
-					argTypes.add(getName(splitArgs[i].trim(), "\\."));
+					argTypes.add(Helpers.getName(splitArgs[i].trim(), "\\."));
 				}
 				
-				String returnType = getName(methodProps[3], "\\.");
+				String returnType = Helpers.getName(methodProps[3], "\\.");
 
-				sb.append(getAccessSymbol(access) + " ");
+				sb.append(Helpers.getAccessSymbol(access) + " ");
 
 				sb.append(name
 						+ argTypes.toString().replaceAll("\\[", "(")

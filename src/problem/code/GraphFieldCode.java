@@ -2,9 +2,10 @@ package problem.code;
 
 import java.util.HashMap;
 
-import problem.api.AbstractGraphCode;
+import problem.Helpers;
+import problem.api.IGraphCode;
 
-public class GraphFieldCode extends AbstractGraphCode {
+public class GraphFieldCode implements IGraphCode {
 
 	public GraphFieldCode() {
 		super();
@@ -23,9 +24,9 @@ public class GraphFieldCode extends AbstractGraphCode {
 					// Bad field, causes errors in GraphViz
 					continue;
 				}
-				String type = getName(fieldProperties[2], "\\.");
+				String type = Helpers.getName(fieldProperties[2], "\\.");
 
-				sb.append(getAccessSymbol(access) + " ");
+				sb.append(Helpers.getAccessSymbol(access) + " ");
 
 				sb.append(name + " : " + type + "\\l");
 			}

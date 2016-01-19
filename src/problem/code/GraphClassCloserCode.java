@@ -2,9 +2,9 @@ package problem.code;
 
 import java.util.HashMap;
 
-import problem.api.AbstractGraphCode;
+import problem.api.IGraphCode;
 
-public class GraphClassCloserCode extends AbstractGraphCode {
+public class GraphClassCloserCode implements IGraphCode {
 
 	public GraphClassCloserCode() {
 		super();

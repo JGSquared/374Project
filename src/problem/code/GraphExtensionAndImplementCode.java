@@ -3,9 +3,10 @@ package problem.code;
 import java.util.HashMap;
 
 import problem.FileProperties;
-import problem.api.AbstractGraphCode;
+import problem.Helpers;
+import problem.api.IGraphCode;
 
-public class GraphExtensionAndImplementCode extends AbstractGraphCode {
+public class GraphExtensionAndImplementCode implements IGraphCode {
 
 	public GraphExtensionAndImplementCode() {
 		super();
@@ -16,8 +17,8 @@ public class GraphExtensionAndImplementCode extends AbstractGraphCode {
 		StringBuilder sb = new StringBuilder();
 		FileProperties fp = new FileProperties();
 		
-		String name = getName(items.get("className"), "/");
-		String superName = getName(items.get("extends"), "/");
+		String name = Helpers.getName(items.get("className"), "/");
+		String superName = Helpers.getName(items.get("extends"), "/");
 		String interFacesString = items.get("implements");
 		String[] interFaces = interFacesString.substring(1,
 				interFacesString.length() - 1).split(",");
@@ -28,7 +29,7 @@ public class GraphExtensionAndImplementCode extends AbstractGraphCode {
 		}
 		if (!interFacesString.equals("[]")) {
 			for (String interFace : interFaces) {
-				String interFaceName = getName(interFace, "/");
+				String interFaceName = Helpers.getName(interFace, "/");
 				if (!fp.whiteList.contains(interFaceName)) {
 					sb.append(name + " -> " + interFaceName
 							+ " [arrowhead=\"onormal\", style=\"dashed\"" + "];");

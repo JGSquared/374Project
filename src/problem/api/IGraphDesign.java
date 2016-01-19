@@ -9,7 +9,7 @@ public interface IGraphDesign {
 	public void initializeGraph();
 	public void closeGraph();
 	public void generateGraph() throws IOException;
-	public void addCodeGetter(AbstractGraphCode getter);
-	public void removeCodeGetter(AbstractGraphCode getter);
+	public void addCodeGetter(IGraphCode getter);
+	public void removeCodeGetter(IGraphCode getter);
 	public void useDefault();
 }

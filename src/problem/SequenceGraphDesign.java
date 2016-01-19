@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import problem.api.AbstractGraphCode;
+import problem.api.IGraphCode;
 import problem.api.IGraphDesign;
 import problem.code.GraphSequenceMethodCode;
 import problem.code.GraphSequenceNodeCode;
@@ -15,7 +15,7 @@ import problem.code.GraphSequenceNodeCode;
 public class SequenceGraphDesign implements IGraphDesign {
 	private StringBuilder sb = new StringBuilder();
 	private FileProperties fp = new FileProperties();
-	private List<AbstractGraphCode> codeGetters = new ArrayList<AbstractGraphCode>();
+	private List<IGraphCode> codeGetters = new ArrayList<IGraphCode>();
 
 	@Override
 	public void addGraphCode(HashMap<String, String> items) {
@@ -50,23 +50,25 @@ public class SequenceGraphDesign implements IGraphDesign {
 	}
 
 	@Override
-	public void addCodeGetter(AbstractGraphCode getter) {
+	public void addCodeGetter(IGraphCode getter) {
 		this.codeGetters.add(getter);
 	}
 	
-	public List<AbstractGraphCode> getCodeGetters() {
+	public List<IGraphCode> getCodeGetters() {
 		return this.codeGetters;
 	}
 
 	@Override
-	public void removeCodeGetter(AbstractGraphCode getter) {
+	public void removeCodeGetter(IGraphCode getter) {
 		this.codeGetters.remove(getter);
 	}
 
 	@Override
 	public void useDefault() {
-		addCodeGetter(new GraphSequenceNodeCode());
-		addCodeGetter(new GraphSequenceMethodCode());
+		IGraphCode item1 = new GraphSequenceNodeCode();
+		IGraphCode item2 = new GraphSequenceMethodCode();
+		addCodeGetter(item1);
+		addCodeGetter(item2);
 	}
 
 }

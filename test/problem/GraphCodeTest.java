@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import problem.api.AbstractGraphCode;
+import problem.api.IGraphCode;
 import problem.code.GraphClassCloserCode;
 import problem.code.GraphDeclarationCode;
 import problem.code.GraphExtensionAndImplementCode;
@@ -18,7 +18,7 @@ public class GraphCodeTest {
 	
 	@Test
 	public final void testGraphMethodCode() {
-		AbstractGraphCode codeGetter = new GraphMethodCode();
+		IGraphCode codeGetter = new GraphMethodCode();
 		HashMap<String, String> items = new HashMap<String, String>();
 		StringBuilder expected = new StringBuilder();
 		
@@ -37,7 +37,7 @@ public class GraphCodeTest {
 	
 	@Test
 	public final void testGraphFieldCode() {
-		AbstractGraphCode codeGetter = new GraphFieldCode();
+		IGraphCode codeGetter = new GraphFieldCode();
 		HashMap<String, String> items = new HashMap<String, String>();
 		StringBuilder expected = new StringBuilder();
 		expected.append("|");
@@ -57,7 +57,7 @@ public class GraphCodeTest {
 	
 	@Test
 	public final void testGraphExtensionAndImplementationCode() {
-		AbstractGraphCode codeGetter = new GraphExtensionAndImplementCode();
+		IGraphCode codeGetter = new GraphExtensionAndImplementCode();
 		HashMap<String, String> items = new HashMap<String, String>();
 		StringBuilder expected = new StringBuilder();
 		
@@ -90,7 +90,7 @@ public class GraphCodeTest {
 	
 	@Test
 	public final void testGraphDeclarationCode() {
-		AbstractGraphCode codeGetter = new GraphDeclarationCode();
+		IGraphCode codeGetter = new GraphDeclarationCode();
 		HashMap<String, String> items = new HashMap<String, String>();
 		StringBuilder expected = new StringBuilder();
 		
@@ -103,7 +103,7 @@ public class GraphCodeTest {
 	
 	@Test
 	public final void testGraphCloserCode() {
-		AbstractGraphCode codeGetter = new GraphClassCloserCode();
+		IGraphCode codeGetter = new GraphClassCloserCode();
 		HashMap<String, String> items = new HashMap<String, String>();
 		StringBuilder expected = new StringBuilder();
 		
@@ -114,7 +114,7 @@ public class GraphCodeTest {
 	
 	@Test
 	public final void testGraphUsesCode() {
-		AbstractGraphCode codeGetter = new GraphUsesCode();
+		IGraphCode codeGetter = new GraphUsesCode();
 		HashMap<String, String> items = new HashMap<String, String>();
 		StringBuilder expected = new StringBuilder();
 		
@@ -145,7 +145,7 @@ public class GraphCodeTest {
 	
 	@Test
 	public final void testGraphUsesCodeAssociation() {
-		AbstractGraphCode codeGetter = new GraphUsesCode();
+		IGraphCode codeGetter = new GraphUsesCode();
 		HashMap<String, String> items = new HashMap<String, String>();
 		StringBuilder expected = new StringBuilder();
 		

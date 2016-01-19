@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import problem.api.AbstractGraphCode;
+import problem.api.IGraphCode;
 import problem.api.IGraphDesign;
 import problem.code.GraphClassCloserCode;
 import problem.code.GraphDeclarationCode;
@@ -19,7 +19,7 @@ import problem.code.GraphUsesCode;
 public class DotGraphDesign implements IGraphDesign {
 	private StringBuilder sb = new StringBuilder();
 	private FileProperties fp = new FileProperties();
-	private List<AbstractGraphCode> codeGetters = new ArrayList<AbstractGraphCode>();
+	private List<IGraphCode> codeGetters = new ArrayList<IGraphCode>();
 
 	@Override
 	public void addGraphCode(HashMap<String, String> items) {
@@ -53,16 +53,16 @@ public class DotGraphDesign implements IGraphDesign {
 	}
 
 	@Override
-	public void addCodeGetter(AbstractGraphCode getter) {
+	public void addCodeGetter(IGraphCode getter) {
 		this.codeGetters.add(getter);
 	}
 
 	@Override
-	public void removeCodeGetter(AbstractGraphCode getter) {
+	public void removeCodeGetter(IGraphCode getter) {
 		this.codeGetters.remove(getter);		
 	}
 	
-	public List<AbstractGraphCode> getCodeGetters() {
+	public List<IGraphCode> getCodeGetters() {
 		return this.codeGetters;
 	}
 
@@ -72,12 +72,18 @@ public class DotGraphDesign implements IGraphDesign {
 
 	@Override
 	public void useDefault() {
-		addCodeGetter(new GraphDeclarationCode());
-		addCodeGetter(new GraphFieldCode());
-		addCodeGetter(new GraphMethodCode());
-		addCodeGetter(new GraphClassCloserCode());
-		addCodeGetter(new GraphExtensionAndImplementCode());
-		addCodeGetter(new GraphUsesCode());
+		IGraphCode item1 = new GraphDeclarationCode();
+		IGraphCode item2 = new GraphFieldCode();
+		IGraphCode item3 = new GraphMethodCode();
+		IGraphCode item4 = new GraphClassCloserCode();
+		IGraphCode item5 = new GraphExtensionAndImplementCode();
+		IGraphCode item6 = new GraphUsesCode();
+		addCodeGetter(item1);
+		addCodeGetter(item2);
+		addCodeGetter(item3);
+		addCodeGetter(item4);
+		addCodeGetter(item5);
+		addCodeGetter(item6);		
 	}
 
 }

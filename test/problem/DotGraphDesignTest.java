@@ -3,7 +3,7 @@ package problem;
 import org.junit.Assert;
 import org.junit.Test;
 
-import problem.api.AbstractGraphCode;
+import problem.api.IGraphCode;
 import problem.code.GraphFieldCode;
 
 public class DotGraphDesignTest {
@@ -12,7 +12,7 @@ public class DotGraphDesignTest {
 	@Test
 	public final void testaddCodeGetter() {
 		graph = new DotGraphDesign();
-		AbstractGraphCode getter = new GraphFieldCode();
+		IGraphCode getter = new GraphFieldCode();
 		
 		graph.addCodeGetter(getter);
 		
@@ -22,8 +22,8 @@ public class DotGraphDesignTest {
 	@Test
 	public final void testRemoveCodeGetter() {
 		graph = new DotGraphDesign();
-		AbstractGraphCode getter1 = new GraphFieldCode();
-		AbstractGraphCode getter2 = new GraphFieldCode();
+		IGraphCode getter1 = new GraphFieldCode();
+		IGraphCode getter2 = new GraphFieldCode();
 		graph.addCodeGetter(getter1);
 		graph.addCodeGetter(getter2);
 		graph.removeCodeGetter(getter2);

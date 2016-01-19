@@ -10,7 +10,7 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
-import problem.api.AbstractGraphCode;
+import problem.api.IGraphCode;
 import problem.code.GraphUsesCode;
 import problem.visitor.ClassAssociationVisitor;
 import problem.visitor.ClassDeclarationVisitor;
@@ -22,7 +22,7 @@ public class ConcreteTest {
 	
 	@Test
 	public final void testAssociation() throws IOException {
-		AbstractGraphCode codeGetter = new GraphUsesCode();
+		IGraphCode codeGetter = new GraphUsesCode();
 		HashMap<String, String> items = new HashMap<String, String>();
 
 		ClassReader reader = new ClassReader("problem.DotGraphDesign");

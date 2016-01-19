@@ -4,9 +4,12 @@ import java.util.HashMap;
 
 import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 
-import problem.api.AbstractGraphCode;
+import problem.Helpers;
+import problem.api.IGraphCode;
+import problem.api.IPatternDetector;
+import problem.patterns.SingletonPatternDetector;
 
-public class GraphDeclarationCode extends AbstractGraphCode {
+public class GraphDeclarationCode implements IGraphCode {
 	
 	public GraphDeclarationCode() {
 		super();
@@ -14,8 +17,9 @@ public class GraphDeclarationCode extends AbstractGraphCode {
 
 	@Override
 	public String getCode(HashMap<String, String> items) {
+		IPatternDetector detector = new SingletonPatternDetector(items);
 		StringBuilder sb = new StringBuilder();
-		String className = getName(items.get("className"), "/");
+		String className = Helpers.getName(items.get("className"), "/");
 
 		sb.append(className + " [\n");
 		sb.append("shape=\"record\",\n");
@@ -26,9 +30,12 @@ public class GraphDeclarationCode extends AbstractGraphCode {
 		if (access == Opcodes.ACC_INTERFACE) {
 			sb.append("\\<\\<interface\\>\\>\\n");
 		}
-
-		sb.append(className + "|");
 		
+		sb.append(className);
+		if (detector.isPattern()) {
+			sb.append("\\n\\<\\<Singleton\\>\\>");
+		}
+		sb.append("|");
 		return sb.toString();
 	}
 

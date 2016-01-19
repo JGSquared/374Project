@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import problem.FileProperties;
-import problem.api.AbstractGraphCode;
+import problem.Helpers;
+import problem.api.IGraphCode;
 
-public class GraphSequenceNodeCode extends AbstractGraphCode {
+public class GraphSequenceNodeCode implements IGraphCode {
 	private static final String KEY_NAME = "sequenceNode";
 
 	public GraphSequenceNodeCode() {
@@ -26,18 +27,18 @@ public class GraphSequenceNodeCode extends AbstractGraphCode {
 			}
 		}
 		
-		sortListByNum(nodeNames, KEY_NAME.length());
+		Helpers.sortListByNum(nodeNames, KEY_NAME.length());
 		
 		for (int i = 0; i < nodeNames.size(); i++) {
 			String nodeKey = nodeNames.get(i);
 			String nodeValue = items.get(nodeKey);
 			
-			String className = getName(nodeValue, "/");
+			String className = Helpers.getName(nodeValue, "/");
 			if (usedNodes.contains(className)) {
 				continue;
 			}
 			
-			sb.append(getCamelCase(className) + ":" + className + "\n");
+			sb.append(Helpers.getCamelCase(className) + ":" + className + "\n");
 			usedNodes.add(className);
 		}
 		sb.append("\n");

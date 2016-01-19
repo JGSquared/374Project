@@ -5,9 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import problem.FileProperties;
-import problem.api.AbstractGraphCode;
+import problem.Helpers;
+import problem.api.IGraphCode;
 
-public class GraphUsesCode extends AbstractGraphCode {
+public class GraphUsesCode implements IGraphCode {
 
 	public GraphUsesCode() {
 		super();
@@ -18,10 +19,10 @@ public class GraphUsesCode extends AbstractGraphCode {
 		StringBuilder sb = new StringBuilder();
 		FileProperties fp = new FileProperties();
 		List<String> usesList = new ArrayList<String>();
-		String name = getName(items.get("className"), "/");
+		String name = Helpers.getName(items.get("className"), "/");
 		for (String s : items.keySet()) {
 			if (s.contains("associated")) {
-				String type = getName(items.get(s), "\\.");
+				String type = Helpers.getName(items.get(s), "\\.");
 				if (!type.equals("") && !fp.whiteList.contains(type) && !usesList.contains(type) && !type.equals(name)) {
 					sb.append(name + " -> " + type
 							+ " [arrowhead=\"open\", style=\"solid\"" + "];");
@@ -31,7 +32,7 @@ public class GraphUsesCode extends AbstractGraphCode {
 			else if (s.contains("field")) {
 				String field = items.get(s);
 				String[] fieldProps = field.split(":");
-				String signature = getName(fieldProps[3], "\\.");
+				String signature = Helpers.getName(fieldProps[3], "\\.");
 				if (!fieldProps[3].equals("EMPTY")) {
 					if (!signature.equals("") && !fp.whiteList.contains(signature) && !usesList.contains(signature)) {
 						sb.append(name + " -> " + signature
@@ -58,7 +59,7 @@ public class GraphUsesCode extends AbstractGraphCode {
 				String[] splitArgs = argTypesString.split(",");
 				ArrayList<String> argTypes = new ArrayList<String>();
 				for (int i = 0; i < splitArgs.length; i++) {
-					argTypes.add(getName(splitArgs[i].trim(), "\\."));
+					argTypes.add(Helpers.getName(splitArgs[i].trim(), "\\."));
 				}
 				for (int i = 0; i < argTypes.size(); i++) {
 					String argType = argTypes.get(i);
@@ -70,7 +71,7 @@ public class GraphUsesCode extends AbstractGraphCode {
 				}
 			}
 			else if (s.contains("uses")) {
-				String owner = getName(items.get(s), "/");
+				String owner = Helpers.getName(items.get(s), "/");
 				//System.out.println("OWNER: " + owner);
 				if (!owner.equals("") && !fp.whiteList.contains(owner) && !usesList.contains(owner) && !owner.equals(name)) {
 					sb.append(name + " -> " + owner

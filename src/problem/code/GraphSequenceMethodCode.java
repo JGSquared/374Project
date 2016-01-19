@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import problem.FileProperties;
-import problem.api.AbstractGraphCode;
+import problem.Helpers;
+import problem.api.IGraphCode;
 
-public class GraphSequenceMethodCode extends AbstractGraphCode {
+public class GraphSequenceMethodCode implements IGraphCode {
 	private static final String KEY_NAME = "sequenceMethod";
 
 	public GraphSequenceMethodCode() {
@@ -25,15 +26,15 @@ public class GraphSequenceMethodCode extends AbstractGraphCode {
 			}
 		}
 
-		sortListByNum(methodKeys, KEY_NAME.length());
+		Helpers.sortListByNum(methodKeys, KEY_NAME.length());
 
 		for (int i = 0; i < methodKeys.size(); i++) {
 			String methodKey = methodKeys.get(i);
 			String methodValue = items.get(methodKey);
 
 			String[] methodParams = methodValue.split(":");
-			String caller = getName(methodParams[0], "/");
-			String callee = getName(methodParams[1], "/");
+			String caller = Helpers.getName(methodParams[0], "/");
+			String callee = Helpers.getName(methodParams[1], "/");
 			String method = methodParams[2];
 			String args = methodParams[3]
 					.replaceAll("\\[", "")
@@ -42,10 +43,10 @@ public class GraphSequenceMethodCode extends AbstractGraphCode {
 			if (!args.equals("")) {
 				String[] types = args.split(",");
 				for (int j = 0; j < types.length; j++) {
-					argTypes.add(getName(types[j].trim(), "\\."));
+					argTypes.add(Helpers.getName(types[j].trim(), "\\."));
 				}
 			}
-			sb.append(getCamelCase(caller) + ":" + getCamelCase(callee) + "."
+			sb.append(Helpers.getCamelCase(caller) + ":" + Helpers.getCamelCase(callee) + "."
 					+ method);
 			if (argTypes.size() > 0) {
 				sb.append(argTypes.toString().replaceAll("\\[", "(")
