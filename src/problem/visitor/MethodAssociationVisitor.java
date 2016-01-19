@@ -30,12 +30,10 @@ public class MethodAssociationVisitor extends MethodVisitor {
 	}
 	
 	@Override
-	public void visitLocalVariable(String name, String desc, String signature, Label start, Label end, int index) {
-		super.visitLocalVariable(name, desc, signature, start, end, index);
-		String type = "";
-		if (signature != null) { 
-			type = Type.getType(signature).getClassName();
-			this.parsedCode.put("associated" + type, type);
+	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
+		super.visitMethodInsn(opcode, owner, name, desc, itf);
+		if (name.equals("<init>")) {
+			this.parsedCode.put("associated" + owner, owner.replaceAll("/", "\\."));
 		}
 	}
 	

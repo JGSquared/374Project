@@ -852,4 +852,15 @@ _+ main(String[]): void_</panel_attributes>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>200;24;24;24;24;240</additional_attributes>
   </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1984</x>
+      <y>600</y>
+      <w>136</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>120;24;24;24</additional_attributes>
+  </element>
 </diagram>
