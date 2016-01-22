@@ -31,7 +31,7 @@ public class GraphDeclarationCode implements IGraphCode {
 
 		int access = Integer.parseInt(items.get("access"));
 
-		if (access == Opcodes.ACC_INTERFACE) {
+		if (access == (Opcodes.ACC_INTERFACE + Opcodes.ACC_PUBLIC)) {
 			sb.append("\\<\\<interface\\>\\>\\n");
 		}
 		
