@@ -24,7 +24,12 @@ M3: The two major design changes for this milestone were extracting DesignParser
 	already existing interfaces or the new IDesignParser interface. In total, we created one new implementation of IDesignParser,
 	one new implementation of IGraphDesign, one new ClassVisitor, one new MethodVisitor, and two new implementations of
 	AbstractGraphCode. 
-
+	
+M4: Our overall design did not undergo many changes during this milestone. AbstractGraphCode became an interface, and all of its default
+	helper methods were moved to a new class, Helpers, and each of the methods was made static. A new interface, IPatternDetector, was
+	created, and a single implementation, SingletonPatternDetector, takes our parsedCode HashMap to determine if the given class uses
+	the Singleton pattern.
+		
 
 ### CONTRIBUTORS ###
 
@@ -41,6 +46,9 @@ M2: Implemented all new test cases.
 M3: Implemented new ASM visitors to populate HashMap with Sequence diagram information.
 	Implemented new tests.
 
+M4: Implemented new design detector
+	Implemented new test cases	
+
 Josh Green:
 
 M1:	Rewrote visitors to add fields to HashMap rather than building a string.
@@ -54,6 +62,9 @@ M2: Refactored DotGraphDesign, moving all code generators under new abstract cla
 	
 M3: Implemented new codeGetters to generate SDEdit code.
 	Created Sequence diagrams.
+	
+M4: Implemented new design detector
+	Updated documentation, including UML and README	
 
 
 ### INSTRUCTIONS ###
