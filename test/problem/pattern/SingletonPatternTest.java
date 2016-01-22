@@ -88,6 +88,80 @@ public class SingletonPatternTest {
 		
 		GraphDeclarationCode guc = new GraphDeclarationCode();
 		String generatedCode = guc.getCode(items);
+		assertTrue(!generatedCode.contains("Singleton"));
+	}
+	
+	@Test
+	public void runtimeSingletonTest() throws IOException {
+		HashMap<String, String> items = new HashMap<String, String>();
+
+		ClassReader reader = new ClassReader("java.lang.Runtime");
+		ClassVisitor declVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, items);
+		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, declVisitor, items);
+		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, items);
+		ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, items);
+		ClassAssociationVisitor associationVisitor = new ClassAssociationVisitor(Opcodes.ASM5, usesVisitor, items);
+		reader.accept(associationVisitor, ClassReader.EXPAND_FRAMES);
+		items = associationVisitor.getParsedCode();
+		
+		GraphDeclarationCode guc = new GraphDeclarationCode();
+		String generatedCode = guc.getCode(items);
+		assertTrue(generatedCode.contains("Singleton"));
+	}
+	
+	@Test
+	public void desktopSingletonTest() throws IOException {
+		HashMap<String, String> items = new HashMap<String, String>();
+
+		ClassReader reader = new ClassReader("java.awt.Desktop");
+		ClassVisitor declVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, items);
+		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, declVisitor, items);
+		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, items);
+		ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, items);
+		ClassAssociationVisitor associationVisitor = new ClassAssociationVisitor(Opcodes.ASM5, usesVisitor, items);
+		reader.accept(associationVisitor, ClassReader.EXPAND_FRAMES);
+		items = associationVisitor.getParsedCode();
+		
+		GraphDeclarationCode guc = new GraphDeclarationCode();
+		String generatedCode = guc.getCode(items);
+		System.out.println(generatedCode);
+		assertTrue(!generatedCode.contains("Singleton"));
+	}
+	
+	@Test
+	public void calendarSingletonTest() throws IOException {
+		HashMap<String, String> items = new HashMap<String, String>();
+
+		ClassReader reader = new ClassReader("java.util.Calendar");
+		ClassVisitor declVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, items);
+		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, declVisitor, items);
+		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, items);
+		ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, items);
+		ClassAssociationVisitor associationVisitor = new ClassAssociationVisitor(Opcodes.ASM5, usesVisitor, items);
+		reader.accept(associationVisitor, ClassReader.EXPAND_FRAMES);
+		items = associationVisitor.getParsedCode();
+		
+		GraphDeclarationCode guc = new GraphDeclarationCode();
+		String generatedCode = guc.getCode(items);
+		System.out.println(generatedCode);
+		assertTrue(!generatedCode.contains("Singleton"));
+	}
+
+	@Test
+	public void fileterInputStreamSingletonTest() throws IOException {
+		HashMap<String, String> items = new HashMap<String, String>();
+
+		ClassReader reader = new ClassReader("java.io.FilterInputStream");
+		ClassVisitor declVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, items);
+		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, declVisitor, items);
+		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, items);
+		ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, items);
+		ClassAssociationVisitor associationVisitor = new ClassAssociationVisitor(Opcodes.ASM5, usesVisitor, items);
+		reader.accept(associationVisitor, ClassReader.EXPAND_FRAMES);
+		items = associationVisitor.getParsedCode();
+		
+		GraphDeclarationCode guc = new GraphDeclarationCode();
+		String generatedCode = guc.getCode(items);
 		System.out.println(generatedCode);
 		assertTrue(!generatedCode.contains("Singleton"));
 	}
