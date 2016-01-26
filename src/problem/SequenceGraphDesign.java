@@ -9,6 +9,7 @@ import java.util.List;
 
 import problem.api.IGraphCode;
 import problem.api.IGraphDesign;
+import problem.api.IPatternDetector;
 import problem.code.GraphSequenceMethodCode;
 import problem.code.GraphSequenceNodeCode;
 
@@ -64,11 +65,29 @@ public class SequenceGraphDesign implements IGraphDesign {
 	}
 
 	@Override
-	public void useDefault() {
+	public void useDefaultCodeGetters() {
 		IGraphCode item1 = new GraphSequenceNodeCode();
 		IGraphCode item2 = new GraphSequenceMethodCode();
 		addCodeGetter(item1);
 		addCodeGetter(item2);
+	}
+
+	@Override
+	public void addPatternDetector(IPatternDetector detector) {
+		// TODO: Unused exception?
+		return;
+	}
+
+	@Override
+	public void removePatternDetector(IPatternDetector detector) {
+		// TODO: Unused exception?
+		return;
+	}
+
+	@Override
+	public void useDefaultPatternDetectors() {
+		// TODO: Unused exception?
+		return;
 	}
 
 }

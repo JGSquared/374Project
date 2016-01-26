@@ -9,23 +9,28 @@ import java.util.List;
 
 import problem.api.IGraphCode;
 import problem.api.IGraphDesign;
+import problem.api.IPatternDetector;
 import problem.code.GraphClassCloserCode;
 import problem.code.GraphDeclarationCode;
 import problem.code.GraphExtensionAndImplementCode;
 import problem.code.GraphFieldCode;
 import problem.code.GraphMethodCode;
 import problem.code.GraphUsesCode;
+import problem.patterns.SingletonPatternDetector;
 
 public class DotGraphDesign implements IGraphDesign {
 	private StringBuilder sb = new StringBuilder();
 	private FileProperties fp = new FileProperties();
 	private List<IGraphCode> codeGetters = new ArrayList<IGraphCode>();
+	private List<HashMap<String, String>> classCode = new ArrayList<>();
+	private List<IPatternDetector> patternDetectors = new ArrayList<IPatternDetector>();
 
 	@Override
 	public void addGraphCode(HashMap<String, String> items) {
 		for (int i = 0; i < codeGetters.size(); i++) {
 			sb.append(codeGetters.get(i).getCode(items));
 		}
+		this.classCode.add(items);
 	}
 
 	@Override
@@ -36,6 +41,17 @@ public class DotGraphDesign implements IGraphDesign {
 	
 	@Override
 	public void closeGraph() {
+		for (IPatternDetector detector : this.patternDetectors) {
+			detector.detectPattern(classCode, sb);
+		}
+		int colorOffset;
+		while ((colorOffset = sb.indexOf(Constants.COLOR_OFFSET)) != -1) {
+			sb.replace(colorOffset, colorOffset + Constants.COLOR_OFFSET.length(), "");
+		}
+		int labelOffset;
+		while ((labelOffset = sb.indexOf(Constants.LABEL_OFFSET)) != -1) {
+			sb.replace(labelOffset, labelOffset + Constants.LABEL_OFFSET.length(), "");
+		}
 		sb.append("}");
 	}
 
@@ -71,7 +87,7 @@ public class DotGraphDesign implements IGraphDesign {
 	}
 
 	@Override
-	public void useDefault() {
+	public void useDefaultCodeGetters() {
 		IGraphCode item1 = new GraphDeclarationCode();
 		IGraphCode item2 = new GraphFieldCode();
 		IGraphCode item3 = new GraphMethodCode();
@@ -84,6 +100,21 @@ public class DotGraphDesign implements IGraphDesign {
 		addCodeGetter(item4);
 		addCodeGetter(item5);
 		addCodeGetter(item6);		
+	}
+
+	@Override
+	public void addPatternDetector(IPatternDetector detector) {
+		this.patternDetectors.add(detector);
+	}
+
+	@Override
+	public void removePatternDetector(IPatternDetector detector) {
+		this.patternDetectors.remove(detector);
+	}
+
+	@Override
+	public void useDefaultPatternDetectors() {
+		addPatternDetector(new SingletonPatternDetector());
 	}
 
 }

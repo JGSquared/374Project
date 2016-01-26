@@ -11,5 +11,8 @@ public interface IGraphDesign {
 	public void generateGraph() throws IOException;
 	public void addCodeGetter(IGraphCode getter);
 	public void removeCodeGetter(IGraphCode getter);
-	public void useDefault();
+	public void useDefaultCodeGetters();
+	public void addPatternDetector(IPatternDetector detector);
+	public void removePatternDetector(IPatternDetector detector);
+	public void useDefaultPatternDetectors();
 }

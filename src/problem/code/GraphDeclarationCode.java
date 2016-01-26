@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 
+import problem.Constants;
 import problem.Helpers;
 import problem.api.IGraphCode;
 import problem.api.IPatternDetector;
@@ -17,16 +18,14 @@ public class GraphDeclarationCode implements IGraphCode {
 
 	@Override
 	public String getCode(HashMap<String, String> items) {
-		IPatternDetector detector = new SingletonPatternDetector(items);
-		boolean isSingleton = detector.isPattern();
 		StringBuilder sb = new StringBuilder();
 		String className = Helpers.getName(items.get("className"), "/");
 
 		sb.append(className + " [\n");
 		sb.append("shape=\"record\",\n");
-		if (isSingleton) {
-			sb.append("color=\"blue\",\n");
-		}
+		
+		sb.append("color=\"" + Constants.COLOR_OFFSET + "\",\n");
+		
 		sb.append("label = \"{");
 
 		int access = Integer.parseInt(items.get("access"));
@@ -36,9 +35,9 @@ public class GraphDeclarationCode implements IGraphCode {
 		}
 		
 		sb.append(className);
-		if (detector.isPattern()) {
-			sb.append("\\n\\<\\<Singleton\\>\\>");
-		}
+		
+		sb.append(Constants.LABEL_OFFSET);
+		
 		sb.append("|");
 		return sb.toString();
 	}

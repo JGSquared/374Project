@@ -15,7 +15,8 @@ public class App {
 		IDesignParser dp = new ClassDesignParser();
 		IGraphDesign graphDesigner = new DotGraphDesign();
 		
-		graphDesigner.useDefault();
+		graphDesigner.useDefaultCodeGetters();
+		graphDesigner.useDefaultPatternDetectors();
 		dp.parse(args, graphDesigner);
 	}
 	
