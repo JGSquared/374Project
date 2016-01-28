@@ -10,6 +10,10 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
+import problem.ClassDesignParser;
+import problem.DotGraphDesign;
+import problem.api.IDesignParser;
+import problem.api.IGraphDesign;
 import problem.code.GraphDeclarationCode;
 import problem.visitor.ClassAssociationVisitor;
 import problem.visitor.ClassDeclarationVisitor;
@@ -21,148 +25,113 @@ public class SingletonPatternTest {
 
 	@Test
 	public void eagerSingletonTest() throws IOException {
-		HashMap<String, String> items = new HashMap<String, String>();
-
-		ClassReader reader = new ClassReader("problem.pattern.EagerSingleton");
-		ClassVisitor declVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, items);
-		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, declVisitor, items);
-		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, items);
-		ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, items);
-		ClassAssociationVisitor associationVisitor = new ClassAssociationVisitor(Opcodes.ASM5, usesVisitor, items);
-		reader.accept(associationVisitor, ClassReader.EXPAND_FRAMES);
-		items = associationVisitor.getParsedCode();
 		
-		GraphDeclarationCode guc = new GraphDeclarationCode();
-		String generatedCode = guc.getCode(items);
-		assertTrue(generatedCode.contains("Singleton"));
+		IDesignParser dp = new ClassDesignParser();
+		DotGraphDesign graphDesigner = new DotGraphDesign();
+		
+		graphDesigner.useDefaultCodeGetters();
+		graphDesigner.useDefaultPatternDetectors();
+		String[] args = new String[1];
+		args[0] = "problem.pattern.EagerSingleton";
+		dp.parse(args, graphDesigner);
+		assertTrue(graphDesigner.getGraphStringBuilder().toString().contains("<Singleton"));
 	}
 	
 	@Test
-	public void lazySingletonTtest() throws IOException {
-		HashMap<String, String> items = new HashMap<String, String>();
-
-		ClassReader reader = new ClassReader("problem.pattern.LazySingleton");
-		ClassVisitor declVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, items);
-		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, declVisitor, items);
-		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, items);
-		ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, items);
-		ClassAssociationVisitor associationVisitor = new ClassAssociationVisitor(Opcodes.ASM5, usesVisitor, items);
-		reader.accept(associationVisitor, ClassReader.EXPAND_FRAMES);
-		items = associationVisitor.getParsedCode();
+	public void lazySingletonTest() throws IOException {
 		
-		GraphDeclarationCode guc = new GraphDeclarationCode();
-		String generatedCode = guc.getCode(items);
-		assertTrue(generatedCode.contains("Singleton"));
+		IDesignParser dp = new ClassDesignParser();
+		DotGraphDesign graphDesigner = new DotGraphDesign();
+		
+		graphDesigner.useDefaultCodeGetters();
+		graphDesigner.useDefaultPatternDetectors();
+		String[] args = new String[1];
+		args[0] = "problem.pattern.LazySingleton";
+		dp.parse(args, graphDesigner);
+		assertTrue(graphDesigner.getGraphStringBuilder().toString().contains("<Singleton"));
 	}
 	
 	@Test
 	public void threadSafeSingletonTest() throws IOException {
-		HashMap<String, String> items = new HashMap<String, String>();
-
-		ClassReader reader = new ClassReader("problem.pattern.ThreadSafeSingleton");
-		ClassVisitor declVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, items);
-		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, declVisitor, items);
-		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, items);
-		ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, items);
-		ClassAssociationVisitor associationVisitor = new ClassAssociationVisitor(Opcodes.ASM5, usesVisitor, items);
-		reader.accept(associationVisitor, ClassReader.EXPAND_FRAMES);
-		items = associationVisitor.getParsedCode();
 		
-		GraphDeclarationCode guc = new GraphDeclarationCode();
-		String generatedCode = guc.getCode(items);
-		assertTrue(generatedCode.contains("Singleton"));
+		IDesignParser dp = new ClassDesignParser();
+		DotGraphDesign graphDesigner = new DotGraphDesign();
+		
+		graphDesigner.useDefaultCodeGetters();
+		graphDesigner.useDefaultPatternDetectors();
+		String[] args = new String[1];
+		args[0] = "problem.pattern.ThreadSafeSingleton";
+		dp.parse(args, graphDesigner);
+		assertTrue(graphDesigner.getGraphStringBuilder().toString().contains("<Singleton"));
 	}
 	
 	@Test
 	public void incorrectPatternTest() throws IOException {
-		HashMap<String, String> items = new HashMap<String, String>();
-
-		ClassReader reader = new ClassReader("problem.pattern.IncorrectPattern");
-		ClassVisitor declVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, items);
-		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, declVisitor, items);
-		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, items);
-		ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, items);
-		ClassAssociationVisitor associationVisitor = new ClassAssociationVisitor(Opcodes.ASM5, usesVisitor, items);
-		reader.accept(associationVisitor, ClassReader.EXPAND_FRAMES);
-		items = associationVisitor.getParsedCode();
 		
-		GraphDeclarationCode guc = new GraphDeclarationCode();
-		String generatedCode = guc.getCode(items);
-		assertTrue(!generatedCode.contains("Singleton"));
+		IDesignParser dp = new ClassDesignParser();
+		DotGraphDesign graphDesigner = new DotGraphDesign();
+		
+		graphDesigner.useDefaultCodeGetters();
+		graphDesigner.useDefaultPatternDetectors();
+		String[] args = new String[1];
+		args[0] = "problem.pattern.IncorrectPattern";
+		dp.parse(args, graphDesigner);
+		assertTrue(!graphDesigner.getGraphStringBuilder().toString().contains("<Singleton"));
 	}
 	
 	@Test
 	public void runtimeSingletonTest() throws IOException {
-		HashMap<String, String> items = new HashMap<String, String>();
-
-		ClassReader reader = new ClassReader("java.lang.Runtime");
-		ClassVisitor declVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, items);
-		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, declVisitor, items);
-		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, items);
-		ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, items);
-		ClassAssociationVisitor associationVisitor = new ClassAssociationVisitor(Opcodes.ASM5, usesVisitor, items);
-		reader.accept(associationVisitor, ClassReader.EXPAND_FRAMES);
-		items = associationVisitor.getParsedCode();
 		
-		GraphDeclarationCode guc = new GraphDeclarationCode();
-		String generatedCode = guc.getCode(items);
-		assertTrue(generatedCode.contains("Singleton"));
+		IDesignParser dp = new ClassDesignParser();
+		DotGraphDesign graphDesigner = new DotGraphDesign();
+		
+		graphDesigner.useDefaultCodeGetters();
+		graphDesigner.useDefaultPatternDetectors();
+		String[] args = new String[1];
+		args[0] = "java.lang.Runtime";
+		dp.parse(args, graphDesigner);
+		assertTrue(graphDesigner.getGraphStringBuilder().toString().contains("<Singleton"));
 	}
 	
 	@Test
 	public void desktopSingletonTest() throws IOException {
-		HashMap<String, String> items = new HashMap<String, String>();
-
-		ClassReader reader = new ClassReader("java.awt.Desktop");
-		ClassVisitor declVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, items);
-		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, declVisitor, items);
-		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, items);
-		ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, items);
-		ClassAssociationVisitor associationVisitor = new ClassAssociationVisitor(Opcodes.ASM5, usesVisitor, items);
-		reader.accept(associationVisitor, ClassReader.EXPAND_FRAMES);
-		items = associationVisitor.getParsedCode();
 		
-		GraphDeclarationCode guc = new GraphDeclarationCode();
-		String generatedCode = guc.getCode(items);
-		System.out.println(generatedCode);
-		assertTrue(!generatedCode.contains("Singleton"));
+		IDesignParser dp = new ClassDesignParser();
+		DotGraphDesign graphDesigner = new DotGraphDesign();
+		
+		graphDesigner.useDefaultCodeGetters();
+		graphDesigner.useDefaultPatternDetectors();
+		String[] args = new String[1];
+		args[0] = "java.awt.Desktop";
+		dp.parse(args, graphDesigner);
+		assertTrue(!graphDesigner.getGraphStringBuilder().toString().contains("<Singleton"));
 	}
 	
 	@Test
 	public void calendarSingletonTest() throws IOException {
-		HashMap<String, String> items = new HashMap<String, String>();
-
-		ClassReader reader = new ClassReader("java.util.Calendar");
-		ClassVisitor declVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, items);
-		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, declVisitor, items);
-		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, items);
-		ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, items);
-		ClassAssociationVisitor associationVisitor = new ClassAssociationVisitor(Opcodes.ASM5, usesVisitor, items);
-		reader.accept(associationVisitor, ClassReader.EXPAND_FRAMES);
-		items = associationVisitor.getParsedCode();
 		
-		GraphDeclarationCode guc = new GraphDeclarationCode();
-		String generatedCode = guc.getCode(items);
-		System.out.println(generatedCode);
-		assertTrue(!generatedCode.contains("Singleton"));
+		IDesignParser dp = new ClassDesignParser();
+		DotGraphDesign graphDesigner = new DotGraphDesign();
+		
+		graphDesigner.useDefaultCodeGetters();
+		graphDesigner.useDefaultPatternDetectors();
+		String[] args = new String[1];
+		args[0] = "java.util.Calendar";
+		dp.parse(args, graphDesigner);
+		assertTrue(!graphDesigner.getGraphStringBuilder().toString().contains("<Singleton"));
 	}
 
 	@Test
 	public void fileterInputStreamSingletonTest() throws IOException {
-		HashMap<String, String> items = new HashMap<String, String>();
-
-		ClassReader reader = new ClassReader("java.io.FilterInputStream");
-		ClassVisitor declVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, items);
-		ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, declVisitor, items);
-		ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor, items);
-		ClassVisitor usesVisitor = new ClassUsesVisitor(Opcodes.ASM5, methodVisitor, items);
-		ClassAssociationVisitor associationVisitor = new ClassAssociationVisitor(Opcodes.ASM5, usesVisitor, items);
-		reader.accept(associationVisitor, ClassReader.EXPAND_FRAMES);
-		items = associationVisitor.getParsedCode();
 		
-		GraphDeclarationCode guc = new GraphDeclarationCode();
-		String generatedCode = guc.getCode(items);
-		System.out.println(generatedCode);
-		assertTrue(!generatedCode.contains("Singleton"));
+		IDesignParser dp = new ClassDesignParser();
+		DotGraphDesign graphDesigner = new DotGraphDesign();
+		
+		graphDesigner.useDefaultCodeGetters();
+		graphDesigner.useDefaultPatternDetectors();
+		String[] args = new String[1];
+		args[0] = "java.io.FilterInputStream";
+		dp.parse(args, graphDesigner);
+		assertTrue(!graphDesigner.getGraphStringBuilder().toString().contains("<Singleton"));
 	}
 }
