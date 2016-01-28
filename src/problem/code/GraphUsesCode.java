@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import problem.Constants;
 import problem.FileProperties;
 import problem.Helpers;
 import problem.api.IGraphCode;
@@ -28,7 +29,7 @@ public class GraphUsesCode implements IGraphCode {
 				}
 				if (!type.equals("") && !fp.whiteList.contains(type) && !usesList.contains(type) && !type.equals(name)) {
 					sb.append(name + " -> " + type
-							+ " [arrowhead=\"open\", style=\"solid\"" + "];");
+							+ " [arrowhead=\"open\", style=\"solid\", label=\"" + Constants.ARROW_OFFSET + "\"" + "];");
 					usesList.add(type);
 				}
 			}

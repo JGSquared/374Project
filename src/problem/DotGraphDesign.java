@@ -52,6 +52,10 @@ public class DotGraphDesign implements IGraphDesign {
 		while ((labelOffset = sb.indexOf(Constants.LABEL_OFFSET)) != -1) {
 			sb.replace(labelOffset, labelOffset + Constants.LABEL_OFFSET.length(), "");
 		}
+		int arrowOffset;
+		while ((arrowOffset = sb.indexOf(Constants.ARROW_OFFSET)) != -1) {
+			sb.replace(arrowOffset, arrowOffset + Constants.ARROW_OFFSET.length(), "");
+		}
 		sb.append("}");
 	}
 
