@@ -22,14 +22,16 @@ public class GraphExtensionAndImplementCode implements IGraphCode {
 		String interFacesString = items.get("implements");
 		String[] interFaces = interFacesString.substring(1,
 				interFacesString.length() - 1).split(",");
-		
-		if (!superName.equals("") && !fp.whiteList.contains(superName)) {
+		if (!superName.equals("") && !fp.whiteList.contains(superName) && Helpers.isClassNameValid(superName)) {
 			sb.append(name + " -> " + superName
 					+ " [arrowhead=\"onormal\", style=\"solid\"" + "];");
 		}
 		if (!interFacesString.equals("[]")) {
 			for (String interFace : interFaces) {
 				String interFaceName = Helpers.getName(interFace, "/");
+				if (!Helpers.isClassNameValid(interFaceName)) {
+					continue;
+				}
 				if (!fp.whiteList.contains(interFaceName)) {
 					sb.append(name + " -> " + interFaceName
 							+ " [arrowhead=\"onormal\", style=\"dashed\"" + "];");

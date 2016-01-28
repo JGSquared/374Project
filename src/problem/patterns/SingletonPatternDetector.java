@@ -24,9 +24,11 @@ public class SingletonPatternDetector implements IPatternDetector {
 		for (HashMap<String, String> parsedCode : classCode) {
 			if (checkStatus(parsedCode) && checkForGetInstance(parsedCode)
 					&& checkForPrivateConstructor(parsedCode)) {
-				int colorOffset = sb.indexOf(Constants.COLOR_OFFSET);
+				String className = Helpers.getName(parsedCode.get("className"), "/");
+				int fromIndex = Helpers.getClassDeclarationIndex(className, sb);
+				int colorOffset = sb.indexOf(Constants.COLOR_OFFSET, fromIndex);
 				sb.replace(colorOffset, colorOffset + Constants.COLOR_OFFSET.length(), colorString);
-				int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
+				int labelOffset = sb.indexOf(Constants.LABEL_OFFSET, fromIndex);
 				sb.replace(labelOffset, labelOffset + Constants.LABEL_OFFSET.length(), patternLabel);
 			}
 		}

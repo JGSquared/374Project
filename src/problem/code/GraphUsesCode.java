@@ -23,6 +23,9 @@ public class GraphUsesCode implements IGraphCode {
 		for (String s : items.keySet()) {
 			if (s.contains("associated")) {
 				String type = Helpers.getName(items.get(s), "\\.");
+				if (!Helpers.isClassNameValid(type)) {
+					continue;
+				}
 				if (!type.equals("") && !fp.whiteList.contains(type) && !usesList.contains(type) && !type.equals(name)) {
 					sb.append(name + " -> " + type
 							+ " [arrowhead=\"open\", style=\"solid\"" + "];");
@@ -33,6 +36,9 @@ public class GraphUsesCode implements IGraphCode {
 				String field = items.get(s);
 				String[] fieldProps = field.split(":");
 				String signature = Helpers.getName(fieldProps[3], "\\.");
+				if (!Helpers.isClassNameValid(signature)) {
+					continue;
+				}
 				if (!fieldProps[3].equals("EMPTY")) {
 					if (!signature.equals("") && !fp.whiteList.contains(signature) && !usesList.contains(signature)) {
 						sb.append(name + " -> " + signature
@@ -63,6 +69,9 @@ public class GraphUsesCode implements IGraphCode {
 				}
 				for (int i = 0; i < argTypes.size(); i++) {
 					String argType = argTypes.get(i);
+					if (!Helpers.isClassNameValid(argType)) {
+						continue;
+					}
 					if (!argType.equals("") && !fp.whiteList.contains(argType) && !usesList.contains(argType)) {
 						sb.append(name + " -> " + argType
 								+ " [arrowhead=\"open\", style=\"dashed\"" + "];");
@@ -72,7 +81,9 @@ public class GraphUsesCode implements IGraphCode {
 			}
 			else if (s.contains("uses")) {
 				String owner = Helpers.getName(items.get(s), "/");
-				//System.out.println("OWNER: " + owner);
+				if (!Helpers.isClassNameValid(owner)) {
+					continue;
+				}
 				if (!owner.equals("") && !fp.whiteList.contains(owner) && !usesList.contains(owner) && !owner.equals(name)) {
 					sb.append(name + " -> " + owner
 							+ " [arrowhead=\"open\", style=\"dashed\"" + "];");

@@ -1,11 +1,15 @@
 digraph G{
 rankdir=BT;
-ThreadManager [
+VirtualThread [
+shape="record",
+color="",
+label = "{VirtualThread|# c : Command\l|+ run() : void\l}"
+];VirtualThread -> Command [arrowhead="open", style="solid"];VirtualThread -> ThreadManager [arrowhead="open", style="dashed"];ThreadManager [
 shape="record",
 color="blue",
 label = "{ThreadManager\n\<\<Singleton\>\>|- threads : Queue\l uniqueManager : ThreadManager\l|+ getThreads() : Queue\l getInstance() : ThreadManager\l+ run() : void\l+ enqueue(VirtualThread) : void\l}"
-];ThreadManager -> VirtualThread [arrowhead="open", style="solid"];App [
+];ThreadManager -> VirtualThread [arrowhead="open", style="solid"];Helpers [
 shape="record",
 color="",
-label = "{App|| main(String) : void\l}"
-];App -> DotGraphDesign [arrowhead="open", style="solid"];App -> ClassDesignParser [arrowhead="open", style="solid"];App -> IDesignParser [arrowhead="open", style="dashed"];App -> IGraphDesign [arrowhead="open", style="dashed"];}
+label = "{Helpers|| isClassNameValid(String) : boolean\l getClassDeclarationIndex(String, StringBuilder) : int\l sortListByNum(ArrayList, int) : void\l getCamelCase(String) : String\l getAccessSymbol(int) : String\l getName(String, String) : String\l}"
+];}

@@ -57,12 +57,17 @@ public class Helpers {
 		int fromIndex = 0;
 		int declarationIndex;
 		while ((declarationIndex = sb.indexOf(className, fromIndex)) != -1) {
-			if (!sb.subSequence(declarationIndex - 3, declarationIndex - 1).equals("->")) {
+			if (!sb.substring(declarationIndex - 3, declarationIndex - 1).equals("->")) {
 				return declarationIndex;
 			}
-			fromIndex = declarationIndex;
+			fromIndex = declarationIndex + 1;
 		}
 		
 		return -1;
+	}
+	
+	public static boolean isClassNameValid(String className) {
+		// Performs necessary checks to ensure the className follows correct syntax
+		return !className.contains("$");
 	}
 }
