@@ -50,4 +50,19 @@ public class Helpers {
 			}
 		});
 	}
+	
+	public static int getClassDeclarationIndex(String className, StringBuilder sb) {
+		// Takes in a StringBuilder with GraphViz code, returns the index where
+		// the given className is declared as a node
+		int fromIndex = 0;
+		int declarationIndex;
+		while ((declarationIndex = sb.indexOf(className, fromIndex)) != -1) {
+			if (!sb.subSequence(declarationIndex - 3, declarationIndex - 1).equals("->")) {
+				return declarationIndex;
+			}
+			fromIndex = declarationIndex;
+		}
+		
+		return -1;
+	}
 }
