@@ -17,9 +17,12 @@ public class AdapterPatternDetector implements IPatternDetector{
 	private String adapter = "";
 	private String target = "";
 	private StringBuilder sb = new StringBuilder();
+	private List<HashMap<String, String>> classCode;
+	
 	@Override
 	public void detectPattern(List<HashMap<String, String>> classCode, StringBuilder sb) {
 		this.sb = sb;
+		this.classCode = classCode;
 		for (HashMap<String, String> parsedCode : classCode) {
 			isAdapter(parsedCode, classCode);
 			if ((!adaptee.equals("")) && (!adapter.equals("")) && (!target.equals(""))) {
@@ -53,12 +56,12 @@ public class AdapterPatternDetector implements IPatternDetector{
 	private void isAssociated(HashMap<String, String> parsedCode) {
 		for (String s : parsedCode.keySet()) {
 			if (s.contains("associated")) {
-				containsField(parsedCode, parsedCode.get(s));
+				containsInterfaceField(parsedCode, parsedCode.get(s));
 			}
 		}
 	}
 	 
-	private void containsField(HashMap<String, String> parsedCode, String adaptee) {
+	private void containsInterfaceField(HashMap<String, String> parsedCode, String adaptee) {
 		adaptee = Helpers.getName(adaptee, "\\.");
 		for (String s : parsedCode.keySet()) {
 			if (s.contains("field")) {
@@ -66,7 +69,15 @@ public class AdapterPatternDetector implements IPatternDetector{
 				String[] fieldProperties = field.split(":");
 				String type = Helpers.getName(fieldProperties[2], "\\.");
 				if (type.equals(adaptee)) {
-					this.adaptee = type;
+					for (HashMap<String, String> c : this.classCode) {
+						String currentClass = Helpers.getName(c.get("className"), "/");
+						if (currentClass.equals(type)) {
+							int access = Integer.parseInt(c.get("access"));
+							if (access == 1537) {
+								this.adaptee = currentClass;
+							}
+						}
+					}
 				}
 			}
 		}
