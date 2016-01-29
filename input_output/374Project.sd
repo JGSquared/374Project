@@ -4,11 +4,11 @@ App [
 shape="record",
 color="",
 label = "{App|| main(String) : void\l}"
-];App -> IteratorAdapter [arrowhead="open", style="solid", label=""];App -> LinearTransformer [arrowhead="open", style="solid", label=""];IteratorAdapter [
+];App -> IteratorToEnumerationAdapter [arrowhead="open", style="solid", label=""];App -> LinearTransformer [arrowhead="open", style="solid", label=""];IteratorToEnumerationAdapter [
 shape="record",
 color="brown",
-label = "{IteratorAdapter\n\<\<Adapter\>\>| iter : Iterator\l|+ hasMoreElements() : boolean\l+ nextElement() : Object\l}"
-];IteratorAdapter -> Enumeration [arrowhead="onormal", style="dashed"];IteratorAdapter -> Iterator [arrowhead="open", style="solid"];LinearTransformer [
+label = "{IteratorToEnumerationAdapter\n\<\<Adapter\>\>|- itr : Iterator\l|+ hasMoreElements() : boolean\l+ nextElement() : Object\l}"
+];IteratorToEnumerationAdapter -> Enumeration [arrowhead="onormal", style="dashed"];IteratorToEnumerationAdapter -> Iterator [arrowhead="open", style="solid"];LinearTransformer [
 shape="record",
 color="",
 label = "{LinearTransformer|- enumTion : Enumeration\l|+ transform(OutputStream) : void\l}"
