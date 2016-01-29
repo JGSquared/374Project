@@ -3,4 +3,4 @@ sdEditPath-> C:\\sdEdit\\sdedit-4.01
 flags-> -Tpng
 fileIn-> .\\input_output\\374Project.sd
 fileOut-> .\\input_output\\374Project_UML.png
-whiteList-> String,Object,void,int,char,double,float,long,boolean,HashMap,FileReader,BufferedReader,Throwable,Exception,Type,List,ArrayList,Arrays,Runtime,StringBuilder,ClassReader,PrintStream,StringBuffer,ClassVisitor,Label,Set,Iterator,Integer,MethodVisitor,FileOutputStream,OutputStream,InterruptedException,Thread,Queue,LinkedList,Collections,IOException
+whiteList-> String,Object,void,int,char,double,float,long,boolean,HashMap,FileReader,BufferedReader,Throwable,Exception,Type,List,ArrayList,Arrays,Runtime,StringBuilder,ClassReader,PrintStream,StringBuffer,Label,Set,Iterator,Integer,MethodVisitor,FileOutputStream,OutputStream,InterruptedException,Thread,Queue,LinkedList,Collections,IOException

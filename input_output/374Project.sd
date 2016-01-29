@@ -1,19 +1,47 @@
 digraph G{
 rankdir=BT;
-ClassAssociationVisitor [
+Beverage [
 shape="record",
 color="green",
-label = "{ClassAssociationVisitor\n\<\<Decorator\>\>|- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitMethod(int, String, String, String, String) : MethodVisitor\l}"
-];ClassAssociationVisitor -> MethodAssociationVisitor [arrowhead="open", style="solid", label=""];ClassDeclarationVisitor [
+label = "{Beverage\n\<\<Component\>\>| description : String\l| cost() : double\l+ getDescription() : String\l}"
+];CondimentDecorator [
 shape="record",
 color="green",
-label = "{ClassDeclarationVisitor\n\<\<Decorator\>\>|- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visit(int, int, String, String, String, String) : void\l}"
-];ClassFieldVisitor [
+label = "{CondimentDecorator\n\<\<Decorator\>\>|| getDescription() : String\l}"
+];CondimentDecorator -> Beverage [arrowhead="onormal", style="solid"];CondimentDecorator -> Beverage [arrowhead="open", style="solid", label="decorates"];DarkRoast [
+shape="record",
+color="",
+label = "{DarkRoast||+ cost() : double\l}"
+];DarkRoast -> Beverage [arrowhead="onormal", style="solid"];DarkRoast -> Beverage [arrowhead="open", style="solid", label=""];Decaf [
+shape="record",
+color="",
+label = "{Decaf||+ cost() : double\l}"
+];Decaf -> Beverage [arrowhead="onormal", style="solid"];Decaf -> Beverage [arrowhead="open", style="solid", label=""];Espresso [
+shape="record",
+color="",
+label = "{Espresso||+ cost() : double\l}"
+];Espresso -> Beverage [arrowhead="onormal", style="solid"];Espresso -> Beverage [arrowhead="open", style="solid", label=""];HouseBlend [
+shape="record",
+color="",
+label = "{HouseBlend||+ cost() : double\l}"
+];HouseBlend -> Beverage [arrowhead="onormal", style="solid"];HouseBlend -> Beverage [arrowhead="open", style="solid", label=""];Milk [
 shape="record",
 color="green",
-label = "{ClassFieldVisitor\n\<\<Decorator\>\>|- fieldCounter : int\l- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitField(int, String, String, String, Object) : FieldVisitor\l}"
-];ClassMethodVisitor [
+label = "{Milk\n\<\<Decorator\>\>| beverage : Beverage\l|+ cost() : double\l+ getDescription() : String\l}"
+];Milk -> CondimentDecorator [arrowhead="onormal", style="solid"];Milk -> Beverage [arrowhead="open", style="solid", label=""];Milk -> CondimentDecorator [arrowhead="open", style="solid", label=""];Mocha [
 shape="record",
 color="green",
-label = "{ClassMethodVisitor\n\<\<Decorator\>\>|- methodCounter : int\l- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitMethod(int, String, String, String, String) : MethodVisitor\l}"
-];}
+label = "{Mocha\n\<\<Decorator\>\>| beverage : Beverage\l|+ cost() : double\l+ getDescription() : String\l}"
+];Mocha -> CondimentDecorator [arrowhead="onormal", style="solid"];Mocha -> Beverage [arrowhead="open", style="solid", label=""];Mocha -> CondimentDecorator [arrowhead="open", style="solid", label=""];Soy [
+shape="record",
+color="green",
+label = "{Soy\n\<\<Decorator\>\>| beverage : Beverage\l|+ cost() : double\l+ getDescription() : String\l}"
+];Soy -> CondimentDecorator [arrowhead="onormal", style="solid"];Soy -> Beverage [arrowhead="open", style="solid", label=""];Soy -> CondimentDecorator [arrowhead="open", style="solid", label=""];StarbuzzCoffee [
+shape="record",
+color="",
+label = "{StarbuzzCoffee|| main(String) : void\l}"
+];StarbuzzCoffee -> Mocha [arrowhead="open", style="solid", label=""];StarbuzzCoffee -> Espresso [arrowhead="open", style="solid", label=""];StarbuzzCoffee -> Soy [arrowhead="open", style="solid", label=""];StarbuzzCoffee -> HouseBlend [arrowhead="open", style="solid", label=""];StarbuzzCoffee -> DarkRoast [arrowhead="open", style="solid", label=""];StarbuzzCoffee -> Whip [arrowhead="open", style="solid", label=""];StarbuzzCoffee -> Beverage [arrowhead="open", style="dashed"];Whip [
+shape="record",
+color="green",
+label = "{Whip\n\<\<Decorator\>\>| beverage : Beverage\l|+ cost() : double\l+ getDescription() : String\l}"
+];Whip -> CondimentDecorator [arrowhead="onormal", style="solid"];Whip -> Beverage [arrowhead="open", style="solid", label=""];Whip -> CondimentDecorator [arrowhead="open", style="solid", label=""];}

@@ -16,6 +16,7 @@ public class DecoratorPatternDetector implements IPatternDetector {
 	private static final String arrowLabel = "decorates";
 	private StringBuilder sb;
 	private boolean componentLabeled = false;
+	private List<HashMap<String, String>> classTree = new ArrayList<>();
 
 	public DecoratorPatternDetector() {
 	}
@@ -25,14 +26,18 @@ public class DecoratorPatternDetector implements IPatternDetector {
 			StringBuilder sb) {
 		this.sb = sb;
 		for (HashMap<String, String> code : classCode) {
-			if (isDecorator(code, classCode)) {
-				labelDecorator(code.get("className"));
+			if (checkDecorator(code, classCode)) {
+				labelDecorator(code.get("className"), code);
 			}
+			classTree = new ArrayList<>();
 		}
 	}
 
-	private boolean isDecorator(HashMap<String, String> code,
+	private boolean checkDecorator(HashMap<String, String> code,
 			List<HashMap<String, String>> classCode) {
+		if (code.get("decorator") != null) {
+			return true;
+		}
 		String currentClass = code.get("className");
 		String currentExtends = code.get("extends");
 		for (HashMap<String, String> c : classCode) {
@@ -40,24 +45,30 @@ public class DecoratorPatternDetector implements IPatternDetector {
 			if (currentClass.equals(otherClass)) {
 				continue;
 			} else if (currentExtends.equals(otherClass)) {
-				if (isAssociated(code, otherClass)) {
-					if (checkConstructor(code, otherClass)) {
-						labelComponent(otherClass);
-						labelArrow(currentClass, otherClass);
+				if (isAssociated(code, otherClass) && checkConstructor(code, otherClass)) {
+					labelComponent(otherClass);
+					labelArrow(currentClass, otherClass);
+					labelDecorator(code.get("className"), code);
+					code.put("decorator", "true");
+					return true;
+				} else {
+					this.classTree.add(code);
+					if (checkDecorator(c, classCode)) {
+						labelDecorator(c.get("className"), c);
+						labelDecorator(code.get("className"), code);
+						c.put("decorator", "true");
+						code.put("decorator", "true");
 						return true;
 					}
-				} else {
-					return isDecorator(c, classCode);
 				}
 			}
 		}
-		if (isAssociated(code, currentExtends)) {
-//			System.out.println(checkField(code, currentExtends));
-			if (checkConstructor(code, currentExtends)) {
-				labelComponent(currentExtends);
-				labelArrow(currentClass, currentExtends);
-				return true;
-			}
+		if (isAssociated(code, currentExtends) && checkConstructor(code, currentExtends)) {
+			labelComponent(currentExtends);
+			labelArrow(currentClass, currentExtends);
+			labelDecorator(code.get("className"), code);
+			code.put("decorator", "true");
+			return true;
 		}
 		return false;
 	}
@@ -82,7 +93,6 @@ public class DecoratorPatternDetector implements IPatternDetector {
 			if (s.contains("method")) {
 				String method = code.get(s);
 				String[] methodProps = method.split(":");
-
 				// int access = Integer.parseInt(methodProps[0]);
 				String name = methodProps[1];
 				if (name.equals("<init>")) {
@@ -101,30 +111,41 @@ public class DecoratorPatternDetector implements IPatternDetector {
 				}
 			}
 		}
-
-		return false;
-	}
-
-	private boolean checkField(HashMap<String, String> code, String otherClass) {
-		System.out.println("otherClass in checkField: " + otherClass);
-		String otherClassName = Helpers.getName(otherClass, "/");
-		for (String s : code.keySet()) {
-			if (s.contains("field")) {
-				String field = code.get(s);
-				String[] fieldProperties = field.split(":");
-				String type = Helpers.getName(fieldProperties[2], "\\.");
-				System.out.println("type: " + type);
-				if (type.equals(otherClassName)) {
-					return true;
-				}
+		for (HashMap<String, String> c : this.classTree) {
+			if (code.equals(c)) {
+				continue;
+			}
+			if (checkConstructor(c, otherClass)) {
+				return true;
 			}
 		}
 
 		return false;
 	}
 
-	private void labelDecorator(String className) {
+//	private boolean checkField(HashMap<String, String> code, String otherClass) {
+//		System.out.println("otherClass in checkField: " + otherClass);
+//		String otherClassName = Helpers.getName(otherClass, "/");
+//		for (String s : code.keySet()) {
+//			if (s.contains("field")) {
+//				String field = code.get(s);
+//				String[] fieldProperties = field.split(":");
+//				String type = Helpers.getName(fieldProperties[2], "\\.");
+//				System.out.println("type: " + type);
+//				if (type.equals(otherClassName)) {
+//					return true;
+//				}
+//			}
+//		}
+//
+//		return false;
+//	}
+
+	private void labelDecorator(String className, HashMap<String, String> code) {
 		// given a className, finds that class and labels it as a decorator
+		if (code.get("decorator") != null) {
+			return;
+		}
 		String name = Helpers.getName(className, "/");
 		int classIndex = Helpers.getClassDeclarationIndex(name, sb);
 		if (classIndex == -1) {
@@ -138,14 +159,15 @@ public class DecoratorPatternDetector implements IPatternDetector {
 				classIndex);
 		this.sb.replace(labelOffset,
 				labelOffset + Constants.LABEL_OFFSET.length(),
-				decoratorLabel);		
+				decoratorLabel);
 	}
 
 	private void labelComponent(String otherClass) {
-		// Given a className (separated by '.'), finds that class in the
+		// Given a className, finds that class in the
 		// StringBuilder and labels it as a component
 		if (!componentLabeled) {
 			String className = Helpers.getName(otherClass, "\\.");
+			className = Helpers.getName(otherClass, "/");
 			int classIndex = Helpers.getClassDeclarationIndex(className,
 					this.sb);
 			if (classIndex == -1) {
@@ -175,7 +197,6 @@ public class DecoratorPatternDetector implements IPatternDetector {
 			return;
 		}
 		int otherClassIndex;
-		System.out.println("otherClassName: " + otherClassName);
 		while ((otherClassIndex = sb.indexOf(otherClassName, classIndex)) != -1) {
 			if (associatedArrow(otherClassIndex)) {
 				break;
@@ -195,10 +216,10 @@ public class DecoratorPatternDetector implements IPatternDetector {
 		// true if it is an associated arrow, false otherwise
 		int arrowheadIndex = sb.indexOf("arrowhead", index);
 		int arrowStart = 11;
-		int arrowEnd = 16;
+		int arrowEnd = 15;
 		int styleIndex = sb.indexOf("style", index);
 		int styleStart = 7;
-		int styleEnd = 13;
+		int styleEnd = 12;
 		String arrowhead = sb.substring(arrowheadIndex + arrowStart,
 				arrowheadIndex + arrowEnd);
 		String style = sb.substring(styleIndex + styleStart, styleIndex
