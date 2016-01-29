@@ -1,15 +1,19 @@
 digraph G{
 rankdir=BT;
-VirtualThread [
+ClassAssociationVisitor [
 shape="record",
-color="",
-label = "{VirtualThread|# c : Command\l|+ run() : void\l}"
-];VirtualThread -> Command [arrowhead="open", style="solid"];VirtualThread -> ThreadManager [arrowhead="open", style="dashed"];ThreadManager [
+color="green",
+label = "{ClassAssociationVisitor\n\<\<Decorator\>\>|- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitMethod(int, String, String, String, String) : MethodVisitor\l}"
+];ClassAssociationVisitor -> MethodAssociationVisitor [arrowhead="open", style="solid", label=""];ClassDeclarationVisitor [
 shape="record",
-color="blue",
-label = "{ThreadManager\n\<\<Singleton\>\>|- threads : Queue\l uniqueManager : ThreadManager\l|+ getThreads() : Queue\l getInstance() : ThreadManager\l+ run() : void\l+ enqueue(VirtualThread) : void\l}"
-];ThreadManager -> VirtualThread [arrowhead="open", style="solid"];Helpers [
+color="green",
+label = "{ClassDeclarationVisitor\n\<\<Decorator\>\>|- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visit(int, int, String, String, String, String) : void\l}"
+];ClassFieldVisitor [
 shape="record",
-color="",
-label = "{Helpers|| isClassNameValid(String) : boolean\l getClassDeclarationIndex(String, StringBuilder) : int\l sortListByNum(ArrayList, int) : void\l getCamelCase(String) : String\l getAccessSymbol(int) : String\l getName(String, String) : String\l}"
+color="green",
+label = "{ClassFieldVisitor\n\<\<Decorator\>\>|- fieldCounter : int\l- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitField(int, String, String, String, Object) : FieldVisitor\l}"
+];ClassMethodVisitor [
+shape="record",
+color="green",
+label = "{ClassMethodVisitor\n\<\<Decorator\>\>|- methodCounter : int\l- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitMethod(int, String, String, String, String) : MethodVisitor\l}"
 ];}
