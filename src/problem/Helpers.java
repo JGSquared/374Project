@@ -13,7 +13,11 @@ public class Helpers {
 		// returns the name with no path (e.g. DotGraphDesign)
 		String[] paths = path.split(separator);
 
-		return paths[paths.length - 1];
+		String newPath = paths[paths.length - 1];
+		if (newPath.indexOf("<") != -1) {
+			newPath = newPath.substring(0, newPath.indexOf("<"));
+		}
+		return newPath;
 	}
 	
 	public static String getAccessSymbol(int access) {
@@ -55,10 +59,15 @@ public class Helpers {
 		// Takes in a StringBuilder with GraphViz code, returns the index where
 		// the given className is declared as a node
 		int fromIndex = 0;
+		int shapeIndex = 0;
 		int declarationIndex;
+		
 		while ((declarationIndex = sb.indexOf(className, fromIndex)) != -1) {
 			if (sb.substring(declarationIndex - 1, declarationIndex).equals(";")) {
-				return declarationIndex;
+				shapeIndex = sb.indexOf("shape", declarationIndex);
+				if ((shapeIndex != -1) && (shapeIndex - (declarationIndex + className.length()) < 10)) {
+					return declarationIndex;
+				}
 			}
 			fromIndex = declarationIndex + 1;
 		}
