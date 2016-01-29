@@ -1,15 +1,16 @@
 digraph G{
 rankdir=BT;
-App [
+Adaptee [
 shape="record",
-color="",
-label = "{App|| main(String) : void\l}"
-];App -> DotGraphDesign [arrowhead="open", style="solid", label=""];App -> ClassDesignParser [arrowhead="open", style="solid", label=""];App -> IDesignParser [arrowhead="open", style="dashed"];App -> IGraphDesign [arrowhead="open", style="dashed"];ClassDesignParser [
+color="brown",
+label = "{Adaptee\n\<\<Adaptee\>\>||+ doOtherStuff() : void\l}"
+];Adapter [
 shape="record",
-color="",
-label = "{ClassDesignParser|- parsedCode : HashMap\l|+ parse(String, IGraphDesign) : void\l}"
-];ClassDesignParser -> IDesignParser [arrowhead="onormal", style="dashed"];ClassDesignParser -> ClassDeclarationVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassFieldVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassAssociationVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassUsesVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassMethodVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> IGraphDesign [arrowhead="open", style="dashed"];Constants [
+color="brown",
+label = "{Adapter\n\<\<Adapter\>\>| adaptee : Adaptee\l|+ doStuff() : void\l}"
+];Adapter -> Target [arrowhead="onormal", style="dashed"];Adapter -> Adaptee [arrowhead="open", style="solid", label=""];Target [
 shape="record",
+<<<<<<< HEAD
 color="",
 label = "{Constants| ARROW_OFFSET : String\l COLOR_OFFSET : String\l LABEL_OFFSET : String\l|}"
 ];DotGraphDesign [
@@ -125,3 +126,8 @@ shape="record",
 color="green",
 label = "{MethodUsesVisitor\n\<\<Decorator\>\>|- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitMethodInsn(int, String, String, String, boolean) : void\l}"
 ];MethodUsesVisitor -> MethodVisitor [arrowhead="onormal", style="solid"];MethodUsesVisitor -> MethodVisitor [arrowhead="open", style="solid", label="decorates"];}
+=======
+color="brown",
+label = "{\<\<interface\>\>\nTarget\n\<\<Target\>\>|| doStuff() : void\l}"
+];}
+>>>>>>> 15f9ad2b10333842ebf6383769c91b8da593acf9
