@@ -43,7 +43,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 			} else {
 				target = currentImplements;
 				adapter = currentClass;
-				isAssociated(parsedCode); // currentClass belongs to parsedCode. boolean return not used.
+				isAssociated(parsedCode);
 			}
 		}
 	}
