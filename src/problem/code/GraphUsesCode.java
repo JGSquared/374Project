@@ -18,7 +18,7 @@ public class GraphUsesCode implements IGraphCode {
 	@Override
 	public String getCode(HashMap<String, String> items) {
 		StringBuilder sb = new StringBuilder();
-		FileProperties fp = new FileProperties();
+		FileProperties fp = FileProperties.getInstance();
 		List<String> usesList = new ArrayList<String>();
 		String name = Helpers.getName(items.get("className"), "/");
 		for (String s : items.keySet()) {

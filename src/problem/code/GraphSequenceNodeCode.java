@@ -17,7 +17,7 @@ public class GraphSequenceNodeCode implements IGraphCode {
 	@Override
 	public String getCode(HashMap<String, String> items) {
 		StringBuilder sb = new StringBuilder();
-		FileProperties fp = new FileProperties();
+		FileProperties fp = FileProperties.getInstance();
 		ArrayList<String> nodeNames = new ArrayList<>();
 		ArrayList<String> usedNodes = new ArrayList<>();
 		

@@ -33,7 +33,9 @@ M4: Our overall design did not undergo many changes during this milestone. Abstr
 M5: The design of our tool changed a fair amount to solve the issue of handling patterns that involved multiple classes. Our 
 	solution was to push all pattern detection until after the GraphViz code had been generated, sending a list of each class's parsedCode.
 	To handle adding to the StringBuilder after the fact, we use our own special syntax within the code in order to inject proper
-	labels and colors into the generated code.
+	labels and colors into the generated code. Constants.java holds all of the special syntax tags used, and any new tags will be
+	added here. Lastly, FileProperties was transformed into a Singleton to ensure there was no difference in the properties found
+	between our classes that require those properties.
 		
 
 ### CONTRIBUTORS ###
@@ -101,6 +103,9 @@ M5: Implemented Decorator detector.
 	MethodDesignParser, respectively. The <Key, Value> pairs that should be expected in this implementation are defined in MORE INFO.
 	Lastly, this implementation will not generate a PNG file. Rather, it will only generate a code file specified in fileIn of
 	properties.txt. fileIn should have the extension ".sd".
+	
+	In Milestone 5, DotGraphDesign must have IPatternDetectors registered, much like IGraphCode. Calling useDefaultPatternDetectors()
+	will use all of our default implementations of IPatternDetector. 
 	
 
 ### MORE INFO ###

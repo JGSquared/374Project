@@ -123,24 +123,6 @@ public class DecoratorPatternDetector implements IPatternDetector {
 		return false;
 	}
 
-//	private boolean checkField(HashMap<String, String> code, String otherClass) {
-//		System.out.println("otherClass in checkField: " + otherClass);
-//		String otherClassName = Helpers.getName(otherClass, "/");
-//		for (String s : code.keySet()) {
-//			if (s.contains("field")) {
-//				String field = code.get(s);
-//				String[] fieldProperties = field.split(":");
-//				String type = Helpers.getName(fieldProperties[2], "\\.");
-//				System.out.println("type: " + type);
-//				if (type.equals(otherClassName)) {
-//					return true;
-//				}
-//			}
-//		}
-//
-//		return false;
-//	}
-
 	private void labelDecorator(String className, HashMap<String, String> code) {
 		// given a className, finds that class and labels it as a decorator
 		if (code.get("decorator") != null) {
@@ -173,6 +155,8 @@ public class DecoratorPatternDetector implements IPatternDetector {
 			if (classIndex == -1) {
 				return;
 			}
+			System.out.println(className);
+			System.out.println(sb.substring(classIndex - 20, classIndex + 20));
 			int colorOffset = this.sb.indexOf(Constants.COLOR_OFFSET,
 					classIndex);
 			this.sb.replace(colorOffset,

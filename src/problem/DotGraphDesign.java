@@ -21,7 +21,7 @@ import problem.patterns.SingletonPatternDetector;
 
 public class DotGraphDesign implements IGraphDesign {
 	private StringBuilder sb = new StringBuilder();
-	private FileProperties fp = new FileProperties();
+	private FileProperties fp = FileProperties.getInstance();
 	private List<IGraphCode> codeGetters = new ArrayList<IGraphCode>();
 	private List<HashMap<String, String>> classCode = new ArrayList<>();
 	private List<IPatternDetector> patternDetectors = new ArrayList<IPatternDetector>();
@@ -119,7 +119,7 @@ public class DotGraphDesign implements IGraphDesign {
 
 	@Override
 	public void useDefaultPatternDetectors() {
-//		addPatternDetector(new SingletonPatternDetector());
+		addPatternDetector(new SingletonPatternDetector());
 		addPatternDetector(new DecoratorPatternDetector());
 	}
 

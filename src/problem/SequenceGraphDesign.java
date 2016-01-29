@@ -15,7 +15,7 @@ import problem.code.GraphSequenceNodeCode;
 
 public class SequenceGraphDesign implements IGraphDesign {
 	private StringBuilder sb = new StringBuilder();
-	private FileProperties fp = new FileProperties();
+	private FileProperties fp = FileProperties.getInstance();
 	private List<IGraphCode> codeGetters = new ArrayList<IGraphCode>();
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileProperties {
+	private static FileProperties uniqueInstance;
 	public String graphVizPath = "";
 	public String flags = "";
 	public String fileIn = "";
@@ -13,7 +14,14 @@ public class FileProperties {
 	public String sdEditPath = "";
 	public List<String> whiteList = new ArrayList<String>();
 	
-	public FileProperties() {
+	public static FileProperties getInstance() {
+		if (uniqueInstance == null) {
+			uniqueInstance = new FileProperties();
+		}
+		return uniqueInstance;
+	}
+	
+	private FileProperties() {
 		// Read in properties
 		try (BufferedReader br = new BufferedReader(new FileReader(
 				"./input_output/properties.txt"))) {

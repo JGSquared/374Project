@@ -10,16 +10,16 @@ color="",
 label = "{ClassDesignParser|- parsedCode : HashMap\l|+ parse(String, IGraphDesign) : void\l}"
 ];ClassDesignParser -> IDesignParser [arrowhead="onormal", style="dashed"];ClassDesignParser -> ClassDeclarationVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassFieldVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassAssociationVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassUsesVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassMethodVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> IGraphDesign [arrowhead="open", style="dashed"];Constants [
 shape="record",
-color="green",
-label = "{Constants\n\<\<Component\>\>| ARROW_OFFSET : String\l COLOR_OFFSET : String\l LABEL_OFFSET : String\l|}"
+color="",
+label = "{Constants| ARROW_OFFSET : String\l COLOR_OFFSET : String\l LABEL_OFFSET : String\l|}"
 ];DotGraphDesign [
 shape="record",
 color="",
 label = "{DotGraphDesign|- patternDetectors : List\l- classCode : List\l- codeGetters : List\l- fp : FileProperties\l- sb : StringBuilder\l|+ useDefaultCodeGetters() : void\l+ getGraphStringBuilder() : StringBuilder\l+ getCodeGetters() : List\l+ removeCodeGetter(IGraphCode) : void\l+ addCodeGetter(IGraphCode) : void\l+ generateGraph() : void\l+ closeGraph() : void\l+ initializeGraph() : void\l+ addGraphCode(HashMap) : void\l+ addPatternDetector(IPatternDetector) : void\l+ removePatternDetector(IPatternDetector) : void\l+ useDefaultPatternDetectors() : void\l}"
-];DotGraphDesign -> IGraphDesign [arrowhead="onormal", style="dashed"];DotGraphDesign -> GraphFieldCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphClassCloserCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphDeclarationCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphMethodCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> DecoratorPatternDetector [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphUsesCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> FileProperties [arrowhead="open", style="solid", label=""];DotGraphDesign -> IPatternDetector [arrowhead="open", style="solid"];DotGraphDesign -> IGraphCode [arrowhead="open", style="solid"];DotGraphDesign -> GraphExtensionAndImplementCode [arrowhead="open", style="solid", label=""];FileProperties [
+];DotGraphDesign -> IGraphDesign [arrowhead="onormal", style="dashed"];DotGraphDesign -> GraphFieldCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphClassCloserCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphDeclarationCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphMethodCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> DecoratorPatternDetector [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphUsesCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> FileProperties [arrowhead="open", style="solid", label=""];DotGraphDesign -> IPatternDetector [arrowhead="open", style="solid"];DotGraphDesign -> IGraphCode [arrowhead="open", style="solid"];DotGraphDesign -> SingletonPatternDetector [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphExtensionAndImplementCode [arrowhead="open", style="solid", label=""];FileProperties [
 shape="record",
-color="",
-label = "{FileProperties|+ whiteList : List\l+ sdEditPath : String\l+ fileOut : String\l+ fileIn : String\l+ flags : String\l+ graphVizPath : String\l|}"
+color="blue",
+label = "{FileProperties\n\<\<Singleton\>\>|+ sdEditPath : String\l+ fileOut : String\l+ fileIn : String\l+ flags : String\l+ whiteList : List\l+ graphVizPath : String\l uniqueInstance : FileProperties\l| getInstance() : FileProperties\l}"
 ];Helpers [
 shape="record",
 color="",
@@ -60,7 +60,7 @@ label = "{GraphDeclarationCode||+ getCode(HashMap) : String\l}"
 shape="record",
 color="",
 label = "{GraphExtensionAndImplementCode||+ getCode(HashMap) : String\l}"
-];GraphExtensionAndImplementCode -> IGraphCode [arrowhead="onormal", style="dashed"];GraphExtensionAndImplementCode -> FileProperties [arrowhead="open", style="solid", label=""];GraphExtensionAndImplementCode -> Helpers [arrowhead="open", style="dashed"];GraphFieldCode [
+];GraphExtensionAndImplementCode -> IGraphCode [arrowhead="onormal", style="dashed"];GraphExtensionAndImplementCode -> Helpers [arrowhead="open", style="dashed"];GraphExtensionAndImplementCode -> FileProperties [arrowhead="open", style="dashed"];GraphFieldCode [
 shape="record",
 color="",
 label = "{GraphFieldCode||+ getCode(HashMap) : String\l}"
@@ -72,15 +72,15 @@ label = "{GraphMethodCode||+ getCode(HashMap) : String\l}"
 shape="record",
 color="",
 label = "{GraphSequenceMethodCode| KEY_NAME : String\l|+ getCode(HashMap) : String\l}"
-];GraphSequenceMethodCode -> IGraphCode [arrowhead="onormal", style="dashed"];GraphSequenceMethodCode -> FileProperties [arrowhead="open", style="solid", label=""];GraphSequenceMethodCode -> Helpers [arrowhead="open", style="dashed"];GraphSequenceNodeCode [
+];GraphSequenceMethodCode -> IGraphCode [arrowhead="onormal", style="dashed"];GraphSequenceMethodCode -> Helpers [arrowhead="open", style="dashed"];GraphSequenceMethodCode -> FileProperties [arrowhead="open", style="dashed"];GraphSequenceNodeCode [
 shape="record",
 color="",
 label = "{GraphSequenceNodeCode| KEY_NAME : String\l|+ getCode(HashMap) : String\l}"
-];GraphSequenceNodeCode -> IGraphCode [arrowhead="onormal", style="dashed"];GraphSequenceNodeCode -> FileProperties [arrowhead="open", style="solid", label=""];GraphSequenceNodeCode -> Helpers [arrowhead="open", style="dashed"];GraphUsesCode [
+];GraphSequenceNodeCode -> IGraphCode [arrowhead="onormal", style="dashed"];GraphSequenceNodeCode -> Helpers [arrowhead="open", style="dashed"];GraphSequenceNodeCode -> FileProperties [arrowhead="open", style="dashed"];GraphUsesCode [
 shape="record",
 color="",
 label = "{GraphUsesCode||+ getCode(HashMap) : String\l}"
-];GraphUsesCode -> IGraphCode [arrowhead="onormal", style="dashed"];GraphUsesCode -> FileProperties [arrowhead="open", style="solid", label=""];GraphUsesCode -> Helpers [arrowhead="open", style="dashed"];DecoratorPatternDetector [
+];GraphUsesCode -> IGraphCode [arrowhead="onormal", style="dashed"];GraphUsesCode -> Helpers [arrowhead="open", style="dashed"];GraphUsesCode -> FileProperties [arrowhead="open", style="dashed"];DecoratorPatternDetector [
 shape="record",
 color="",
 label = "{DecoratorPatternDetector|- componentLabeled : boolean\l- sb : StringBuilder\l arrowLabel : String\l componentLabel : String\l- classTree : List\l decoratorLabel : String\l colorString : String\l|- associatedArrow(int) : boolean\l- labelArrow(String, String) : void\l- labelComponent(String) : void\l- labelDecorator(String, HashMap) : void\l- checkConstructor(HashMap, String) : boolean\l- isAssociated(HashMap, String) : boolean\l- checkDecorator(HashMap, List) : boolean\l+ detectPattern(List, StringBuilder) : void\l}"

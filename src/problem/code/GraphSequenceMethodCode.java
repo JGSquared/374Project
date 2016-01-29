@@ -17,7 +17,7 @@ public class GraphSequenceMethodCode implements IGraphCode {
 	@Override
 	public String getCode(HashMap<String, String> items) {
 		StringBuilder sb = new StringBuilder();
-		FileProperties fp = new FileProperties();
+		FileProperties fp = FileProperties.getInstance();
 		ArrayList<String> methodKeys = new ArrayList<>();
 
 		for (String s : items.keySet()) {

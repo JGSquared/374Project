@@ -15,7 +15,7 @@ public class GraphExtensionAndImplementCode implements IGraphCode {
 	@Override
 	public String getCode(HashMap<String, String> items) {
 		StringBuilder sb = new StringBuilder();
-		FileProperties fp = new FileProperties();
+		FileProperties fp = FileProperties.getInstance();
 		
 		String name = Helpers.getName(items.get("className"), "/");
 		String superName = Helpers.getName(items.get("extends"), "/");
