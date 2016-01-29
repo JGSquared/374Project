@@ -57,7 +57,8 @@ public class Helpers {
 		int fromIndex = 0;
 		int declarationIndex;
 		while ((declarationIndex = sb.indexOf(className, fromIndex)) != -1) {
-			if (!sb.substring(declarationIndex - 3, declarationIndex - 1).equals("->")) {
+			if (!sb.substring(declarationIndex - 3, declarationIndex - 1).equals("->")
+					&& !sb.substring(declarationIndex - 2, declarationIndex - 1).equals(":")) {
 				return declarationIndex;
 			}
 			fromIndex = declarationIndex + 1;

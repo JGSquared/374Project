@@ -29,6 +29,11 @@ M4: Our overall design did not undergo many changes during this milestone. Abstr
 	helper methods were moved to a new class, Helpers, and each of the methods was made static. A new interface, IPatternDetector, was
 	created, and a single implementation, SingletonPatternDetector, takes our parsedCode HashMap to determine if the given class uses
 	the Singleton pattern.
+	
+M5: The design of our tool changed a fair amount to solve the issue of handling patterns that involved multiple classes. Our 
+	solution was to push all pattern detection until after the GraphViz code had been generated, sending a list of each class's parsedCode.
+	To handle adding to the StringBuilder after the fact, we use our own special syntax within the code in order to inject proper
+	labels and colors into the generated code.
 		
 
 ### CONTRIBUTORS ###
@@ -46,8 +51,11 @@ M2: Implemented all new test cases.
 M3: Implemented new ASM visitors to populate HashMap with Sequence diagram information.
 	Implemented new tests.
 
-M4: Implemented new design detector
-	Implemented new test cases	
+M4: Implemented new design detector.
+	Implemented new test cases.
+	
+M5: Implemented Adapter detector.
+	Implemented new tests.
 
 Josh Green:
 
@@ -63,8 +71,11 @@ M2: Refactored DotGraphDesign, moving all code generators under new abstract cla
 M3: Implemented new codeGetters to generate SDEdit code.
 	Created Sequence diagrams.
 	
-M4: Implemented new design detector
-	Updated documentation, including UML and README	
+M4: Implemented new design detector.
+	Updated documentation, including UML and README.
+	
+M5: Implemented Decorator detector.
+	Updated documentation, including UML and README.
 
 
 ### INSTRUCTIONS ###
