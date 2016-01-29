@@ -35,7 +35,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 	private void isAdapter(HashMap<String, String> parsedCode, List<HashMap<String, String>> classCode) {
 		String currentClass = Helpers.getName(parsedCode.get("className"), "/");
 		String currentImplements = Helpers.getName(parsedCode.get("implements"), "/");
-		currentImplements = currentImplements.substring(1, currentImplements.length() - 1);
+		currentImplements = currentImplements.equals("[]") ? "" : currentImplements.substring(0, currentImplements.length() - 1);
 		for (HashMap<String, String> c : classCode) {
 			String otherClass = c.get("className");
 			if (currentClass.equals(otherClass)) {
