@@ -12,7 +12,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 	private static final String patternLabelAdapter = "\\n\\<\\<Adapter\\>\\>";
 	private static final String patternLabelAdaptee = "\\n\\<\\<Adaptee\\>\\>";
 	private static final String patternLabelTarget = "\\n\\<\\<Target\\>\\>";
-	private static final String arrowLabel = "\\n\\<\\<adapts\\>\\>";
+	private static final String arrowLabel = "adapts";
 	private String adaptee = "";
 	private String adapter = "";
 	private String target = "";

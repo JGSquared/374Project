@@ -4,20 +4,20 @@ App [
 shape="record",
 color="",
 label = "{App|| main(String) : void\l}"
-];App -> IteratorEnumeration [arrowhead="open", style="solid", label=""];App -> LinearTransformer [arrowhead="open", style="solid", label=""];IteratorEnumeration [
+];App -> IteratorToEnumerationAdapter [arrowhead="open", style="solid", label=""];App -> LinearTransformer [arrowhead="open", style="solid", label=""];IteratorToEnumerationAdapter [
 shape="record",
 color="brown",
-label = "{IteratorEnumeration\n\<\<Adapter\>\>|- iter : Iterator\l|+ nextElement() : Object\l+ hasMoreElements() : boolean\l}"
-];IteratorEnumeration -> Enumeration [arrowhead="onormal", style="dashed"];IteratorEnumeration -> Iterator [arrowhead="open", style="solid", label=""];LinearTransformer [
+label = "{IteratorToEnumerationAdapter\n\<\<Adapter\>\>|- itr : Iterator\l|+ hasMoreElements() : boolean\l+ nextElement() : Object\l}"
+];IteratorToEnumerationAdapter -> Enumeration [arrowhead="onormal", style="dashed"];IteratorToEnumerationAdapter -> Iterator [arrowhead="open", style="solid", label="adapts"];LinearTransformer [
 shape="record",
 color="",
 label = "{LinearTransformer|- enumTion : Enumeration\l|+ transform(OutputStream) : void\l}"
-];LinearTransformer -> Enumeration [arrowhead="open", style="solid", label=""];Enumeration [
+];LinearTransformer -> Enumeration [arrowhead="open", style="solid", label=""];Iterator [
 shape="record",
 color="brown",
-label = "{\<\<interface\>\>\nEnumeration\n\<\<Target\>\>|| hasMoreElements() : boolean\l nextElement() : Object\l}"
-];Iterator [
+label = "{\<\<interface\>\>\nIterator\n\<\<Adaptee\>\>|| next() : Object\l+ remove() : void\l+ forEachRemaining(Consumer) : void\l hasNext() : boolean\l}"
+];Enumeration [
 shape="record",
 color="brown",
-label = "{\<\<interface\>\>\nIterator\n\<\<Adaptee\>\>|| hasNext() : boolean\l remove() : void\l next() : Object\l}"
+label = "{\<\<interface\>\>\nEnumeration\n\<\<Target\>\>|| nextElement() : Object\l hasMoreElements() : boolean\l}"
 ];}

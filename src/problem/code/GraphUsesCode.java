@@ -43,7 +43,7 @@ public class GraphUsesCode implements IGraphCode {
 				if (!fieldProps[3].equals("EMPTY")) {
 					if (!signature.equals("") && !fp.whiteList.contains(signature) && !usesList.contains(signature)) {
 						sb.append(name + " -> " + signature
-								+ " [arrowhead=\"open\", style=\"solid\"" + "];");
+								+ " [arrowhead=\"open\", style=\"solid\", label=\"" + Constants.ARROW_OFFSET+ "\"" + "];");
 						usesList.add(signature);
 					}
 				}
