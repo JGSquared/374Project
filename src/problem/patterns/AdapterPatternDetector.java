@@ -12,6 +12,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 	private static final String patternLabelAdapter = "\\n\\<\\<Adapter\\>\\>";
 	private static final String patternLabelAdaptee = "\\n\\<\\<Adaptee\\>\\>";
 	private static final String patternLabelTarget = "\\n\\<\\<Target\\>\\>";
+	private static final String arrowLabel = "\\n\\<\\<adapts\\>\\>";
 	private String adaptee = "";
 	private String adapter = "";
 	private String target = "";
@@ -25,6 +26,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 				labelAdaptee(adaptee);
 				labelAdapter(adapter);
 				labelTarget(target);
+				labelArrow(adapter, adaptee);
 				adaptee = "";
 				adapter = "";
 				target = "";
@@ -119,5 +121,47 @@ public class AdapterPatternDetector implements IPatternDetector{
 		this.sb.replace(labelOffset,
 				labelOffset + Constants.LABEL_OFFSET.length(),
 				patternLabelTarget);
+	}
+	
+	private void labelArrow(String currentClass, String otherClass) {
+		// Given a className, finds that class in the
+		// StringBuilder and labels the correct arrow as the decorates arrow
+		String className = Helpers.getName(currentClass, "/");
+		otherClass = Helpers.getName(otherClass, "\\.");
+		String otherClassName = Helpers.getName(otherClass, "/");
+		int classIndex = Helpers.getClassDeclarationIndex(className, sb);
+		if (classIndex == -1) {
+			return;
+		}
+		int otherClassIndex;
+		while ((otherClassIndex = sb.indexOf(otherClassName, classIndex)) != -1) {
+			if (associatedArrow(otherClassIndex)) {
+				break;
+			}
+			classIndex = otherClassIndex + 1;
+		}
+		if (otherClassIndex == -1) {
+			return;
+		}
+		int arrowOffset = sb.indexOf(Constants.ARROW_OFFSET, otherClassIndex);
+		sb.replace(arrowOffset, arrowOffset + Constants.ARROW_OFFSET.length(),
+				arrowLabel);
+	}
+	
+	private boolean associatedArrow(int index) {
+		// Given an index in a StringBuilder to an arrow, returns
+		// true if it is an associated arrow, false otherwise
+		int arrowheadIndex = sb.indexOf("arrowhead", index);
+		int arrowStart = 11;
+		int arrowEnd = 15;
+		int styleIndex = sb.indexOf("style", index);
+		int styleStart = 7;
+		int styleEnd = 12;
+		String arrowhead = sb.substring(arrowheadIndex + arrowStart,
+				arrowheadIndex + arrowEnd);
+		String style = sb.substring(styleIndex + styleStart, styleIndex
+				+ styleEnd);
+
+		return arrowhead.equals("open") && style.equals("solid");
 	}
 }
