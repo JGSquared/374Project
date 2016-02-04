@@ -1,8 +1,5 @@
 digraph G{
 rankdir=BT;
-<<<<<<< HEAD
-App [
-=======
 ClassFieldVisitor [
 shape="record",
 color="green",
@@ -96,28 +93,18 @@ shape="record",
 color="",
 label = "{\<\<interface\>\>\nIPatternDetector|| detectPattern(List, HashMap) : void\l}"
 ];App [
->>>>>>> 9d075ad096ad7463873147f052e7d8aabd2a7a41
 shape="record",
 color="",
 label = "{App|| main(String) : void\l}"
-];App -> IteratorToEnumerationAdapter [arrowhead="open", style="solid", label=""];App -> LinearTransformer [arrowhead="open", style="solid", label=""];Iterator [
+];App -> DotGraphDesign [arrowhead="open", style="solid", label=""];App -> ClassDesignParser [arrowhead="open", style="solid", label=""];App -> IDesignParser [arrowhead="open", style="dashed"];App -> IGraphDesign [arrowhead="open", style="dashed"];ClassSequenceVisitor [
 shape="record",
-<<<<<<< HEAD
-color="brown",
-label = "{\<\<interface\>\>\nIterator\n\<\<Adaptee\>\>|| next() : Object\l+ remove() : void\l+ forEachRemaining(Consumer) : void\l hasNext() : boolean\l}"
-];IteratorToEnumerationAdapter [
-shape="record",
-color="brown",
-label = "{IteratorToEnumerationAdapter\n\<\<Adapter\>\>|- itr : Iterator\l|+ hasMoreElements() : boolean\l+ nextElement() : Object\l}"
-];IteratorToEnumerationAdapter -> Enumeration [arrowhead="onormal", style="dashed"];IteratorToEnumerationAdapter -> Iterator [arrowhead="open", style="solid", label="adapts"];}
-=======
 color="green",
 label = "{ClassSequenceVisitor\n\<\<Decorator\>\>|- argTypes : ArrayList\l- methodCalls : List\l- className : String\l- methodName : String\l- callDepth : int\l- parsedCode : HashMap\l|+ getMethodCalls() : List\l+ getParsedCode() : HashMap\l+ visit(int, int, String, String, String, String) : void\l+ visitMethod(int, String, String, String, String) : MethodVisitor\l}"
 ];ClassSequenceVisitor -> ClassVisitor [arrowhead="onormal", style="solid"];ClassSequenceVisitor -> MethodSequenceVisitor [arrowhead="open", style="solid", label=""];ClassSequenceVisitor -> ClassVisitor [arrowhead="open", style="solid", label="decorates"];DotGraphDesign [
 shape="record",
 color="",
 label = "{DotGraphDesign|- patternDetectors : List\l- classProperties : List\l- classCode : HashMap\l- codeGetters : List\l- fp : FileProperties\l- sb : StringBuilder\l|+ useDefaultCodeGetters() : void\l+ getGraphStringBuilder() : StringBuilder\l+ getCodeGetters() : List\l+ removeCodeGetter(IGraphCode) : void\l+ addCodeGetter(IGraphCode) : void\l+ generateGraph() : void\l+ closeGraph() : void\l+ initializeGraph() : void\l+ addGraphCode(HashMap) : void\l+ addPatternDetector(IPatternDetector) : void\l+ removePatternDetector(IPatternDetector) : void\l+ useDefaultPatternDetectors() : void\l}"
-];DotGraphDesign -> IGraphDesign [arrowhead="onormal", style="dashed"];DotGraphDesign -> GraphFieldCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphClassCloserCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphDeclarationCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphMethodCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> DecoratorPatternDetector [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphUsesCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> FileProperties [arrowhead="open", style="solid", label=""];DotGraphDesign -> IPatternDetector [arrowhead="open", style="solid", label=""];DotGraphDesign -> IGraphCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> SingletonPatternDetector [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphExtensionAndImplementCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> Collection [arrowhead="open", style="dashed"];DotGraphDesign -> Helpers [arrowhead="open", style="dashed"];ClassAssociationVisitor [
+];DotGraphDesign -> IGraphDesign [arrowhead="onormal", style="dashed"];DotGraphDesign -> GraphFieldCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphClassCloserCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphDeclarationCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphMethodCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> DecoratorPatternDetector [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphUsesCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> AdapterPatternDetector [arrowhead="open", style="solid", label=""];DotGraphDesign -> FileProperties [arrowhead="open", style="solid", label=""];DotGraphDesign -> IPatternDetector [arrowhead="open", style="solid", label=""];DotGraphDesign -> IGraphCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> SingletonPatternDetector [arrowhead="open", style="solid", label=""];DotGraphDesign -> GraphExtensionAndImplementCode [arrowhead="open", style="solid", label=""];DotGraphDesign -> Collection [arrowhead="open", style="dashed"];DotGraphDesign -> Helpers [arrowhead="open", style="dashed"];ClassAssociationVisitor [
 shape="record",
 color="green",
 label = "{ClassAssociationVisitor\n\<\<Decorator\>\>|- parsedCode : HashMap\l|+ getParsedCode() : HashMap\l+ visitMethod(int, String, String, String, String) : MethodVisitor\l}"
@@ -132,7 +119,7 @@ label = "{GraphClassCloserCode||+ getCode(HashMap) : String\l}"
 ];GraphClassCloserCode -> IGraphCode [arrowhead="onormal", style="dashed"];AdapterPatternDetector [
 shape="record",
 color="",
-label = "{AdapterPatternDetector|- adaptee : String\l arrowLabel : String\l patternLabelTarget : String\l patternLabelAdaptee : String\l- classProperties : List\l- sb : StringBuilder\l- target : String\l- adapter : String\l patternLabelAdapter : String\l colorString : String\l|- associatedArrow(int) : boolean\l- labelArrow(String, String) : void\l- labelTarget(String) : void\l- labelAdapter(String) : void\l- labelAdaptee(String) : void\l- containsInterfaceField(HashMap, String) : void\l- isAssociated(HashMap) : void\l- isAdapter(HashMap, List) : void\l+ detectPattern(List, HashMap) : void\l}"
+label = "{AdapterPatternDetector|- adaptee : String\l arrowLabel : String\l patternLabelTarget : String\l patternLabelAdaptee : String\l- classCode : HashMap\l- sb : StringBuilder\l- target : String\l- adapter : String\l patternLabelAdapter : String\l colorString : String\l- classProperties : List\l|- associatedArrow(int) : boolean\l- labelArrow(String, String) : void\l- labelTarget(String) : void\l- labelAdapter(String) : void\l- labelAdaptee(String) : void\l- containsInterfaceField(HashMap, String) : void\l- isAssociated(HashMap) : void\l- isAdapter(HashMap, List) : void\l+ detectPattern(List, HashMap) : void\l}"
 ];AdapterPatternDetector -> IPatternDetector [arrowhead="onormal", style="dashed"];AdapterPatternDetector -> Helpers [arrowhead="open", style="dashed"];ClassMethodVisitor [
 shape="record",
 color="green",
@@ -142,4 +129,3 @@ shape="record",
 color="",
 label = "{ClassDesignParser|- parsedCode : HashMap\l|+ parse(String, IGraphDesign) : void\l}"
 ];ClassDesignParser -> IDesignParser [arrowhead="onormal", style="dashed"];ClassDesignParser -> ClassDeclarationVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassFieldVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassAssociationVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassUsesVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassMethodVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> IGraphDesign [arrowhead="open", style="dashed"];}
->>>>>>> 9d075ad096ad7463873147f052e7d8aabd2a7a41

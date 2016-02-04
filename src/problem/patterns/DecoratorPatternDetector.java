@@ -151,14 +151,10 @@ public class DecoratorPatternDetector implements IPatternDetector {
 				return;
 			}
 			StringBuilder sb = new StringBuilder(this.classCode.get(className) );
-			int classIndex = Helpers.getClassDeclarationIndex(className,
-					sb);
-			int colorOffset = sb.indexOf(Constants.COLOR_OFFSET,
-					classIndex);
+			int colorOffset = sb.indexOf(Constants.COLOR_OFFSET);
 			sb.replace(colorOffset,
 					colorOffset + Constants.COLOR_OFFSET.length(), colorString);
-			int labelOffset = sb.indexOf(Constants.LABEL_OFFSET,
-					classIndex);
+			int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
 			sb.replace(labelOffset,
 					labelOffset + Constants.LABEL_OFFSET.length(),
 					componentLabel);
