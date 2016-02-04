@@ -17,8 +17,8 @@ public class GraphExtensionAndImplementCode implements IGraphCode {
 		StringBuilder sb = new StringBuilder();
 		FileProperties fp = FileProperties.getInstance();
 		
-		String name = Helpers.getName(items.get("className"), "/");
-		String superName = Helpers.getName(items.get("extends"), "/");
+		String name = Helpers.getName(items.get("className"));
+		String superName = Helpers.getName(items.get("extends"));
 		String interFacesString = items.get("implements");
 		String[] interFaces = interFacesString.substring(1,
 				interFacesString.length() - 1).split(",");
@@ -28,7 +28,7 @@ public class GraphExtensionAndImplementCode implements IGraphCode {
 		}
 		if (!interFacesString.equals("[]")) {
 			for (String interFace : interFaces) {
-				String interFaceName = Helpers.getName(interFace, "/");
+				String interFaceName = Helpers.getName(interFace);
 				if (!Helpers.isClassNameValid(interFaceName)) {
 					continue;
 				}

@@ -20,15 +20,16 @@ public class SingletonPatternDetector implements IPatternDetector {
 	}
 
 	@Override
-	public void detectPattern(List<HashMap<String, String>> classCode, StringBuilder sb) {
-		for (HashMap<String, String> parsedCode : classCode) {
+	public void detectPattern(List<HashMap<String, String>> classProperties, HashMap<String, String> classCode) {
+		for (HashMap<String, String> parsedCode : classProperties) {
 			if (checkStatus(parsedCode) && checkForGetInstance(parsedCode)
 					&& checkForPrivateConstructor(parsedCode)) {
-				String className = Helpers.getName(parsedCode.get("className"), "/");
-				int fromIndex = Helpers.getClassDeclarationIndex(className, sb);
-				int colorOffset = sb.indexOf(Constants.COLOR_OFFSET, fromIndex);
+				String className = Helpers.getName(parsedCode.get("className"));
+				StringBuilder sb = new StringBuilder(classCode.get(className));
+//				int fromIndex = Helpers.getClassDeclarationIndex(className, sb);
+				int colorOffset = sb.indexOf(Constants.COLOR_OFFSET);
 				sb.replace(colorOffset, colorOffset + Constants.COLOR_OFFSET.length(), colorString);
-				int labelOffset = sb.indexOf(Constants.LABEL_OFFSET, fromIndex);
+				int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
 				sb.replace(labelOffset, labelOffset + Constants.LABEL_OFFSET.length(), patternLabel);
 			}
 		}
@@ -46,8 +47,8 @@ public class SingletonPatternDetector implements IPatternDetector {
 				items = parsedCode.get(key).split(":");
 				String fieldType = items[2];
 				int access = Integer.parseInt(items[0]);
-				if (Helpers.getName(fieldType, "\\.").equals(
-						Helpers.getName(className, "/"))) {
+				if (Helpers.getName(fieldType).equals(
+						Helpers.getName(className))) {
 					if ((privateOp + staticOp == access)
 							|| (privateOp + staticOp + volatileOp == access)) {
 						return true;
@@ -69,8 +70,8 @@ public class SingletonPatternDetector implements IPatternDetector {
 			if (key.contains("method")) {
 				items = parsedCode.get(key).split(":");
 				int access = Integer.parseInt(items[0]);
-				String returnType = Helpers.getName(items[3], "\\.");
-				if (returnType.equals(Helpers.getName(className, "/"))) {
+				String returnType = Helpers.getName(items[3]);
+				if (returnType.equals(Helpers.getName(className))) {
 					if ((publicOp + staticOp == access)
 							|| (publicOp + staticOp + syncOp == access)) {
 						return true;

@@ -24,7 +24,7 @@ public class GraphFieldCode implements IGraphCode {
 					// Bad field, causes errors in GraphViz
 					continue;
 				}
-				String type = Helpers.getName(fieldProperties[2], "\\.");
+				String type = Helpers.getName(fieldProperties[2]);
 
 				sb.append(Helpers.getAccessSymbol(access) + " ");
 

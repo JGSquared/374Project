@@ -24,15 +24,17 @@ public class DotGraphDesign implements IGraphDesign {
 	private StringBuilder sb = new StringBuilder();
 	private FileProperties fp = FileProperties.getInstance();
 	private List<IGraphCode> codeGetters = new ArrayList<IGraphCode>();
-	private List<HashMap<String, String>> classCode = new ArrayList<>();
+	private HashMap<String, String> classCode = new HashMap<>();
+	private List<HashMap<String, String>> classProperties = new ArrayList<>();
 	private List<IPatternDetector> patternDetectors = new ArrayList<IPatternDetector>();
 
 	@Override
 	public void addGraphCode(HashMap<String, String> items) {
 		for (int i = 0; i < codeGetters.size(); i++) {
-			sb.append(codeGetters.get(i).getCode(items));
+//			sb.append(codeGetters.get(i).getCode(items));
+			classCode.put(items.get("className"), codeGetters.get(i).getCode(items));
 		}
-		this.classCode.add(items);
+		this.classProperties.add(items);
 	}
 
 	@Override
@@ -44,8 +46,13 @@ public class DotGraphDesign implements IGraphDesign {
 	@Override
 	public void closeGraph() {
 		for (IPatternDetector detector : this.patternDetectors) {
-			detector.detectPattern(classCode, sb);
+			detector.detectPattern(classProperties, classCode);
 		}
+		
+		for (String s : this.classCode.values()) {
+			sb.append(s);
+		}
+		
 		int colorOffset;
 		while ((colorOffset = sb.indexOf(Constants.COLOR_OFFSET)) != -1) {
 			sb.replace(colorOffset, colorOffset + Constants.COLOR_OFFSET.length(), "");

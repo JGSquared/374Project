@@ -33,7 +33,7 @@ public class GraphSequenceNodeCode implements IGraphCode {
 			String nodeKey = nodeNames.get(i);
 			String nodeValue = items.get(nodeKey);
 			
-			String className = Helpers.getName(nodeValue, "/");
+			String className = Helpers.getName(nodeValue);
 			if (usedNodes.contains(className)) {
 				continue;
 			}

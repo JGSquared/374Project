@@ -33,8 +33,8 @@ public class GraphSequenceMethodCode implements IGraphCode {
 			String methodValue = items.get(methodKey);
 
 			String[] methodParams = methodValue.split(":");
-			String caller = Helpers.getName(methodParams[0], "/");
-			String callee = Helpers.getName(methodParams[1], "/");
+			String caller = Helpers.getName(methodParams[0]);
+			String callee = Helpers.getName(methodParams[1]);
 			String method = methodParams[2];
 			String args = methodParams[3]
 					.replaceAll("\\[", "")
@@ -43,7 +43,7 @@ public class GraphSequenceMethodCode implements IGraphCode {
 			if (!args.equals("")) {
 				String[] types = args.split(",");
 				for (int j = 0; j < types.length; j++) {
-					argTypes.add(Helpers.getName(types[j].trim(), "\\."));
+					argTypes.add(Helpers.getName(types[j].trim()));
 				}
 			}
 			sb.append(Helpers.getCamelCase(caller) + ":" + Helpers.getCamelCase(callee) + "."

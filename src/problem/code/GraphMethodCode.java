@@ -33,10 +33,10 @@ public class GraphMethodCode implements IGraphCode {
 				String[] splitArgs = argTypesString.split(",");
 				ArrayList<String> argTypes = new ArrayList<String>();
 				for (int i = 0; i < splitArgs.length; i++) {
-					argTypes.add(Helpers.getName(splitArgs[i].trim(), "\\."));
+					argTypes.add(Helpers.getName(splitArgs[i].trim()));
 				}
 				
-				String returnType = Helpers.getName(methodProps[3], "\\.");
+				String returnType = Helpers.getName(methodProps[3]);
 
 				sb.append(Helpers.getAccessSymbol(access) + " ");
 

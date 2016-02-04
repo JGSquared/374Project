@@ -20,10 +20,10 @@ public class GraphUsesCode implements IGraphCode {
 		StringBuilder sb = new StringBuilder();
 		FileProperties fp = FileProperties.getInstance();
 		List<String> usesList = new ArrayList<String>();
-		String name = Helpers.getName(items.get("className"), "/");
+		String name = Helpers.getName(items.get("className"));
 		for (String s : items.keySet()) {
 			if (s.contains("associated")) {
-				String type = Helpers.getName(items.get(s), "\\.");
+				String type = Helpers.getName(items.get(s));
 				if (!Helpers.isClassNameValid(type)) {
 					continue;
 				}
@@ -36,7 +36,7 @@ public class GraphUsesCode implements IGraphCode {
 			else if (s.contains("field")) {
 				String field = items.get(s);
 				String[] fieldProps = field.split(":");
-				String signature = Helpers.getName(fieldProps[3], "\\.");
+				String signature = Helpers.getName(fieldProps[3]);
 				if (!Helpers.isClassNameValid(signature)) {
 					continue;
 				}
@@ -66,7 +66,7 @@ public class GraphUsesCode implements IGraphCode {
 				String[] splitArgs = argTypesString.split(",");
 				ArrayList<String> argTypes = new ArrayList<String>();
 				for (int i = 0; i < splitArgs.length; i++) {
-					argTypes.add(Helpers.getName(splitArgs[i].trim(), "\\."));
+					argTypes.add(Helpers.getName(splitArgs[i].trim()));
 				}
 				for (int i = 0; i < argTypes.size(); i++) {
 					String argType = argTypes.get(i);
@@ -81,7 +81,7 @@ public class GraphUsesCode implements IGraphCode {
 				}
 			}
 			else if (s.contains("uses")) {
-				String owner = Helpers.getName(items.get(s), "/");
+				String owner = Helpers.getName(items.get(s));
 				if (!Helpers.isClassNameValid(owner)) {
 					continue;
 				}

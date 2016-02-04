@@ -17,14 +17,15 @@ public class AdapterPatternDetector implements IPatternDetector{
 	private String adapter = "";
 	private String target = "";
 	private StringBuilder sb = new StringBuilder();
-	private List<HashMap<String, String>> classCode;
+	private List<HashMap<String, String>> classProperties;
 	
 	@Override
-	public void detectPattern(List<HashMap<String, String>> classCode, StringBuilder sb) {
-		this.sb = sb;
-		this.classCode = classCode;
-		for (HashMap<String, String> parsedCode : classCode) {
-			isAdapter(parsedCode, classCode);
+	public void detectPattern(List<HashMap<String, String>> classProperties, HashMap<String, String> classCode) {
+		this.classProperties = classProperties;
+		for (HashMap<String, String> parsedCode : classProperties) {
+			String classKey = Helpers.getName(parsedCode.get("className"));
+			this.sb = new StringBuilder(classCode.get(classKey));
+			isAdapter(parsedCode, classProperties);
 			if ((!adaptee.equals("")) && (!adapter.equals("")) && (!target.equals(""))) {
 				labelAdaptee(adaptee);
 				labelAdapter(adapter);
@@ -38,8 +39,8 @@ public class AdapterPatternDetector implements IPatternDetector{
 	}
 
 	private void isAdapter(HashMap<String, String> parsedCode, List<HashMap<String, String>> classCode) {
-		String currentClass = Helpers.getName(parsedCode.get("className"), "/");
-		String currentImplements = Helpers.getName(parsedCode.get("implements"), "/");
+		String currentClass = Helpers.getName(parsedCode.get("className"));
+		String currentImplements = Helpers.getName(parsedCode.get("implements"));
 		currentImplements = currentImplements.equals("[]") ? "" : currentImplements.substring(0, currentImplements.length() - 1);
 		for (HashMap<String, String> c : classCode) {
 			String otherClass = c.get("className");
@@ -62,15 +63,15 @@ public class AdapterPatternDetector implements IPatternDetector{
 	}
 	 
 	private void containsInterfaceField(HashMap<String, String> parsedCode, String adaptee) {
-		adaptee = Helpers.getName(adaptee, "\\.");
+		adaptee = Helpers.getName(adaptee);
 		for (String s : parsedCode.keySet()) {
 			if (s.contains("field")) {
 				String field = parsedCode.get(s);
 				String[] fieldProperties = field.split(":");
-				String type = Helpers.getName(fieldProperties[2], "\\.");
+				String type = Helpers.getName(fieldProperties[2]);
 				if (type.equals(adaptee)) {
-					for (HashMap<String, String> c : this.classCode) {
-						String currentClass = Helpers.getName(c.get("className"), "/");
+					for (HashMap<String, String> c : this.classProperties) {
+						String currentClass = Helpers.getName(c.get("className"));
 						if (currentClass.equals(type)) {
 							int access = Integer.parseInt(c.get("access"));
 							if (access == 1537) {
@@ -84,7 +85,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 	}
 	
 	private void labelAdaptee(String className) {
-		String name = Helpers.getName(className, "/");
+		String name = Helpers.getName(className);
 		int classIndex = Helpers.getClassDeclarationIndex(name, sb);
 		if (classIndex == -1) {
 			return;
@@ -101,7 +102,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 	}
 	
 	private void labelAdapter(String className) {
-		String name = Helpers.getName(className, "/");
+		String name = Helpers.getName(className);
 		int classIndex = Helpers.getClassDeclarationIndex(name, sb);
 		if (classIndex == -1) {
 			return;
@@ -118,7 +119,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 	}
 	
 	private void labelTarget(String className) {
-		String name = Helpers.getName(className, "/");
+		String name = Helpers.getName(className);
 		int classIndex = Helpers.getClassDeclarationIndex(name, sb);
 		if (classIndex == -1) {
 			return;
@@ -137,9 +138,9 @@ public class AdapterPatternDetector implements IPatternDetector{
 	private void labelArrow(String currentClass, String otherClass) {
 		// Given a className, finds that class in the
 		// StringBuilder and labels the correct arrow as the decorates arrow
-		String className = Helpers.getName(currentClass, "/");
-		otherClass = Helpers.getName(otherClass, "\\.");
-		String otherClassName = Helpers.getName(otherClass, "/");
+		String className = Helpers.getName(currentClass);
+		otherClass = Helpers.getName(otherClass);
+		String otherClassName = Helpers.getName(otherClass);
 		int classIndex = Helpers.getClassDeclarationIndex(className, sb);
 		if (classIndex == -1) {
 			return;

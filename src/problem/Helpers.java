@@ -8,12 +8,14 @@ import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 
 public class Helpers {
 	
-	public static String getName(String path, String separator) {
+	public static String getName(String path) {
 		// takes a path to a class name (e.g. problem/DotGraphDesign) and
 		// returns the name with no path (e.g. DotGraphDesign)
-		String[] paths = path.split(separator);
+		String[] paths = path.split("/");
 
-		String newPath = paths[paths.length - 1];
+		String intermediatePath = paths[paths.length - 1];
+		String[] intermediatePaths = intermediatePath.split("\\.");
+		String newPath = intermediatePaths[intermediatePaths.length - 1];
 		if (newPath.indexOf("<") != -1) {
 			newPath = newPath.substring(0, newPath.indexOf("<"));
 		}

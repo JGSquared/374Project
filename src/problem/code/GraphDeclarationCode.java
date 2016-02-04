@@ -19,7 +19,7 @@ public class GraphDeclarationCode implements IGraphCode {
 	@Override
 	public String getCode(HashMap<String, String> items) {
 		StringBuilder sb = new StringBuilder();
-		String className = Helpers.getName(items.get("className"), "/");
+		String className = Helpers.getName(items.get("className"));
 
 		sb.append(className + " [\n");
 		sb.append("shape=\"record\",\n");

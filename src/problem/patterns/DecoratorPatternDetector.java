@@ -22,11 +22,13 @@ public class DecoratorPatternDetector implements IPatternDetector {
 	}
 
 	@Override
-	public void detectPattern(List<HashMap<String, String>> classCode,
-			StringBuilder sb) {
-		this.sb = sb;
-		for (HashMap<String, String> code : classCode) {
-			if (checkDecorator(code, classCode)) {
+	public void detectPattern(List<HashMap<String, String>> classProperties,
+			HashMap<String, String> classCode) {
+//		this.sb = classCode;
+		for (HashMap<String, String> code : classProperties) {
+			String classKey = Helpers.getName(code.get("className"));
+			this.sb = new StringBuilder(classCode.get(classKey));
+			if (checkDecorator(code, classProperties)) {
 				labelDecorator(code.get("className"), code);
 			}
 			classTree = new ArrayList<>();
@@ -74,10 +76,10 @@ public class DecoratorPatternDetector implements IPatternDetector {
 	}
 
 	private boolean isAssociated(HashMap<String, String> code, String otherClass) {
-		String otherClassName = Helpers.getName(otherClass, "/");
+		String otherClassName = Helpers.getName(otherClass);
 		for (String s : code.keySet()) {
 			if (s.contains("associated")) {
-				String associatedName = Helpers.getName(code.get(s), "\\.");
+				String associatedName = Helpers.getName(code.get(s));
 				if (associatedName.equals(otherClassName)) {
 					return true;
 				}
@@ -88,7 +90,7 @@ public class DecoratorPatternDetector implements IPatternDetector {
 
 	private boolean checkConstructor(HashMap<String, String> code,
 			String otherClass) {
-		String otherClassName = Helpers.getName(otherClass, "/");
+		String otherClassName = Helpers.getName(otherClass);
 		for (String s : code.keySet()) {
 			if (s.contains("method")) {
 				String method = code.get(s);
@@ -103,7 +105,7 @@ public class DecoratorPatternDetector implements IPatternDetector {
 					String[] splitArgs = argTypesString.split(",");
 					ArrayList<String> argTypes = new ArrayList<String>();
 					for (int i = 0; i < splitArgs.length; i++) {
-						argTypes.add(Helpers.getName(splitArgs[i].trim(), "\\."));
+						argTypes.add(Helpers.getName(splitArgs[i].trim()));
 					}
 					if (argTypes.contains(otherClassName)) {
 						return true;
@@ -128,7 +130,7 @@ public class DecoratorPatternDetector implements IPatternDetector {
 		if (code.get("decorator") != null) {
 			return;
 		}
-		String name = Helpers.getName(className, "/");
+		String name = Helpers.getName(className);
 		int classIndex = Helpers.getClassDeclarationIndex(name, sb);
 		if (classIndex == -1) {
 			return;
@@ -148,8 +150,8 @@ public class DecoratorPatternDetector implements IPatternDetector {
 		// Given a className, finds that class in the
 		// StringBuilder and labels it as a component
 		if (!componentLabeled) {
-			String className = Helpers.getName(otherClass, "\\.");
-			className = Helpers.getName(otherClass, "/");
+			String className = Helpers.getName(otherClass);
+			className = Helpers.getName(otherClass);
 			int classIndex = Helpers.getClassDeclarationIndex(className,
 					this.sb);
 			if (classIndex == -1) {
@@ -173,9 +175,9 @@ public class DecoratorPatternDetector implements IPatternDetector {
 	private void labelArrow(String currentClass, String otherClass) {
 		// Given a className, finds that class in the
 		// StringBuilder and labels the correct arrow as the decorates arrow
-		String className = Helpers.getName(currentClass, "/");
-		otherClass = Helpers.getName(otherClass, "\\.");
-		String otherClassName = Helpers.getName(otherClass, "/");
+		String className = Helpers.getName(currentClass);
+		otherClass = Helpers.getName(otherClass);
+		String otherClassName = Helpers.getName(otherClass);
 		int classIndex = Helpers.getClassDeclarationIndex(className, sb);
 		if (classIndex == -1) {
 			return;

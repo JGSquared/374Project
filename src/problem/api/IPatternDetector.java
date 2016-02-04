@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface IPatternDetector {
 
-	public void detectPattern(List<HashMap<String, String>> classCode, StringBuilder sb);
+	public void detectPattern(List<HashMap<String, String>> classProperties, HashMap<String, String> classCode);
 }
