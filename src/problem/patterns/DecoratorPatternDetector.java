@@ -17,6 +17,7 @@ public class DecoratorPatternDetector implements IPatternDetector {
 	private StringBuilder sb;
 	private boolean componentLabeled = false;
 	private List<HashMap<String, String>> classTree = new ArrayList<>();
+	private HashMap<String, String> classCode = new HashMap<>();
 
 	public DecoratorPatternDetector() {
 	}
@@ -24,7 +25,7 @@ public class DecoratorPatternDetector implements IPatternDetector {
 	@Override
 	public void detectPattern(List<HashMap<String, String>> classProperties,
 			HashMap<String, String> classCode) {
-//		this.sb = classCode;
+		this.classCode = classCode;
 		for (HashMap<String, String> code : classProperties) {
 			String classKey = Helpers.getName(code.get("className"));
 			this.sb = new StringBuilder(classCode.get(classKey));
@@ -36,13 +37,13 @@ public class DecoratorPatternDetector implements IPatternDetector {
 	}
 
 	private boolean checkDecorator(HashMap<String, String> code,
-			List<HashMap<String, String>> classCode) {
+			List<HashMap<String, String>> classProperties) {
 		if (code.get("decorator") != null) {
 			return true;
 		}
 		String currentClass = code.get("className");
 		String currentExtends = code.get("extends");
-		for (HashMap<String, String> c : classCode) {
+		for (HashMap<String, String> c : classProperties) {
 			String otherClass = c.get("className");
 			if (currentClass.equals(otherClass)) {
 				continue;
@@ -55,7 +56,7 @@ public class DecoratorPatternDetector implements IPatternDetector {
 					return true;
 				} else {
 					this.classTree.add(code);
-					if (checkDecorator(c, classCode)) {
+					if (checkDecorator(c, classProperties)) {
 						labelDecorator(c.get("className"), c);
 						labelDecorator(code.get("className"), code);
 						c.put("decorator", "true");
@@ -95,7 +96,6 @@ public class DecoratorPatternDetector implements IPatternDetector {
 			if (s.contains("method")) {
 				String method = code.get(s);
 				String[] methodProps = method.split(":");
-				// int access = Integer.parseInt(methodProps[0]);
 				String name = methodProps[1];
 				if (name.equals("<init>")) {
 					String argTypesString = methodProps[2];
@@ -131,19 +131,15 @@ public class DecoratorPatternDetector implements IPatternDetector {
 			return;
 		}
 		String name = Helpers.getName(className);
-		int classIndex = Helpers.getClassDeclarationIndex(name, sb);
-		if (classIndex == -1) {
-			return;
-		}
-		int colorOffset = this.sb.indexOf(Constants.COLOR_OFFSET,
-				classIndex);
-		this.sb.replace(colorOffset,
+		StringBuilder sb = new StringBuilder(this.classCode.get(name));
+		int colorOffset = sb.indexOf(Constants.COLOR_OFFSET);
+		sb.replace(colorOffset,
 				colorOffset + Constants.COLOR_OFFSET.length(), colorString);
-		int labelOffset = this.sb.indexOf(Constants.LABEL_OFFSET,
-				classIndex);
-		this.sb.replace(labelOffset,
+		int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
+		sb.replace(labelOffset,
 				labelOffset + Constants.LABEL_OFFSET.length(),
 				decoratorLabel);
+		this.classCode.put(name, sb.toString());
 	}
 
 	private void labelComponent(String otherClass) {
@@ -151,24 +147,23 @@ public class DecoratorPatternDetector implements IPatternDetector {
 		// StringBuilder and labels it as a component
 		if (!componentLabeled) {
 			String className = Helpers.getName(otherClass);
-			className = Helpers.getName(otherClass);
-			int classIndex = Helpers.getClassDeclarationIndex(className,
-					this.sb);
-			if (classIndex == -1) {
+			if (this.classCode.get(className) == null) {
 				return;
 			}
-			System.out.println(className);
-			System.out.println(sb.substring(classIndex - 20, classIndex + 20));
-			int colorOffset = this.sb.indexOf(Constants.COLOR_OFFSET,
+			StringBuilder sb = new StringBuilder(this.classCode.get(className) );
+			int classIndex = Helpers.getClassDeclarationIndex(className,
+					sb);
+			int colorOffset = sb.indexOf(Constants.COLOR_OFFSET,
 					classIndex);
-			this.sb.replace(colorOffset,
+			sb.replace(colorOffset,
 					colorOffset + Constants.COLOR_OFFSET.length(), colorString);
-			int labelOffset = this.sb.indexOf(Constants.LABEL_OFFSET,
+			int labelOffset = sb.indexOf(Constants.LABEL_OFFSET,
 					classIndex);
-			this.sb.replace(labelOffset,
+			sb.replace(labelOffset,
 					labelOffset + Constants.LABEL_OFFSET.length(),
 					componentLabel);
 			componentLabeled = true;
+			this.classCode.put(className, sb.toString());
 		}
 	}
 
@@ -176,15 +171,12 @@ public class DecoratorPatternDetector implements IPatternDetector {
 		// Given a className, finds that class in the
 		// StringBuilder and labels the correct arrow as the decorates arrow
 		String className = Helpers.getName(currentClass);
-		otherClass = Helpers.getName(otherClass);
 		String otherClassName = Helpers.getName(otherClass);
-		int classIndex = Helpers.getClassDeclarationIndex(className, sb);
-		if (classIndex == -1) {
-			return;
-		}
+		StringBuilder sb = new StringBuilder(this.classCode.get(className));
+		int classIndex = 0;
 		int otherClassIndex;
 		while ((otherClassIndex = sb.indexOf(otherClassName, classIndex)) != -1) {
-			if (associatedArrow(otherClassIndex)) {
+			if (associatedArrow(otherClassIndex, sb)) {
 				break;
 			}
 			classIndex = otherClassIndex + 1;
@@ -195,9 +187,10 @@ public class DecoratorPatternDetector implements IPatternDetector {
 		int arrowOffset = sb.indexOf(Constants.ARROW_OFFSET, otherClassIndex);
 		sb.replace(arrowOffset, arrowOffset + Constants.ARROW_OFFSET.length(),
 				arrowLabel);
+		this.classCode.put(className, sb.toString());
 	}
 
-	private boolean associatedArrow(int index) {
+	private boolean associatedArrow(int index, StringBuilder sb) {
 		// Given an index in a StringBuilder to an arrow, returns
 		// true if it is an associated arrow, false otherwise
 		int arrowheadIndex = sb.indexOf("arrowhead", index);
