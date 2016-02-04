@@ -25,7 +25,6 @@ public class SingletonPatternTest {
 
 	@Test
 	public void eagerSingletonTest() throws IOException {
-		
 		IDesignParser dp = new ClassDesignParser();
 		DotGraphDesign graphDesigner = new DotGraphDesign();
 		

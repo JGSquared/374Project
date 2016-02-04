@@ -30,10 +30,11 @@ public class DotGraphDesign implements IGraphDesign {
 
 	@Override
 	public void addGraphCode(HashMap<String, String> items) {
+		StringBuilder graphCode = new StringBuilder();
 		for (int i = 0; i < codeGetters.size(); i++) {
-//			sb.append(codeGetters.get(i).getCode(items));
-			classCode.put(items.get("className"), codeGetters.get(i).getCode(items));
+			graphCode.append(codeGetters.get(i).getCode(items));
 		}
+		classCode.put(Helpers.getName(items.get("className")), graphCode.toString());
 		this.classProperties.add(items);
 	}
 
@@ -128,8 +129,8 @@ public class DotGraphDesign implements IGraphDesign {
 	@Override
 	public void useDefaultPatternDetectors() {
 		addPatternDetector(new SingletonPatternDetector());
-		addPatternDetector(new DecoratorPatternDetector());
-		addPatternDetector(new AdapterPatternDetector());
+//		addPatternDetector(new DecoratorPatternDetector());
+//		addPatternDetector(new AdapterPatternDetector());
 	}
 
 }

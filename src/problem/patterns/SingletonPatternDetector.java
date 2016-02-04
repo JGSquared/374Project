@@ -31,6 +31,7 @@ public class SingletonPatternDetector implements IPatternDetector {
 				sb.replace(colorOffset, colorOffset + Constants.COLOR_OFFSET.length(), colorString);
 				int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
 				sb.replace(labelOffset, labelOffset + Constants.LABEL_OFFSET.length(), patternLabel);
+				classCode.put(className, sb.toString());
 			}
 		}
 	}
