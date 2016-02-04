@@ -1,5 +1,6 @@
 digraph G{
 rankdir=BT;
+<<<<<<< HEAD
 ClassFieldVisitor [
 shape="record",
 color="",
@@ -129,3 +130,10 @@ shape="record",
 color="",
 label = "{ClassDesignParser|- parsedCode : HashMap\l|+ parse(String, IGraphDesign) : void\l}"
 ];ClassDesignParser -> IDesignParser [arrowhead="onormal", style="dashed"];ClassDesignParser -> ClassDeclarationVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassFieldVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassAssociationVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassUsesVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassMethodVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> IGraphDesign [arrowhead="open", style="dashed"];}
+=======
+InputStreamReader [
+shape="record",
+color="",
+label = "{InputStreamReader| sd : StreamDecoder\l|+ read() : int\l+ read(char, int, int) : int\l+ ready() : boolean\l+ close() : void\l+ getEncoding() : String\l}"
+];InputStreamReader -> Reader [arrowhead="onormal", style="solid"];InputStreamReader -> Error [arrowhead="open", style="solid", label=""];InputStreamReader -> Reader [arrowhead="open", style="solid", label=""];InputStreamReader -> NullPointerException [arrowhead="open", style="solid", label=""];InputStreamReader -> StreamDecoder [arrowhead="open", style="solid", label=""];}
+>>>>>>> 99be69f3bbcc81eca0f63c2b7bf3c361b216d308
