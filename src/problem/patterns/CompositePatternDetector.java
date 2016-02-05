@@ -10,10 +10,9 @@ import problem.api.IPatternDetector;
 
 public class CompositePatternDetector implements IPatternDetector {
 	private static final String colorString = "yellow";
-	private static final String componentLabel = "\\n\\<\\<Decorator\\>\\>";
-	private static final String compositeLabel = "\\n\\<\\<Component\\>\\>";
+	private static final String componentLabel = "\\n\\<\\<Component\\>\\>";
+	private static final String compositeLabel = "\\n\\<\\<Composite\\>\\>";
 	private static final String leafLabel = "\\n\\<\\<Leaf\\>\\>";
-	private boolean componentLabeled = false;
 	private HashMap<String, String> component;
 	private HashMap<String, String> classCode;
 	private List<HashMap<String, String>> classProperties;
@@ -28,6 +27,7 @@ public class CompositePatternDetector implements IPatternDetector {
 		this.classCode = classCode;
 		for (HashMap<String, String> classProps : classProperties) {
 			if (checkComposite(classProps)) {
+				System.out.println(Helpers.getName(this.component.get("className")));
 				labelComponent(Helpers.getName(this.component.get("className")));
 				labelComposite(classProps.get("className"));
 			} else if (checkLeaf(classProps)) {
@@ -39,7 +39,7 @@ public class CompositePatternDetector implements IPatternDetector {
 	
 	private boolean checkComposite(HashMap<String, String> classProps) {
 		this.component = getComponent(classProps);
-		if (this.component == null) {
+		if (this.component == null || classProps.equals(this.component)) {
 			return false;
 		}
 		String componentName = Helpers.getName(this.component.get("className"));
@@ -59,11 +59,14 @@ public class CompositePatternDetector implements IPatternDetector {
 					argTypes.add(Helpers.getName(splitArgs[i].trim()));
 				}
 				if (argTypes.contains(componentName) && methodSigInComponent(method)) {
-					methodEqualCount++;			
+					methodEqualCount++;	
+					System.out.println("Class Name is: " + classProps.get("className"));
+					System.out.println("Actual Method is : " + method);
 				}
+				
 			}
 		}
-		if (methodEqualCount > 2)
+		if (methodEqualCount >= 2)
 			return true;
 		
 		return false;
@@ -71,7 +74,7 @@ public class CompositePatternDetector implements IPatternDetector {
 	
 	private boolean checkLeaf(HashMap<String, String> classProps) {
 		this.component = getComponent(classProps);
-		if (this.component == null) {
+		if (this.component == null || classProps.equals(this.component)) {
 			return false;
 		}
 		String componentName = Helpers.getName(this.component.get("className"));
@@ -102,9 +105,11 @@ public class CompositePatternDetector implements IPatternDetector {
 	}
 	
 	private boolean methodSigInComponent(String method) {
+		method = method.substring(method.indexOf(":"));
 		for (String s : this.component.keySet()) {
 			if (s.contains("method")) {
 				String componentMethod = this.component.get(s);
+				componentMethod = componentMethod.substring(componentMethod.indexOf(":"));
 				if (componentMethod.equals(method)) {
 					return true;
 				}
@@ -116,7 +121,7 @@ public class CompositePatternDetector implements IPatternDetector {
 	private HashMap<String, String> getComponent(HashMap<String, String> classProps) {
 		int methodCount = 0;
 		// Is it an abstract class or interface
-		String componentName = classProps.get("className");
+		String componentName = Helpers.getName(classProps.get("className"));
 		int access = Integer.parseInt(classProps.get("access"));
 		//1537 Interface 1057 Abstract Class
 		if (access == 1537 || access == 1057) {
@@ -184,22 +189,23 @@ public class CompositePatternDetector implements IPatternDetector {
 	private void labelComponent(String otherClass) {
 		// Given a className, finds that class in the
 		// StringBuilder and labels it as a component
-		if (!componentLabeled) {
-			String className = Helpers.getName(otherClass);
-			if (this.classCode.get(className) == null) {
-				return;
-			}
-			StringBuilder sb = new StringBuilder(this.classCode.get(className) );
-			int colorOffset = sb.indexOf(Constants.COLOR_OFFSET);
-			sb.replace(colorOffset,
-					colorOffset + Constants.COLOR_OFFSET.length(), colorString);
-			int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
-			sb.replace(labelOffset,
-					labelOffset + Constants.LABEL_OFFSET.length(),
-					componentLabel);
-			componentLabeled = true;
-			this.classCode.put(className, sb.toString());
+		String className = Helpers.getName(otherClass);
+		if (this.classCode.get(className) == null) {
+			return;
 		}
+		StringBuilder sb = new StringBuilder(this.classCode.get(className) );
+		int colorOffset = sb.indexOf(Constants.COLOR_OFFSET);
+		if (colorOffset == -1) {
+			return;
+		}
+		sb.replace(colorOffset,
+				colorOffset + Constants.COLOR_OFFSET.length(), colorString);
+		int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
+		sb.replace(labelOffset,
+				labelOffset + Constants.LABEL_OFFSET.length(),
+				componentLabel);
+		this.classCode.put(className, sb.toString());
+			
 	}
 	
 	private void labelComposite(String className) {
@@ -211,6 +217,9 @@ public class CompositePatternDetector implements IPatternDetector {
 		}
 		StringBuilder sb = new StringBuilder(code);
 		int colorOffset = sb.indexOf(Constants.COLOR_OFFSET);
+		if (colorOffset == -1) {
+			return;
+		}
 		sb.replace(colorOffset,
 				colorOffset + Constants.COLOR_OFFSET.length(), colorString);
 		int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
@@ -223,11 +232,15 @@ public class CompositePatternDetector implements IPatternDetector {
 	private void labelLeaf(String className) {
 		String name = Helpers.getName(className);
 		String code = this.classCode.get(name);
+		
 		if (code == null) {
 			return;
 		}
 		StringBuilder sb = new StringBuilder(code);
 		int colorOffset = sb.indexOf(Constants.COLOR_OFFSET);
+		if (colorOffset == -1) {
+			return;
+		}
 		sb.replace(colorOffset,
 				colorOffset + Constants.COLOR_OFFSET.length(), colorString);
 		int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
