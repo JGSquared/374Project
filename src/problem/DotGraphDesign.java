@@ -17,6 +17,7 @@ import problem.code.GraphFieldCode;
 import problem.code.GraphMethodCode;
 import problem.code.GraphUsesCode;
 import problem.patterns.AdapterPatternDetector;
+import problem.patterns.CompositePatternDetector;
 import problem.patterns.DecoratorPatternDetector;
 import problem.patterns.SingletonPatternDetector;
 
@@ -128,9 +129,10 @@ public class DotGraphDesign implements IGraphDesign {
 
 	@Override
 	public void useDefaultPatternDetectors() {
-		addPatternDetector(new SingletonPatternDetector());
-		addPatternDetector(new DecoratorPatternDetector());
-		addPatternDetector(new AdapterPatternDetector());
+//		addPatternDetector(new SingletonPatternDetector());
+//		addPatternDetector(new DecoratorPatternDetector());
+//		addPatternDetector(new AdapterPatternDetector());
+		addPatternDetector(new CompositePatternDetector());
 	}
 
 }

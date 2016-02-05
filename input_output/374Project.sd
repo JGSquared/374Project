@@ -1,27 +1,7 @@
 digraph G{
 rankdir=BT;
-TextEditorApp [
+AbstractSprite [
 shape="record",
 color="",
-label = "{TextEditorApp|| main(String) : void\l}"
-];TextEditorApp -> EncryptionOutputStream [arrowhead="open", style="solid", label=""];TextEditorApp -> TextEditor [arrowhead="open", style="solid", label=""];TextEditorApp -> FileInputStream [arrowhead="open", style="solid", label=""];TextEditorApp -> DecryptionInputStream [arrowhead="open", style="solid", label=""];TextEditorApp -> SubstitutionCipher [arrowhead="open", style="solid", label=""];DecryptionInputStream [
-shape="record",
-color="",
-label = "{DecryptionInputStream|- decryptor : IDecryption\l|+ read(byte, int, int) : int\l+ read() : int\l}"
-];DecryptionInputStream -> FilterInputStream [arrowhead="onormal", style="solid"];DecryptionInputStream -> IDecryption [arrowhead="open", style="solid", label=""];DecryptionInputStream -> FilterInputStream [arrowhead="open", style="solid", label=""];DecryptionInputStream -> byte [arrowhead="open", style="dashed"];IEncryption [
-shape="record",
-color="brown",
-label = "{\<\<interface\>\>\nIEncryption\n\<\<Adaptee\>\>|| encrypt(char) : char\l}"
-];SubstitutionCipher [
-shape="record",
-color="brown",
-label = "{SubstitutionCipher\n\<\<Adapter\>\>|- decryptionKey : char[]\l- encryptionKey : char[]\l|+ decrypt(char) : char\l+ encrypt(char) : char\l}"
-];SubstitutionCipher -> IEncryption [arrowhead="onormal", style="dashed"];SubstitutionCipher -> IDecryption [arrowhead="onormal", style="dashed"];SubstitutionCipher -> char[] [arrowhead="open", style="solid", label=""];EncryptionOutputStream [
-shape="record",
-color="",
-label = "{EncryptionOutputStream|- encryptor : IEncryption\l|+ write(int) : void\l}"
-];EncryptionOutputStream -> FilterOutputStream [arrowhead="onormal", style="solid"];EncryptionOutputStream -> IEncryption [arrowhead="open", style="solid", label=""];EncryptionOutputStream -> FilterOutputStream [arrowhead="open", style="solid", label=""];IDecryption [
-shape="record",
-color="brown",
-label = "{\<\<interface\>\>\nIDecryption\n\<\<Target\>\>|| decrypt(char) : char\l}"
-];}
+label = "{AbstractSprite|# dy : double\l# dx : double\l# shape : Shape\l| computeNewBoundsAfterMoving(Dimension) : Rectangle2D\l move(Dimension) : void\l getShape() : Shape\l isSingleSprite() : boolean\l}"
+];AbstractSprite -> ISprite [arrowhead="onormal", style="dashed"];AbstractSprite -> Shape [arrowhead="open", style="solid", label=""];AbstractSprite -> Dimension [arrowhead="open", style="dashed"];AbstractSprite -> Rectangle2D [arrowhead="open", style="dashed"];}

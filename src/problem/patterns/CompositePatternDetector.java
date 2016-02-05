@@ -76,8 +76,70 @@ public class CompositePatternDetector implements IPatternDetector {
 	}
 	
 	private HashMap<String, String> getComponent(HashMap<String, String> classProps) {
-		// TODO
+		int methodCount = 0;
+		// Is it an abstract class or interface
+		String componentName = classProps.get("className");
+		int access = Integer.parseInt(classProps.get("access"));
+		//1537 Interface 1057 Abstract Class
+		if (access == 1537 || access == 1057) {
+			// 2 Methods that take this component as an argument
+			for (String s : classProps.keySet()) {
+				if (s.contains("method")) {
+					String method = classProps.get(s);
+					String[] methodProps = method.split(":");
+					
+					String argTypesString = methodProps[2];
+					argTypesString = argTypesString.replaceAll("\\[", "");
+					argTypesString = argTypesString.replaceAll("\\]", "");
+
+					String[] splitArgs = argTypesString.split(",");
+					ArrayList<String> argTypes = new ArrayList<String>();
+					for (int i = 0; i < splitArgs.length; i++) {
+						argTypes.add(Helpers.getName(splitArgs[i].trim()));
+					}
+					if (argTypes.contains(componentName)) {
+						methodCount++;			
+					}
+					
+					if (methodCount >= 2) {
+						return classProps;
+					}
+				}
+			}
+		}
+		// If whatever I do extend/ implements is not not
+		// If I extend, find in hashmap, call getComponent on that class
+		String extendsName = classProps.get("extends");
+		if (extendsName != null) {
+			extendsName = Helpers.getName(extendsName);
+			for (int i = 0; i < this.classProperties.size(); i++) {
+				HashMap<String, String> nextClassProps = this.classProperties.get(i);
+				String extender = Helpers.getName(nextClassProps.get("className"));
+				if (extendsName.equals(extender)) {
+					HashMap<String, String> component = getComponent(nextClassProps);
+					if (component != null) {
+						return component;
+					}
+				}
+			}
+		}
 		
+		String implementsName = classProps.get("implements");
+		String[] interFaces = implementsName.substring(1,
+				implementsName.length() - 1).split(",");
+		if (interFaces.length == 1) {
+			implementsName = Helpers.getName(interFaces[0]);
+			for (int i = 0; i < this.classProperties.size(); i++) {
+				HashMap<String, String> nextClassProps = this.classProperties.get(i);
+				String implementer = Helpers.getName(nextClassProps.get("className"));
+				if (implementsName.equals(implementer)) {
+					HashMap<String, String> component = getComponent(nextClassProps);
+					if (component != null) {
+						return component;
+					}
+				}
+			}
+		}
 		return null;
 	}
 	
