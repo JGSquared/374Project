@@ -103,7 +103,38 @@ public class CompositePatternDetector implements IPatternDetector {
 	}
 	
 	private void labelComposite(String className) {
-		// TODO
+		// Given a className, labels that class as a composite
+		String name = Helpers.getName(className);
+		String code = this.classCode.get(name);
+		if (code == null) {
+			return;
+		}
+		StringBuilder sb = new StringBuilder(code);
+		int colorOffset = sb.indexOf(Constants.COLOR_OFFSET);
+		sb.replace(colorOffset,
+				colorOffset + Constants.COLOR_OFFSET.length(), colorString);
+		int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
+		sb.replace(labelOffset,
+				labelOffset + Constants.LABEL_OFFSET.length(),
+				compositeLabel);
+		this.classCode.put(name, sb.toString());
+	}
+	
+	private void labelLeaf(String className) {
+		String name = Helpers.getName(className);
+		String code = this.classCode.get(name);
+		if (code == null) {
+			return;
+		}
+		StringBuilder sb = new StringBuilder(code);
+		int colorOffset = sb.indexOf(Constants.COLOR_OFFSET);
+		sb.replace(colorOffset,
+				colorOffset + Constants.COLOR_OFFSET.length(), colorString);
+		int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
+		sb.replace(labelOffset,
+				labelOffset + Constants.LABEL_OFFSET.length(),
+				leafLabel);
+		this.classCode.put(name, sb.toString());
 	}
 
 }
