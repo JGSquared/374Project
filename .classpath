@@ -10,6 +10,5 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/Lab2-1-Lib"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Lab2-1-Solution"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Lab5-1-Solution"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CompositeTest"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
