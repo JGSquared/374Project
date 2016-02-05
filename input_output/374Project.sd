@@ -1,5 +1,56 @@
 digraph G{
 rankdir=BT;
+<<<<<<< HEAD
+SpriteFactory [
+shape="record",
+color="",
+label = "{SpriteFactory| DY : double\l DX : double\l HEIGHT : double\l WIDTH : double\l sprites : List\l random : Random\l| computeRandomLocation(Dimension) : Point2D\l createRandomSprite(Dimension) : ISprite\l <clinit>() : void\l}"
+];SpriteFactory -> Class [arrowhead="open", style="solid", label=""];SpriteFactory -> Random [arrowhead="open", style="solid", label=""];SpriteFactory -> ISprite [arrowhead="open", style="solid", label=""];SpriteFactory -> Constructor [arrowhead="open", style="dashed"];SpriteFactory -> Dimension [arrowhead="open", style="dashed"];SpriteFactory -> Double [arrowhead="open", style="dashed"];SpriteFactory -> Point2D [arrowhead="open", style="dashed"];AbstractSprite [
+shape="record",
+color="yellow",
+label = "{AbstractSprite\n\<\<Composite\>\>|# dy : double\l# dx : double\l# shape : Shape\l|+ getChild(int) : ISprite\l+ iterator() : Iterator\l move(Dimension) : void\l computeNewBoundsAfterMoving(Dimension) : Rectangle2D\l getShape() : Shape\l+ add(ISprite) : void\l+ remove(ISprite) : void\l}"
+];AbstractSprite -> ISprite [arrowhead="onormal", style="dashed"];AbstractSprite -> NullSpriteIterator [arrowhead="open", style="solid", label=""];AbstractSprite -> Shape [arrowhead="open", style="solid", label=""];AbstractSprite -> Dimension [arrowhead="open", style="dashed"];AbstractSprite -> ISprite [arrowhead="open", style="dashed"];AbstractSprite -> Rectangle2D [arrowhead="open", style="dashed"];SpriteComponent [
+shape="record",
+color="",
+label = "{SpriteComponent|- components : ArrayList\l|+ add(SpriteComponent) : void\l+ removeComponent(SpriteComponent) : void\l}"
+];SpriteComponent -> ISprite [arrowhead="onormal", style="dashed"];SpriteComponent -> SpriteComponent [arrowhead="open", style="solid", label=""];ISprite [
+shape="record",
+color="yellow",
+label = "{\<\<interface\>\>\nISprite\n\<\<Component\>\>|| getShape() : Shape\l add(ISprite) : void\l remove(ISprite) : void\l getChild(int) : ISprite\l move(Dimension) : void\l}"
+];ISprite -> Iterable [arrowhead="onormal", style="dashed"];ISprite -> ISprite [arrowhead="open", style="dashed"];ISprite -> Dimension [arrowhead="open", style="dashed"];CircleSprite [
+shape="record",
+color="yellow",
+label = "{CircleSprite\n\<\<Leaf\>\>||+ move(Dimension) : void\l}"
+];CircleSprite -> AbstractSprite [arrowhead="onormal", style="solid"];CircleSprite -> Shape [arrowhead="open", style="solid", label=""];CircleSprite -> AbstractSprite [arrowhead="open", style="solid", label=""];CircleSprite -> Dimension [arrowhead="open", style="dashed"];CircleSprite -> Rectangle2D [arrowhead="open", style="dashed"];RectangleTower [
+shape="record",
+color="",
+label = "{RectangleTower||}"
+];RectangleTower -> CompositeSprite [arrowhead="onormal", style="solid"];RectangleTower -> RectangleSprite [arrowhead="open", style="solid", label=""];RectangleTower -> CompositeSprite [arrowhead="open", style="solid", label=""];NullSpriteIterator [
+shape="record",
+color="",
+label = "{NullSpriteIterator||+ hasNext() : boolean\l+ next() : ISprite\l+ remove() : void\l next() : Object\l}"
+];NullSpriteIterator -> Iterator [arrowhead="onormal", style="dashed"];CrystalBall [
+shape="record",
+color="",
+label = "{CrystalBall||}"
+];CrystalBall -> CompositeSprite [arrowhead="onormal", style="solid"];CrystalBall -> CompositeSprite [arrowhead="open", style="solid", label=""];CrystalBall -> RectangleTower [arrowhead="open", style="solid", label=""];CrystalBall -> CircleSprite [arrowhead="open", style="solid", label=""];RectangleSprite [
+shape="record",
+color="yellow",
+label = "{RectangleSprite\n\<\<Leaf\>\>||+ move(Dimension) : void\l}"
+];RectangleSprite -> AbstractSprite [arrowhead="onormal", style="solid"];RectangleSprite -> Shape [arrowhead="open", style="solid", label=""];RectangleSprite -> AbstractSprite [arrowhead="open", style="solid", label=""];RectangleSprite -> Dimension [arrowhead="open", style="dashed"];RectangleSprite -> Rectangle2D [arrowhead="open", style="dashed"];CompositeSprite [
+shape="record",
+color="yellow",
+label = "{CompositeSprite\n\<\<Composite\>\>| children : List\l|+ move(Dimension) : void\l+ iterator() : Iterator\l+ add(ISprite) : void\l+ remove(ISprite) : void\l+ getChild(int) : ISprite\l}"
+];CompositeSprite -> AbstractSprite [arrowhead="onormal", style="solid"];CompositeSprite -> CompositeSpriteIterator [arrowhead="open", style="solid", label=""];CompositeSprite -> ISprite [arrowhead="open", style="solid", label=""];CompositeSprite -> AbstractSprite [arrowhead="open", style="solid", label=""];CompositeSprite -> Dimension [arrowhead="open", style="dashed"];CompositeSprite -> Iterator [arrowhead="open", style="dashed"];SpriteComposite [
+shape="record",
+color="",
+label = "{SpriteComposite||}"
+];CompositeSpriteIterator [
+shape="record",
+color="",
+label = "{CompositeSpriteIterator|- stack : Stack\l|+ hasNext() : boolean\l+ next() : ISprite\l+ remove() : void\l next() : Object\l}"
+];CompositeSpriteIterator -> Iterator [arrowhead="onormal", style="dashed"];CompositeSpriteIterator -> ISprite [arrowhead="open", style="solid", label=""];CompositeSpriteIterator -> Stack [arrowhead="open", style="solid", label=""];CompositeSpriteIterator -> Iterator [arrowhead="open", style="dashed"];}
+=======
 ClassFieldVisitor [
 shape="record",
 color="green",
@@ -133,3 +184,4 @@ shape="record",
 color="",
 label = "{ClassDesignParser|- parsedCode : HashMap\l|+ parse(String, IGraphDesign) : void\l}"
 ];ClassDesignParser -> IDesignParser [arrowhead="onormal", style="dashed"];ClassDesignParser -> ClassDeclarationVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassFieldVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassAssociationVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassUsesVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> ClassMethodVisitor [arrowhead="open", style="solid", label=""];ClassDesignParser -> IGraphDesign [arrowhead="open", style="dashed"];}
+>>>>>>> e73d7a6b0021158f5acd816b5b39e4c49ba64304
