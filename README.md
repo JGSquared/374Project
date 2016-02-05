@@ -36,7 +36,13 @@ M5: The design of our tool changed a fair amount to solve the issue of handling 
 	labels and colors into the generated code. Constants.java holds all of the special syntax tags used, and any new tags will be
 	added here. Lastly, FileProperties was transformed into a Singleton to ensure there was no difference in the properties found
 	between our classes that require those properties.
-		
+
+M6: The design of our tool for this milestone evolved slightly to make it easier for detectors to find and replace our special
+	syntax. Previously, our DotGraphDesign constructed a single large String containing all of the code generated for each class.
+	Now, each time the addGraphCode method is called, DotGraphDesign maps that class to its code. This map is sent to our detectors,
+	and now knowing the class name makes it quick to find the correct piece of code and inject the proper labels and colors. All of 
+	these string are combined after the detectors have run to generate the full graph. Outside of this change, our design stayed
+	consistent, and we only added one new class, CompositePatternDetector, to solve the problem for this milestone.
 
 ### CONTRIBUTORS ###
 
@@ -58,6 +64,9 @@ M4: Implemented new design detector.
 	
 M5: Implemented Adapter detector.
 	Implemented new tests.
+	
+M6: Implemented Composite detector.
+	Implemented new tests.
 
 Josh Green:
 
@@ -77,6 +86,9 @@ M4: Implemented new design detector.
 	Updated documentation, including UML and README.
 	
 M5: Implemented Decorator detector.
+	Updated documentation, including UML and README.
+	
+M6: Implemented Composite detector.
 	Updated documentation, including UML and README.
 
 
