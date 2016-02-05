@@ -30,12 +30,18 @@ public class CompositePatternDetector implements IPatternDetector {
 			if (checkComposite(classProps)) {
 				labelComponent(Helpers.getName(this.component.get("className")));
 				labelComposite(classProps.get("className"));
+			} else if (checkLeaf(classProps)) {
+				labelComponent(Helpers.getName(this.component.get("className")));
+				labelLeaf(classProps.get("className"));
 			}
 		}
 	}
 	
 	private boolean checkComposite(HashMap<String, String> classProps) {
 		this.component = getComponent(classProps);
+		if (this.component == null) {
+			return false;
+		}
 		String componentName = Helpers.getName(this.component.get("className"));
 		int methodEqualCount = 0;
 		for (String s : classProps.keySet()) {
@@ -58,6 +64,38 @@ public class CompositePatternDetector implements IPatternDetector {
 			}
 		}
 		if (methodEqualCount > 2)
+			return true;
+		
+		return false;
+	}
+	
+	private boolean checkLeaf(HashMap<String, String> classProps) {
+		this.component = getComponent(classProps);
+		if (this.component == null) {
+			return false;
+		}
+		String componentName = Helpers.getName(this.component.get("className"));
+		int methodEqualCount = 0;
+		for (String s : classProps.keySet()) {
+			if (s.contains("method")) {
+				String method = classProps.get(s);
+				String[] methodProps = method.split(":");
+				
+				String argTypesString = methodProps[2];
+				argTypesString = argTypesString.replaceAll("\\[", "");
+				argTypesString = argTypesString.replaceAll("\\]", "");
+
+				String[] splitArgs = argTypesString.split(",");
+				ArrayList<String> argTypes = new ArrayList<String>();
+				for (int i = 0; i < splitArgs.length; i++) {
+					argTypes.add(Helpers.getName(splitArgs[i].trim()));
+				}
+				if (!argTypes.contains(componentName) && methodSigInComponent(method)) {
+					methodEqualCount++;			
+				}
+			}
+		}
+		if (methodEqualCount > 0)
 			return true;
 		
 		return false;

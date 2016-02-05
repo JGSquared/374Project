@@ -1,7 +1,43 @@
 digraph G{
 rankdir=BT;
-AbstractSprite [
+AnimationPanel [
 shape="record",
 color="",
-label = "{AbstractSprite|# dy : double\l# dx : double\l# shape : Shape\l| computeNewBoundsAfterMoving(Dimension) : Rectangle2D\l move(Dimension) : void\l getShape() : Shape\l isSingleSprite() : boolean\l}"
-];AbstractSprite -> ISprite [arrowhead="onormal", style="dashed"];AbstractSprite -> Shape [arrowhead="open", style="solid", label=""];AbstractSprite -> Dimension [arrowhead="open", style="dashed"];AbstractSprite -> Rectangle2D [arrowhead="open", style="dashed"];}
+label = "{AnimationPanel|- sleepTime : long\l animating : boolean\l- sprites : List\l serialVersionUID : long\l| access$2(AnimationPanel) : long\l access$1(AnimationPanel) : List\l access$0(AnimationPanel) : boolean\l# paintComponent(Graphics) : void\l+ reset() : void\l+ animate() : void\l+ getSize() : Dimension\l+ add(ISprite) : void\l}"
+];AnimationPanel -> JPanel [arrowhead="onormal", style="solid"];AnimationPanel -> JPanel [arrowhead="open", style="solid", label=""];AnimationPanel -> ISprite [arrowhead="open", style="solid", label=""];AnimationPanel -> AnimationPanel [arrowhead="open", style="dashed"];AnimationPanel -> Graphics [arrowhead="open", style="dashed"];AnimationPanel -> Graphics2D [arrowhead="open", style="dashed"];AnimationPanel -> Iterator [arrowhead="open", style="dashed"];ComplexCircleSprite [
+shape="record",
+color="",
+label = "{ComplexCircleSprite||+ move(Dimension) : void\l}"
+];ComplexCircleSprite -> AbstractSprite [arrowhead="onormal", style="solid"];ComplexCircleSprite -> AbstractSprite [arrowhead="open", style="solid", label=""];ComplexCircleSprite -> CircleSprite [arrowhead="open", style="solid", label=""];ComplexCircleSprite -> Dimension [arrowhead="open", style="dashed"];ComplexCircleSprite -> ISprite [arrowhead="open", style="dashed"];ComplexCircleSprite -> Iterator [arrowhead="open", style="dashed"];ISprite [
+shape="record",
+color="",
+label = "{\<\<interface\>\>\nISprite|| move(Dimension) : void\l setIndex(int) : void\l setHasNextCalled(boolean) : void\l getSprites() : ArrayList\l getShape() : Shape\l}"
+];ISprite -> Iterator [arrowhead="onormal", style="dashed"];ISprite -> Dimension [arrowhead="open", style="dashed"];RectangleSprite [
+shape="record",
+color="",
+label = "{RectangleSprite||+ move(Dimension) : void\l}"
+];RectangleSprite -> AbstractSprite [arrowhead="onormal", style="solid"];RectangleSprite -> Shape [arrowhead="open", style="solid", label=""];RectangleSprite -> AbstractSprite [arrowhead="open", style="solid", label=""];RectangleSprite -> Rectangle2D [arrowhead="open", style="dashed"];RectangleSprite -> Dimension [arrowhead="open", style="dashed"];ComplexRectangleSprite [
+shape="record",
+color="",
+label = "{ComplexRectangleSprite||+ move(Dimension) : void\l}"
+];ComplexRectangleSprite -> AbstractSprite [arrowhead="onormal", style="solid"];ComplexRectangleSprite -> AbstractSprite [arrowhead="open", style="solid", label=""];ComplexRectangleSprite -> RectangleSprite [arrowhead="open", style="solid", label=""];ComplexRectangleSprite -> Dimension [arrowhead="open", style="dashed"];ComplexRectangleSprite -> ISprite [arrowhead="open", style="dashed"];ComplexRectangleSprite -> Iterator [arrowhead="open", style="dashed"];CircleSprite [
+shape="record",
+color="",
+label = "{CircleSprite||+ move(Dimension) : void\l}"
+];CircleSprite -> AbstractSprite [arrowhead="onormal", style="solid"];CircleSprite -> Shape [arrowhead="open", style="solid", label=""];CircleSprite -> AbstractSprite [arrowhead="open", style="solid", label=""];CircleSprite -> Rectangle2D [arrowhead="open", style="dashed"];CircleSprite -> Dimension [arrowhead="open", style="dashed"];AnimatorApp [
+shape="record",
+color="",
+label = "{AnimatorApp|| main(String) : void\l}"
+];AnimatorApp -> MainWindow [arrowhead="open", style="solid", label=""];SpriteFactory [
+shape="record",
+color="",
+label = "{SpriteFactory| sprites : List\l random : Random\l HEIGHT : double\l WIDTH : double\l DY : double\l DX : double\l| createRandomSprite(Dimension) : ISprite\l computeRandomLocation(Dimension) : Point2D\l <clinit>() : void\l}"
+];SpriteFactory -> Random [arrowhead="open", style="solid", label=""];SpriteFactory -> Class [arrowhead="open", style="solid", label=""];SpriteFactory -> ISprite [arrowhead="open", style="solid", label=""];SpriteFactory -> Dimension [arrowhead="open", style="dashed"];SpriteFactory -> Point2D [arrowhead="open", style="dashed"];SpriteFactory -> Constructor [arrowhead="open", style="dashed"];SpriteFactory -> Double [arrowhead="open", style="dashed"];AbstractSprite [
+shape="record",
+color="",
+label = "{AbstractSprite|- index : int\l- hasNextCalled : boolean\l# sprites : ArrayList\l# shape : Shape\l# dy : double\l# dx : double\l| move(Dimension) : void\l+ setIndex(int) : void\l+ setHasNextCalled(boolean) : void\l+ remove() : void\l+ next() : Shape\l+ hasNext() : boolean\l getSprites() : ArrayList\l getShape() : Shape\l computeNewBoundsAfterMoving(Dimension) : Rectangle2D\l next() : Object\l}"
+];AbstractSprite -> ISprite [arrowhead="onormal", style="dashed"];AbstractSprite -> Shape [arrowhead="open", style="solid", label=""];AbstractSprite -> ISprite [arrowhead="open", style="solid", label=""];AbstractSprite -> Dimension [arrowhead="open", style="dashed"];AbstractSprite -> Rectangle2D [arrowhead="open", style="dashed"];MainWindow [
+shape="record",
+color="",
+label = "{MainWindow|- resetButton : JButton\l- createButton : JButton\l- moveButton : JButton\l- animationPanel : AnimationPanel\l- actionPanel : JPanel\l- frame : JFrame\l| access$2(MainWindow) : JButton\l access$1(MainWindow) : JButton\l access$0(MainWindow) : AnimationPanel\l+ show() : void\l- assignActions() : void\l- createWidgets(String, long) : void\l}"
+];MainWindow -> JPanel [arrowhead="open", style="solid", label=""];MainWindow -> JFrame [arrowhead="open", style="solid", label=""];MainWindow -> JButton [arrowhead="open", style="solid", label=""];MainWindow -> AnimationPanel [arrowhead="open", style="solid", label=""];MainWindow -> MainWindow [arrowhead="open", style="dashed"];MainWindow -> BorderFactory [arrowhead="open", style="dashed"];}
