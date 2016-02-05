@@ -27,7 +27,6 @@ public class CompositePatternDetector implements IPatternDetector {
 		this.classCode = classCode;
 		for (HashMap<String, String> classProps : classProperties) {
 			if (checkComposite(classProps)) {
-				System.out.println(Helpers.getName(this.component.get("className")));
 				labelComponent(Helpers.getName(this.component.get("className")));
 				labelComposite(classProps.get("className"));
 			} else if (checkLeaf(classProps)) {
@@ -60,8 +59,6 @@ public class CompositePatternDetector implements IPatternDetector {
 				}
 				if (argTypes.contains(componentName) && methodSigInComponent(method)) {
 					methodEqualCount++;	
-					System.out.println("Class Name is: " + classProps.get("className"));
-					System.out.println("Actual Method is : " + method);
 				}
 				
 			}
