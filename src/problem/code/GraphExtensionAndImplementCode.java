@@ -1,9 +1,8 @@
 package problem.code;
 
-import java.util.HashMap;
-
 import problem.FileProperties;
 import problem.Helpers;
+import problem.api.CodeMapGetters;
 import problem.api.IGraphCode;
 
 public class GraphExtensionAndImplementCode implements IGraphCode {
@@ -13,20 +12,18 @@ public class GraphExtensionAndImplementCode implements IGraphCode {
 	}
 
 	@Override
-	public String getCode(HashMap<String, String> items) {
+	public String getCode(CodeMapGetters getters) {
 		StringBuilder sb = new StringBuilder();
 		FileProperties fp = FileProperties.getInstance();
 		
-		String name = Helpers.getName(items.get("className"));
-		String superName = Helpers.getName(items.get("extends"));
-		String interFacesString = items.get("implements");
-		String[] interFaces = interFacesString.substring(1,
-				interFacesString.length() - 1).split(",");
+		String name = Helpers.getName(getters.getClassName());
+		String superName = Helpers.getName(getters.getClassExtends());
+		String[] interFaces = getters.getClassImplements();
 		if (!superName.equals("") && !fp.whiteList.contains(superName) && Helpers.isClassNameValid(superName)) {
 			sb.append(name + " -> " + superName
 					+ " [arrowhead=\"onormal\", style=\"solid\"" + "];");
 		}
-		if (!interFacesString.equals("[]")) {
+		if (interFaces.length > 0) {
 			for (String interFace : interFaces) {
 				String interFaceName = Helpers.getName(interFace);
 				if (!Helpers.isClassNameValid(interFaceName)) {

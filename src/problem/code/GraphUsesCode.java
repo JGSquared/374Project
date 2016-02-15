@@ -1,12 +1,12 @@
 package problem.code;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import problem.Constants;
 import problem.FileProperties;
 import problem.Helpers;
+import problem.api.CodeMapGetters;
 import problem.api.IGraphCode;
 
 public class GraphUsesCode implements IGraphCode {
@@ -16,82 +16,84 @@ public class GraphUsesCode implements IGraphCode {
 	}
 
 	@Override
-	public String getCode(HashMap<String, String> items) {
+	public String getCode(CodeMapGetters getters) {
 		StringBuilder sb = new StringBuilder();
 		FileProperties fp = FileProperties.getInstance();
-		List<String> usesList = new ArrayList<String>();
-		String name = Helpers.getName(items.get("className"));
-		for (String s : items.keySet()) {
-			if (s.contains("associated")) {
-				String type = Helpers.getName(items.get(s));
-				if (!Helpers.isClassNameValid(type)) {
-					continue;
-				}
-				if (!type.equals("") && !fp.whiteList.contains(type) && !usesList.contains(type) && !type.equals(name)) {
-					sb.append(name + " -> " + type
-							+ " [arrowhead=\"open\", style=\"solid\", label=\"" + Constants.ARROW_OFFSET + "\"" + "];");
-					usesList.add(type);
-				}
+		List<String> usedList = new ArrayList<String>();
+		String name = Helpers.getName(getters.getClassName());
+		
+		ArrayList<String> associatedList = getters.getClassAssociates();
+		ArrayList<String> fieldList = getters.getFieldNames();
+		ArrayList<String> methodList = getters.getMethodNames();
+		ArrayList<String> usesList = getters.getClassUses();
+		
+		String type;
+		for (String associated : associatedList) {
+			type = Helpers.getName(associated);
+			if (!Helpers.isClassNameValid(type)) {
+				continue;
 			}
-			else if (s.contains("field")) {
-				String field = items.get(s);
-				String[] fieldProps = field.split(":");
-				String signature = Helpers.getName(fieldProps[3]);
-				if (!Helpers.isClassNameValid(signature)) {
-					continue;
-				}
-				if (!fieldProps[3].equals("EMPTY")) {
-					if (!signature.equals("") && !fp.whiteList.contains(signature) && !usesList.contains(signature)) {
-						sb.append(name + " -> " + signature
-								+ " [arrowhead=\"open\", style=\"solid\", label=\"" + Constants.ARROW_OFFSET+ "\"" + "];");
-						usesList.add(signature);
-					}
+			if (!type.equals("") && !fp.whiteList.contains(type) && !usedList.contains(type) && !type.equals(name)) {
+				sb.append(name + " -> " + type
+						+ " [arrowhead=\"open\", style=\"solid\", label=\"" + Constants.ARROW_OFFSET + "\"" + "];");
+				usedList.add(type);
+			}
+		}
+		
+		String signature;
+		for (String fieldName : fieldList) {
+			signature = Helpers.getName(getters.getFieldSignature(fieldName));
+			if (!Helpers.isClassNameValid(signature)) {
+				continue;
+			}
+			if (!signature.equals("EMPTY")) {
+				if (!signature.equals("") && !fp.whiteList.contains(signature) && !usedList.contains(signature)) {
+					sb.append(name + " -> " + signature
+							+ " [arrowhead=\"open\", style=\"solid\", label=\"" + Constants.ARROW_OFFSET+ "\"" + "];");
+					usedList.add(signature);
 				}
 			}
 		}
-		for (String s : items.keySet()) {
-			if (s.contains("method")) {
-				String method = items.get(s);
-				String[] methodProps = method.split(":");
-				String methodName = methodProps[1];
-				if (methodName.equals("<init>")) {
-					// Bad method, causes errors in GraphViz
-					continue;
-				}
-					
-				String argTypesString = methodProps[2];
-				argTypesString = argTypesString.replaceAll("\\[", "");
-				argTypesString = argTypesString.replaceAll("\\]", "");
-	
-				String[] splitArgs = argTypesString.split(",");
-				ArrayList<String> argTypes = new ArrayList<String>();
-				for (int i = 0; i < splitArgs.length; i++) {
-					argTypes.add(Helpers.getName(splitArgs[i].trim()));
-				}
-				for (int i = 0; i < argTypes.size(); i++) {
-					String argType = argTypes.get(i);
-					if (!Helpers.isClassNameValid(argType)) {
-						continue;
-					}
-					if (!argType.equals("") && !fp.whiteList.contains(argType) && !usesList.contains(argType)) {
-						sb.append(name + " -> " + argType
-								+ " [arrowhead=\"open\", style=\"dashed\"" + "];");
-						usesList.add(argType);
-					}
-				}
+		
+		String[] argsArray;
+		ArrayList<String> argTypes;
+		for (String methodName : methodList) {
+			if (methodName.equals("<init>")) {
+				// Bad method, causes errors in GraphViz
+				continue;
 			}
-			else if (s.contains("uses")) {
-				String owner = Helpers.getName(items.get(s));
-				if (!Helpers.isClassNameValid(owner)) {
+
+			argsArray = getters.getMethodArgTypes(methodName);
+			argTypes = new ArrayList<String>();
+			for (int i = 0; i < argsArray.length; i++) {
+				argTypes.add(Helpers.getName(argsArray[i].trim()));
+			}
+			for (int i = 0; i < argTypes.size(); i++) {
+				String argType = argTypes.get(i);
+				if (!Helpers.isClassNameValid(argType)) {
 					continue;
 				}
-				if (!owner.equals("") && !fp.whiteList.contains(owner) && !usesList.contains(owner) && !owner.equals(name)) {
-					sb.append(name + " -> " + owner
+				if (!argType.equals("") && !fp.whiteList.contains(argType) && !usedList.contains(argType)) {
+					sb.append(name + " -> " + argType
 							+ " [arrowhead=\"open\", style=\"dashed\"" + "];");
-					usesList.add(owner);
+					usedList.add(argType);
 				}
 			}
-		}	
+		}
+		
+		String owner;
+		for (String uses : usesList) {
+			owner = Helpers.getName(uses);
+			if (!Helpers.isClassNameValid(owner)) {
+				continue;
+			}
+			if (!owner.equals("") && !fp.whiteList.contains(owner) && !usedList.contains(owner) && !owner.equals(name)) {
+				sb.append(name + " -> " + owner
+						+ " [arrowhead=\"open\", style=\"dashed\"" + "];");
+				usedList.add(owner);
+			}
+		}
+			
 		return sb.toString();
 	}
 }

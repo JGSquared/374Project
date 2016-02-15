@@ -1,7 +1,6 @@
 package problem.code;
 
-import java.util.HashMap;
-
+import problem.api.CodeMapGetters;
 import problem.api.IGraphCode;
 
 public class GraphClassCloserCode implements IGraphCode {
@@ -11,7 +10,7 @@ public class GraphClassCloserCode implements IGraphCode {
 	}
 
 	@Override
-	public String getCode(HashMap<String, String> items) {
+	public String getCode(CodeMapGetters getters) {
 		return "}\"\n];";
 	}
 }

@@ -10,6 +10,7 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
+import problem.api.CodeMapGetters;
 import problem.api.IGraphCode;
 import problem.code.GraphUsesCode;
 import problem.visitor.ClassAssociationVisitor;
@@ -24,6 +25,7 @@ public class TrickFactoryPatternTest {
 	public final void testAssociation() throws IOException {
 		IGraphCode codeGetter = new GraphUsesCode();
 		HashMap<String, String> items = new HashMap<String, String>();
+		CodeMapGetters getters = new CodeMapGetters(items);
 		StringBuilder parsedCode = new StringBuilder();
 		StringBuilder expected = new StringBuilder();
 
@@ -37,7 +39,7 @@ public class TrickFactoryPatternTest {
 		items = associationVisitor.getParsedCode();
 		
 		GraphUsesCode guc = new GraphUsesCode();
-		String generatedCode = guc.getCode(items);
+		String generatedCode = guc.getCode(getters);
 		
 		assertTrue(generatedCode.contains("FreshClams"));
 		assertTrue(!generatedCode.contains("Veggies"));

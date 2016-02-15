@@ -18,7 +18,7 @@ public class MethodUsesVisitorTest {
 		visitor.visitMethodInsn(1, "TestOwner", "TestName", "TestDesc", true);
 		
 		HashMap<String, String> parsedCode =  visitor.getParsedCode();
-		
+
 		assertTrue(parsedCode.keySet().contains("uses0"));
 	}
 }
