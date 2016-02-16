@@ -37,4 +37,19 @@ public class CompositePatternTest {
 		assertTrue(graphDesigner.getGraphStringBuilder().toString().contains("<Composite"));
 		assertTrue(graphDesigner.getGraphStringBuilder().toString().contains("<Leaf"));
 	}
+	
+//	@Test
+//	public void checkCompositeInAWT() throws IOException {
+//		IDesignParser dp = new ClassDesignParser();
+//		DotGraphDesign graphDesigner = new DotGraphDesign();
+//		
+//		graphDesigner.useDefaultCodeGetters();
+//		graphDesigner.useDefaultPatternDetectors();
+//		String[] args = new String[1];
+//		args[0] = "java.awt.*";
+//		dp.parse(args, graphDesigner);
+//		assertTrue(graphDesigner.getGraphStringBuilder().toString().contains("<Component"));
+//		assertTrue(graphDesigner.getGraphStringBuilder().toString().contains("<Composite"));
+//		assertTrue(graphDesigner.getGraphStringBuilder().toString().contains("<Leaf"));
+//	}
 }
