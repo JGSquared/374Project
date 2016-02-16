@@ -1,11 +1,10 @@
 package problem.code;
 
-import java.util.HashMap;
-
 import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 
 import problem.Constants;
 import problem.Helpers;
+import problem.api.CodeMapGetters;
 import problem.api.IGraphCode;
 import problem.api.IPatternDetector;
 import problem.patterns.SingletonPatternDetector;
@@ -17,9 +16,9 @@ public class GraphDeclarationCode implements IGraphCode {
 	}
 
 	@Override
-	public String getCode(HashMap<String, String> items) {
+	public String getCode(CodeMapGetters getters) {
 		StringBuilder sb = new StringBuilder();
-		String className = Helpers.getName(items.get("className"));
+		String className = Helpers.getName(getters.getClassName());
 
 		sb.append(className + " [\n");
 		sb.append("shape=\"record\",\n");
@@ -28,9 +27,9 @@ public class GraphDeclarationCode implements IGraphCode {
 		
 		sb.append("label = \"{");
 
-		int access = Integer.parseInt(items.get("access"));
+		int access = getters.getAccess();
 
-		// TODO: Figure out why interface access is 1537
+		// DONE: Figure out why interface access is 1537
 		if (access == 1537) {
 			sb.append("\\<\\<interface\\>\\>\\n");
 		}

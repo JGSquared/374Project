@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import problem.api.CodeMapGetters;
 import problem.api.IGraphCode;
 import problem.api.IGraphDesign;
 import problem.api.IPatternDetector;
@@ -28,12 +29,14 @@ public class DotGraphDesign implements IGraphDesign {
 	private HashMap<String, String> classCode = new HashMap<>();
 	private List<HashMap<String, String>> classProperties = new ArrayList<>();
 	private List<IPatternDetector> patternDetectors = new ArrayList<IPatternDetector>();
+	private CodeMapGetters getters;
 
 	@Override
 	public void addGraphCode(HashMap<String, String> items) {
+		getters = new CodeMapGetters(items);
 		StringBuilder graphCode = new StringBuilder();
 		for (int i = 0; i < codeGetters.size(); i++) {
-			graphCode.append(codeGetters.get(i).getCode(items));
+			graphCode.append(codeGetters.get(i).getCode(getters));
 		}
 		classCode.put(Helpers.getName(items.get("className")), graphCode.toString());
 		this.classProperties.add(items);

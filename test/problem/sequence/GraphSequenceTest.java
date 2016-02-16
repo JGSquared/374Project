@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Opcodes;
 
+import problem.api.CodeMapGetters;
 import problem.api.IGraphCode;
 import problem.code.GraphSequenceMethodCode;
 import problem.code.GraphSequenceNodeCode;
@@ -22,6 +23,7 @@ public class GraphSequenceTest {
 	public final void graphSequenceNodeCodeTest() throws IOException {
 		IGraphCode codeGetter = new GraphUsesCode();
 		HashMap<String, String> items = new HashMap<String, String>();
+		CodeMapGetters getters = new CodeMapGetters(items);
 		StringBuilder parsedCode = new StringBuilder();
 		StringBuilder expected = new StringBuilder();
 		
@@ -36,7 +38,7 @@ public class GraphSequenceTest {
 		items = sequenceVisitor.getParsedCode();
 		
 		IGraphCode sequenceNode = new GraphSequenceNodeCode();
-		String generatedCode = sequenceNode.getCode(items);
+		String generatedCode = sequenceNode.getCode(getters);
 		
 		assertTrue(generatedCode.contains("collections:Collections"));
 		
@@ -45,6 +47,7 @@ public class GraphSequenceTest {
 	@Test
 	public final void graphSequenceNodeCodeZeroDepthEdgeTest() throws IOException {
 		HashMap<String, String> items = new HashMap<String, String>();
+		CodeMapGetters getters = new CodeMapGetters(items);
 		
 		ArrayList<String> methodCallList = new ArrayList<String>();
 		methodCallList.add("java.util.List");
@@ -57,7 +60,7 @@ public class GraphSequenceTest {
 		items = sequenceVisitor.getParsedCode();
 		
 		IGraphCode sequenceNode = new GraphSequenceMethodCode();
-		String generatedCode = sequenceNode.getCode(items);
+		String generatedCode = sequenceNode.getCode(getters);
 		assertTrue(!generatedCode.contains("random:system.nanoTime"));
 		
 		HashMap<String, String> items1 = new HashMap<String, String>();
@@ -70,7 +73,7 @@ public class GraphSequenceTest {
 		items1 = sequenceVisitor1.getParsedCode();
 		
 		IGraphCode sequenceNode1 = new GraphSequenceMethodCode();
-		String generatedCode1 = sequenceNode1.getCode(items1);
+		String generatedCode1 = sequenceNode1.getCode(getters);
 		assertTrue(generatedCode1.contains("random:system.nanoTime"));
 		
 	}

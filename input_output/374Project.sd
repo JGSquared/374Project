@@ -1,5 +1,6 @@
 digraph G{
 rankdir=BT;
+<<<<<<< HEAD
 SpriteFactory [
 shape="record",
 color="",
@@ -49,3 +50,10 @@ shape="record",
 color="",
 label = "{CompositeSpriteIterator|- stack : Stack\l|+ hasNext() : boolean\l+ next() : ISprite\l+ remove() : void\l next() : Object\l}"
 ];CompositeSpriteIterator -> Iterator [arrowhead="onormal", style="dashed"];CompositeSpriteIterator -> ISprite [arrowhead="open", style="solid", label=""];CompositeSpriteIterator -> Stack [arrowhead="open", style="solid", label=""];CompositeSpriteIterator -> Iterator [arrowhead="open", style="dashed"];}
+=======
+InputStreamReader [
+shape="record",
+color="",
+label = "{InputStreamReader| sd : StreamDecoder\l|+ read() : int\l+ read() : int\l+ ready() : boolean\l+ close() : void\l+ getEncoding() : String\l}"
+];InputStreamReader -> Reader [arrowhead="onormal", style="solid"];InputStreamReader -> Error [arrowhead="open", style="solid", label=""];InputStreamReader -> Reader [arrowhead="open", style="solid", label=""];InputStreamReader -> NullPointerException [arrowhead="open", style="solid", label=""];InputStreamReader -> StreamDecoder [arrowhead="open", style="solid", label=""];}
+>>>>>>> da0e69f0311276fd2c35b826091a88aef14c5eb4
