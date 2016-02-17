@@ -44,8 +44,8 @@ public class CompositePatternDetector implements IPatternDetector {
 	private boolean checkComposite(CodeMapGetters getter) {
 		this.component = getComponent(getter);
 		String className = Helpers.getName(getter.getClassName());
-		String componentName = Helpers.getName(this.component.getClassName());
-		if (this.component == null || className.equals(componentName)) {
+		String componentName;
+		if (this.component == null || className.equals((componentName = Helpers.getName(this.component.getClassName())))) {
 			return false;
 		}
 //		String componentName = Helpers.getName(this.component.get("className"));
@@ -95,8 +95,8 @@ public class CompositePatternDetector implements IPatternDetector {
 	private boolean checkLeaf(CodeMapGetters getter) {
 		this.component = getComponent(getter);
 		String className = Helpers.getName(getter.getClassName());
-		String componentName = Helpers.getName(this.component.getClassName());
-		if (this.component == null || className.equals(componentName)) {
+		String componentName;
+		if (this.component == null || className.equals((componentName = Helpers.getName(this.component.getClassName())))) {
 			return false;
 		}
 //		String componentName = Helpers.getName(this.component.get("className"));

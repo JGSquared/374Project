@@ -58,10 +58,10 @@ public class GraphUsesCode implements IGraphCode {
 		String[] argsArray;
 		ArrayList<String> argTypes;
 		for (String methodName : methodList) {
-			if (methodName.equals("<init>")) {
-				// Bad method, causes errors in GraphViz
-				continue;
-			}
+//			if (methodName.equals("<init>")) {
+//				// Bad method, causes errors in GraphViz
+//				continue;
+//			}
 
 			argsArray = getters.getMethodArgTypes(methodName);
 			argTypes = new ArrayList<String>();

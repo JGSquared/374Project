@@ -133,7 +133,7 @@ public class DotGraphDesign implements IGraphDesign {
 	@Override
 	public void useDefaultPatternDetectors() {
 		addPatternDetector(new SingletonPatternDetector());
-//		addPatternDetector(new DecoratorPatternDetector());
+		addPatternDetector(new DecoratorPatternDetector());
 		addPatternDetector(new AdapterPatternDetector());
 		addPatternDetector(new CompositePatternDetector());
 	}
