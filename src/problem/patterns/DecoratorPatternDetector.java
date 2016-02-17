@@ -7,6 +7,8 @@ import java.util.List;
 import problem.Constants;
 import problem.FileProperties;
 import problem.Helpers;
+import problem.Pattern;
+import problem.PatternStorage;
 import problem.api.CodeMapGetters;
 import problem.api.IPatternDetector;
 
@@ -15,7 +17,6 @@ public class DecoratorPatternDetector implements IPatternDetector {
 	private static final String decoratorLabel = "\\n\\<\\<Decorator\\>\\>";
 	private static final String componentLabel = "\\n\\<\\<Component\\>\\>";
 	private static final String arrowLabel = "decorates";
-	private StringBuilder sb;
 	private String componentName;
 	private boolean componentLabeled = false;
 	private List<HashMap<String, String>> classProperties = new ArrayList<>();
@@ -33,6 +34,13 @@ public class DecoratorPatternDetector implements IPatternDetector {
 			getter = new CodeMapGetters(code);
 			if (checkDecorator(getter)) {
 				// TODO: Store decorator
+				String label = decoratorLabel;
+				String color = colorString;
+				String arrow = "";
+				String className = Helpers.getName(getter.getClassName());
+				Pattern decorator = new Pattern(label, color, arrow, className);
+				decorator.addRelatedClass(new Pattern(componentLabel, colorString, arrowLabel, this.componentName));
+				PatternStorage.registerPattern(decorator);
 //				labelDecorator(getter);
 //				labelComponent();
 //				if (isAssociated(getter)) {

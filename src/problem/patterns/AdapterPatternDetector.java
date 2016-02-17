@@ -6,6 +6,8 @@ import java.util.List;
 
 import problem.Constants;
 import problem.Helpers;
+import problem.Pattern;
+import problem.PatternStorage;
 import problem.api.CodeMapGetters;
 import problem.api.IPatternDetector;
 
@@ -34,10 +36,14 @@ public class AdapterPatternDetector implements IPatternDetector{
 			isAdapter(getter, classProperties);
 			if ((!adaptee.equals("")) && (!adapter.equals("")) && (!target.equals(""))) {
 				// TODO: Register pattern instead of labeling
-				labelAdaptee(adaptee);
-				labelAdapter(adapter);
-				labelTarget(target);
-				labelArrow(adapter, adaptee);
+				Pattern adapt = new Pattern(patternLabelAdapter, colorString, "", adapter);
+				adapt.addRelatedClass(new Pattern(patternLabelAdaptee, colorString, arrowLabel, adaptee));
+				adapt.addRelatedClass(new Pattern(patternLabelTarget, colorString, "", target));
+				PatternStorage.registerPattern(adapt);
+//				labelAdaptee(adaptee);
+//				labelAdapter(adapter);
+//				labelTarget(target);
+//				labelArrow(adapter, adaptee);
 				adaptee = "";
 				adapter = "";
 				target = "";

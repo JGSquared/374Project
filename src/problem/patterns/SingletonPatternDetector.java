@@ -11,6 +11,8 @@ import com.sun.xml.internal.bind.v2.runtime.Name;
 
 import problem.Constants;
 import problem.Helpers;
+import problem.Pattern;
+import problem.PatternStorage;
 import problem.api.CodeMapGetters;
 import problem.api.IPatternDetector;
 
@@ -29,14 +31,16 @@ public class SingletonPatternDetector implements IPatternDetector {
 			if (checkStatus(getter) && checkForGetInstance(getter) && checkForPrivateConstructor(getter)) {
 				// TODO: Register pattern instead of labeling
 				String className = Helpers.getName(parsedCode.get("className"));
-				StringBuilder sb = new StringBuilder(classCode.get(className));
-				// int fromIndex = Helpers.getClassDeclarationIndex(className,
-				// sb);
-				int colorOffset = sb.indexOf(Constants.COLOR_OFFSET);
-				sb.replace(colorOffset, colorOffset + Constants.COLOR_OFFSET.length(), colorString);
-				int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
-				sb.replace(labelOffset, labelOffset + Constants.LABEL_OFFSET.length(), patternLabel);
-				classCode.put(className, sb.toString());
+				Pattern singleton = new Pattern(patternLabel, colorString, "", className);
+				PatternStorage.registerPattern(singleton);
+//				StringBuilder sb = new StringBuilder(classCode.get(className));
+//				// int fromIndex = Helpers.getClassDeclarationIndex(className,
+//				// sb);
+//				int colorOffset = sb.indexOf(Constants.COLOR_OFFSET);
+//				sb.replace(colorOffset, colorOffset + Constants.COLOR_OFFSET.length(), colorString);
+//				int labelOffset = sb.indexOf(Constants.LABEL_OFFSET);
+//				sb.replace(labelOffset, labelOffset + Constants.LABEL_OFFSET.length(), patternLabel);
+//				classCode.put(className, sb.toString());
 			}
 		}
 	}

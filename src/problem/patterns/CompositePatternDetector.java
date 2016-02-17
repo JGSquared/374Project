@@ -6,6 +6,8 @@ import java.util.List;
 
 import problem.Constants;
 import problem.Helpers;
+import problem.Pattern;
+import problem.PatternStorage;
 import problem.api.CodeMapGetters;
 import problem.api.IPatternDetector;
 
@@ -30,13 +32,23 @@ public class CompositePatternDetector implements IPatternDetector {
 		for (HashMap<String, String> classProps : classProperties) {
 			getter = new CodeMapGetters(classProps);
 			if (checkComposite(getter)) {
+				String className = Helpers.getName(getter.getClassName());
+				String componentName = Helpers.getName(this.component.getClassName());
+				Pattern composite = new Pattern(compositeLabel, colorString, "", className);
+				composite.addRelatedClass(new Pattern(componentLabel, colorString, "", componentName));
+				PatternStorage.registerPattern(composite);
 				// TODO: register pattern instead of labeling
-				labelComponent(Helpers.getName(this.component.getClassName()));
-				labelComposite(getter.getClassName());
+//				labelComponent(componentName);
+//				labelComposite(getter.getClassName());
 			} else if (checkLeaf(getter)) {
+				String className = Helpers.getName(getter.getClassName());
+				String componentName = Helpers.getName(this.component.getClassName());
+				Pattern leaf = new Pattern(leafLabel, colorString, "", className);
+				leaf.addRelatedClass(new Pattern(componentLabel, colorString, "", componentName));
+				PatternStorage.registerPattern(leaf);
 				// TODO: register pattern instead of labeling
-				labelComponent(Helpers.getName(this.component.getClassName()));
-				labelLeaf(getter.getClassName());
+//				labelComponent(componentName);
+//				labelLeaf(getter.getClassName());
 			}
 		}
 	}
