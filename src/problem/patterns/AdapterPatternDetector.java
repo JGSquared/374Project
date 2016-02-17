@@ -1,10 +1,12 @@
 package problem.patterns;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import problem.Constants;
 import problem.Helpers;
+import problem.api.CodeMapGetters;
 import problem.api.IPatternDetector;
 
 public class AdapterPatternDetector implements IPatternDetector{
@@ -24,11 +26,14 @@ public class AdapterPatternDetector implements IPatternDetector{
 	public void detectPattern(List<HashMap<String, String>> classProperties, HashMap<String, String> classCode) {
 		this.classProperties = classProperties;
 		this.classCode = classCode;
+		CodeMapGetters getter;
 		for (HashMap<String, String> parsedCode : classProperties) {
-			String classKey = Helpers.getName(parsedCode.get("className"));
+			getter = new CodeMapGetters(parsedCode);
+			String classKey = Helpers.getName(getter.getClassName());
 			this.sb = new StringBuilder(classCode.get(classKey));
-			isAdapter(parsedCode, classProperties);
+			isAdapter(getter, classProperties);
 			if ((!adaptee.equals("")) && (!adapter.equals("")) && (!target.equals(""))) {
+				// TODO: Register pattern instead of labeling
 				labelAdaptee(adaptee);
 				labelAdapter(adapter);
 				labelTarget(target);
@@ -40,9 +45,9 @@ public class AdapterPatternDetector implements IPatternDetector{
 		}
 	}
 
-	private void isAdapter(HashMap<String, String> parsedCode, List<HashMap<String, String>> classCode) {
-		String currentClass = Helpers.getName(parsedCode.get("className"));
-		String currentImplements = Helpers.getName(parsedCode.get("implements"));
+	private void isAdapter(CodeMapGetters getter, List<HashMap<String, String>> classCode) {
+		String currentClass = Helpers.getName(getter.getClassName());
+		String currentImplements = Helpers.getName(getter.getClassImplements().toString());
 		currentImplements = currentImplements.equals("[]") ? "" : currentImplements.substring(0, currentImplements.length() - 1);
 		for (HashMap<String, String> c : classCode) {
 			String otherClass = c.get("className");
@@ -51,40 +56,67 @@ public class AdapterPatternDetector implements IPatternDetector{
 			} else {
 				target = currentImplements;
 				adapter = currentClass;
-				isAssociated(parsedCode);
+				isAssociated(getter);
 			}
 		}
 	}
 	
-	private void isAssociated(HashMap<String, String> parsedCode) {
-		for (String s : parsedCode.keySet()) {
-			if (s.contains("associated")) {
-				containsInterfaceField(parsedCode, parsedCode.get(s));
-			}
+	private void isAssociated(CodeMapGetters getter) {
+		ArrayList<String> associated = getter.getClassAssociates();
+		for (String a : associated) {
+			containsInterfaceField(getter, a);
 		}
+		
+//		for (String s : parsedCode.keySet()) {
+//			if (s.contains("associated")) {
+//				containsInterfaceField(parsedCode, parsedCode.get(s));
+//			}
+//		}
 	}
 	 
-	private void containsInterfaceField(HashMap<String, String> parsedCode, String adaptee) {
+	private void containsInterfaceField(CodeMapGetters getter, String adaptee) {
 		adaptee = Helpers.getName(adaptee);
-		for (String s : parsedCode.keySet()) {
-			if (s.contains("field")) {
-				String field = parsedCode.get(s);
-				String[] fieldProperties = field.split(":");
-				String type = Helpers.getName(fieldProperties[2]);
-				if (type.equals(adaptee)) {
-					for (HashMap<String, String> c : this.classProperties) {
-						String currentClass = Helpers.getName(c.get("className"));
-						if (currentClass.equals(type)) {
-							
-							int access = Integer.parseInt(c.get("access"));
-							if (access == 1537) {
-								this.adaptee = currentClass;
-							}
+		
+		ArrayList<String> fields = getter.getFieldNames();
+		String type;
+		CodeMapGetters newGetter;
+		String currentClass;
+		int access;
+		for (String fieldName : fields) {
+			type = Helpers.getName(getter.getFieldType(fieldName));
+			if (type.equals(adaptee)) {
+				for (HashMap<String, String> c : this.classProperties) {
+					newGetter = new CodeMapGetters(c);
+					currentClass = Helpers.getName(newGetter.getClassName());
+					if (currentClass.equals(type)) {
+						access = newGetter.getAccess();
+						if (access == 1537) {
+							this.adaptee = currentClass;
 						}
 					}
 				}
 			}
 		}
+		
+//		for (String s : parsedCode.keySet()) {
+//			if (s.contains("field")) {
+//				String field = parsedCode.get(s);
+//				String[] fieldProperties = field.split(":");
+//				String type = Helpers.getName(fieldProperties[2]);
+//				if (type.equals(adaptee)) {
+//					for (HashMap<String, String> c : this.classProperties) {
+//						String currentClass = Helpers.getName(c.get("className"));
+//						if (currentClass.equals(type)) {
+//							
+//							int access = Integer.parseInt(c.get("access"));
+//							if (access == 1537) {
+//								this.adaptee = currentClass;
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
 	}
 	
 	private void labelAdaptee(String className) {
