@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 public class UI extends JPanel{
 	private static final long serialVersionUID = -3778143600831095610L;
@@ -41,9 +42,15 @@ public class UI extends JPanel{
 		analyzeButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Even Better");
+				loadBar();
 			}
 		});
 		this.add(analyzeButton);
+	}
+	
+	public void loadBar() {
+		JProgressBar progressBar = new JProgressBar(0, 100);
+		progressBar.setValue(100);
+		this.add(progressBar);
 	}
 }
