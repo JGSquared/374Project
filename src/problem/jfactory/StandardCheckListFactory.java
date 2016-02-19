@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 
 import problem.ClassStorage;
@@ -27,12 +28,12 @@ public class StandardCheckListFactory extends AbstractCheckListFactory {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// Might be an unnecessary listener
-						JCheckBox box = (JCheckBox) e.getSource();
-						if (box.isSelected()) {
-							box.setSelected(false);
-						} else {
-							box.setSelected(true);
-						}
+//						JCheckBox box = (JCheckBox) e.getSource();
+//						if (box.isSelected()) {
+//							box.setSelected(false);
+//						} else {
+//							box.setSelected(true);
+//						}
 					}
 				});
 				checkList.addSubCheckBox(checkBox);

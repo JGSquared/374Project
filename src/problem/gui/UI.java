@@ -28,7 +28,7 @@ public class UI extends JPanel{
 	
 	public UI(PhaseRunner runner) {
 		this.runner = runner;
-		JFrame frame = new JFrame("Pattern Detection");
+		frame = new JFrame("Pattern Detection");
 		frame.setContentPane(this);
 		frame.setSize(500, 250);
 		this.setLayout(new BorderLayout());
@@ -84,13 +84,15 @@ public class UI extends JPanel{
 	}
 	
 	public void createDisplay() {
-		JPanel imagePanel = new JPanel();
-		imagePanel.setLayout(new BorderLayout());
-		ImageProxy image = new ImageProxy();
-		image.paintIcon(imagePanel, this.getGraphics());
-		this.add(imagePanel, BorderLayout.CENTER);
-		this.revalidate();
-		this.repaint();
+		frame.setVisible(false);
+		ImageUI nextUI = new ImageUI(runner);
+//		JPanel imagePanel = new JPanel();
+//		imagePanel.setLayout(new BorderLayout());
+//		ImageProxy image = new ImageProxy();
+//		image.paintIcon(imagePanel, this.getGraphics());
+//		this.add(imagePanel, BorderLayout.CENTER);
+//		this.revalidate();
+//		this.repaint();
 	}
 	
 }
