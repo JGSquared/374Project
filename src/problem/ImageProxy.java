@@ -93,11 +93,12 @@ public class ImageProxy implements Icon {
 											"cmd.exe", "/k", "\"" + ConfigProperties.getInstance().getDotPath() + "\" -Tpng" + " " +
 													ConfigProperties.getInstance().getOutputFolder() + "\\" + Constants.OUTFILE_NAME + " > "+
 													ConfigProperties.getInstance().getOutputFolder() + "\\" + "output.png"});
-							
+//							retrievalThread.sleep(3000);
 							InputStream in = new FileInputStream(ConfigProperties.getInstance().getOutputFolder() + "\\" + "output.png");
 							byte[] data = IOUtils.readFully(in, -1, false);
 							imageIcon = new ImageIcon(data);
 							retrieving = false;
+							c.revalidate();
 							c.repaint();
 						} catch (Exception e) {
 							e.printStackTrace();
