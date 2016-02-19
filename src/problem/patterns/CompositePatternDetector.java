@@ -36,7 +36,7 @@ public class CompositePatternDetector implements IPatternDetector {
 				String componentName = Helpers.getName(this.component.getClassName());
 				Pattern composite = new Pattern(compositeLabel, colorString, "", className);
 				composite.addRelatedClass(new Pattern(componentLabel, colorString, "", componentName));
-				PatternStorage.registerPattern(composite);
+				PatternStorage.addIClass(composite);
 				// TODO: register pattern instead of labeling
 //				labelComponent(componentName);
 //				labelComposite(getter.getClassName());
@@ -45,7 +45,7 @@ public class CompositePatternDetector implements IPatternDetector {
 				String componentName = Helpers.getName(this.component.getClassName());
 				Pattern leaf = new Pattern(leafLabel, colorString, "", className);
 				leaf.addRelatedClass(new Pattern(componentLabel, colorString, "", componentName));
-				PatternStorage.registerPattern(leaf);
+				PatternStorage.addIClass(leaf);
 				// TODO: register pattern instead of labeling
 //				labelComponent(componentName);
 //				labelLeaf(getter.getClassName());

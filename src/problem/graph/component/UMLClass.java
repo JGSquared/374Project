@@ -35,6 +35,7 @@ public class UMLClass implements IClass {
 		for (IField f : this.fields) {
 			f.accept(v);
 		}
+		v.visit(this);
 		for (IMethod m : this.methods) {
 			m.accept(v);
 		}

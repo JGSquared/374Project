@@ -32,7 +32,7 @@ public class SingletonPatternDetector implements IPatternDetector {
 				// TODO: Register pattern instead of labeling
 				String className = Helpers.getName(parsedCode.get("className"));
 				Pattern singleton = new Pattern(patternLabel, colorString, "", className);
-				PatternStorage.registerPattern(singleton);
+				PatternStorage.addIClass(singleton);
 //				StringBuilder sb = new StringBuilder(classCode.get(className));
 //				// int fromIndex = Helpers.getClassDeclarationIndex(className,
 //				// sb);

@@ -40,7 +40,7 @@ public class DecoratorPatternDetector implements IPatternDetector {
 				String className = Helpers.getName(getter.getClassName());
 				Pattern decorator = new Pattern(label, color, arrow, className);
 				decorator.addRelatedClass(new Pattern(componentLabel, colorString, arrowLabel, this.componentName));
-				PatternStorage.registerPattern(decorator);
+				PatternStorage.addIClass(decorator);
 //				labelDecorator(getter);
 //				labelComponent();
 //				if (isAssociated(getter)) {

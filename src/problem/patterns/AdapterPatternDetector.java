@@ -39,7 +39,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 				Pattern adapt = new Pattern(patternLabelAdapter, colorString, "", adapter);
 				adapt.addRelatedClass(new Pattern(patternLabelAdaptee, colorString, arrowLabel, adaptee));
 				adapt.addRelatedClass(new Pattern(patternLabelTarget, colorString, "", target));
-				PatternStorage.registerPattern(adapt);
+				PatternStorage.addIClass(adapt);
 //				labelAdaptee(adaptee);
 //				labelAdapter(adapter);
 //				labelTarget(target);

@@ -6,6 +6,6 @@ public interface IVisitor {
 	void postVisit(ITraverser c);
 	
 	void addPreVisit(Class klass, ICommand command);
-	void addVisit(Class partOfInterest, ICommand command);
-	void addPostVisit(Class partOfInterest, ICommand command);
+	void addVisit(Class klass, ICommand command);
+	void addPostVisit(Class klass, ICommand command);
 }
