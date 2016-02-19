@@ -43,6 +43,17 @@ M6: The design of our tool for this milestone evolved slightly to make it easier
 	and now knowing the class name makes it quick to find the correct piece of code and inject the proper labels and colors. All of 
 	these string are combined after the detectors have run to generate the full graph. Outside of this change, our design stayed
 	consistent, and we only added one new class, CompositePatternDetector, to solve the problem for this milestone.
+	
+M7: This milestone saw one of the most substantial changes to our design yet. In the past, we were generating Strings for each class
+	before running our pattern detectors, and our detectors would use copious amounts of String parsing to place the correct labels
+	and colors into their proper place. This design made it near impossible to separate our program into distinct phases, because each
+	step required arguments to be passed in from a previous step. This entire process was redesigned using a combination of the Command,
+	Visitor, and Singleton patterns. The Command pattern is used to run the phases in sequence, where each phase is responsible for 
+	creating and executing any classes it needs to run (See INSTRUCTIONS for information about phases). We use two Singletons, one for
+	maintaining the runtime properties of the session, as determined by the config file, and another to maintain the data structures
+	that represent a Class object (IClass, see MORE INFO). Finally, the visitor pattern is employed at the end step of the core code's
+	execution. Our visitors allow us to traverse our data structures and generate the GraphViz code without relying on any other phases. 
+
 
 ### CONTRIBUTORS ###
 
@@ -67,6 +78,10 @@ M5: Implemented Adapter detector.
 	
 M6: Implemented Composite detector.
 	Implemented new tests.
+	
+M7: Implemented majority of GUI code.
+	Implemented Properties.
+	
 
 Josh Green:
 
@@ -90,6 +105,9 @@ M5: Implemented Decorator detector.
 	
 M6: Implemented Composite detector.
 	Updated documentation, including UML and README.
+	
+M7: Implemented majority of refactor.
+	Implemented ClassStorage Singleton.
 
 
 ### INSTRUCTIONS ###
@@ -119,6 +137,24 @@ M6: Implemented Composite detector.
 	In Milestone 5, DotGraphDesign must have IPatternDetectors registered, much like IGraphCode. Calling useDefaultPatternDetectors()
 	will use all of our default implementations of IPatternDetector. 
 	
+	HOW-TO: Specify execution order of phases
+	Specifying the execution order of phases can be done in two simple steps. First, you should create or edit
+	a new txt file with the format described in MORE INFO. This file should have a property called Phases. Just
+	set the value of that property to a comma separated list of phase names you wish to execute in the order you
+	want them to execute. Next, you will need to add the phases to a PhaseRunner class (most likely in the main
+	method). Just create a PhaseRunner, and call addPhase, passing in the name of the phase, and an IPhase
+	instance that should be executed for that name. If you have added every phase correctly, calling the run
+	method of PhaseRunner will ensure that the phases defined in the config execute in the proper order you
+	defined.
+	
+	HOW-TO: Set pattern specific settings
+	For any pattern specific setting, you will need to add a custom key, value pair to the config, and create a
+	new implementation of IPhase that can be executed as described above. To provide as much flexibility as 
+	possible to the user, we expect each IPhase to instantiate the classes it will use. Thus, if you define a 
+	custom property, you can retrieve it from within your IPhase by calling ConfigProperties.getInstance().getProperty(<your-property>). Then, having access to the parameter you defined,
+	you can use it as an argument to any class that accepts it. Again, this is up to the IPhase itself to ensure
+	the parameter is handled properly.
+	
 
 ### MORE INFO ###
 
@@ -146,3 +182,32 @@ Current <Key, Value> pairs found inside DesignParser HashMap<String, String>:
 					 in a sequence diagram as [className], where [className] is the node's class.
 	sequenceMethod<i>: i is an int representing the order in which this method is called. The value is a representation of the method
 					   call as [caller]:[callee]:[method]:[args]
+					  
+					  
+Proper format for a config file:
+
+	For a config file to be read properly by our program, it must follow the format outlined by the Java
+	Properties class. This means that each property must be defined on its own line, and follow the following
+	format: "<key-name>: <value>". Normally, each value will be read in as a String, but there are five required
+	properties for our config files, and failure to provide any of them could lead to errors. The keys and value
+	formats are:
+	
+	Input-Folder: A path to a directory
+	Input-Classes: A comma separated list of the full package for a Java	class (i.e. List should be
+		java.util.List)
+	Output-Directory: a path to a directory
+	Dot-Path: path to the file 'dot.exe'
+	Phases: Comma separated list of phase names
+	
+	Any other property key,value pairs can be specified in the same file, and will be stored in ConfigProperties
+	as a String value, which can be retrieved by calling getProperty with the key.
+
+Explanation of data structures:
+
+	To ease the process of generating code, we store a List of IClass, each of which contains Lists for IField,
+	IMethod, and IArrow. The fields contained in each can be seen by checking the interfaces or the specific
+	implementations (All of which can be found in problem.graph.component). To ensure that any class can access
+	these structures without a need to pass the List around, we store our data structures in a Singleton, 
+	ClassStorage, which provides all necessary methods for storing and retrieving the data. 
+
+
