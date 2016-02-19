@@ -125,4 +125,7 @@ public class UMLCodeWriter extends AbstractCodeWriter {
 		});		
 	}
 
+	public OutputStream getStream() {
+		return out;
+	}
 }

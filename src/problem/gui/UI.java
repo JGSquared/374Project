@@ -69,6 +69,7 @@ public class UI extends JPanel{
 		progressBar = new JProgressBar(0, 100);
         progressBar.setValue(0);
         progressBar.setStringPainted(true);
+        ConfigProperties.getInstance().setProgressBar(progressBar);
         this.add(buttonPanel, BorderLayout.CENTER);
 		this.add(progressBar, BorderLayout.SOUTH);
 	}

@@ -2,6 +2,10 @@ package problem;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -22,6 +26,12 @@ public class ImageProxy {
 			retrievalThread = new Thread(new Runnable() {
 				public void run() {
 					try {
+						// Go through phases here
+//						String[] phases = ConfigProperties.getInstance().getPhases();
+//						for (String phase : phases) {
+//							
+//						}
+						
 						
 						c.revalidate();
 						c.repaint();
@@ -35,7 +45,8 @@ public class ImageProxy {
 	}
 	
 //	public void generateGraph() throws IOException {
-//		OutputStream out = new FileOutputStream(fp.fileIn);
+//		File newOutFile = new File("./input_output/newOutput");
+//		OutputStream out = new FileOutputStream(newOutFile);
 //		out.write(sb.toString().getBytes());
 //		out.close();
 //

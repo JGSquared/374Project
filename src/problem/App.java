@@ -29,7 +29,7 @@ public class App {
 //			System.out.println(className.getClassName());
 //			System.out.println(className.getPatternLabel());
 		}
-		ConfigProperties.getInstance().setupConfig("./input_output/config.txt");
+//		ConfigProperties.getInstance().setupConfig("./input_output/config.txt");
 //		
 //		for (Pattern p : PatternStorage.getPatterns()) {
 //			System.out.println("Class name: " + p.getClassName());
