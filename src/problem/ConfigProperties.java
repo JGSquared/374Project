@@ -36,6 +36,11 @@ public class ConfigProperties {
 		outputFolder = props.get("Output-Directory").toString();
 		dotPath = props.get("Dot-Path").toString();
 		phases = props.get("Phases").toString().split(",");
+		System.out.println("CONFIRMED");
+		System.out.println(inputFolder);
+		for (String ic : inputClasses) {
+			System.out.println(ic);
+		}
 	}
 
 	public String getInputFolder() {

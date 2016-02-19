@@ -4,16 +4,22 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+
+import problem.ConfigProperties;
 
 public class UI extends JPanel{
 	private static final long serialVersionUID = -3778143600831095610L;
 	private static final String loadButton = "Load Config";
 	private static final String analyze = "Analyze";
+	private String fileSelected;
 	
 	JFrame frame;
 	JProgressBar progressBar;
@@ -36,7 +42,10 @@ public class UI extends JPanel{
 		loadButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Cool");
+				JFileChooser fc = new JFileChooser();
+				fc.showOpenDialog(loadButton);
+				fileSelected = fc.getSelectedFile().toString();
+				System.out.println("SELECTED");
 			}
 		});
 		buttonPanel.add(loadButton);
@@ -46,7 +55,11 @@ public class UI extends JPanel{
 		analyzeButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Man");
+				try {
+					ConfigProperties.getInstance().setupConfig(fileSelected);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		buttonPanel.add(analyzeButton);

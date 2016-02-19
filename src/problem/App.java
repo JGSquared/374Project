@@ -6,6 +6,7 @@ import problem.api.IClass;
 import problem.api.IDesignParser;
 import problem.api.IGraphDesign;
 import problem.api.IPatternDetector;
+import problem.gui.UI;
 import problem.patterns.AdapterPatternDetector;
 import problem.patterns.DecoratorPatternDetector;
 import problem.patterns.SingletonPatternDetector;
@@ -38,7 +39,7 @@ public class App {
 //			}
 //		}
 		
-//		UI ui = new UI();
+		UI ui = new UI();
 	}
 	
 }
