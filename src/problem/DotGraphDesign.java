@@ -36,7 +36,7 @@ public class DotGraphDesign implements IGraphDesign {
 //		classCode.put(Helpers.getName(items.get("className")), graphCode.toString());
 //		this.classProperties.add(items);
 		String className = getters.getClassName();
-		IClass c = new UMLClass("", className, getters.getAccess(), "");
+		IClass c = new UMLClass("", className, getters.getAccess(), "", false);
 		for (String fieldName : getters.getFieldNames()) {
 			IField f = new UMLField(fieldName, getters.getFieldAccess(fieldName), getters.getFieldType(fieldName));
 			c.addIField(f);
@@ -51,14 +51,14 @@ public class DotGraphDesign implements IGraphDesign {
 		}
 		String extendsName = getters.getClassExtends();
 		if (!extendsName.equals("") && !fp.whiteList.contains(extendsName) && Helpers.isClassNameValid(extendsName)) {
-			c.addIArrow(new UMLArrow(className, extendsName, "", "extends", "onormal", "solid", ""));
+			c.addIArrow(new UMLArrow(className, extendsName, "", "extends", "onormal", "solid", "", false));
 		}
 		String[] implementsNames = getters.getClassImplements();
 		for (int i = 0; i < implementsNames.length; i++) {
 			if (!Helpers.isClassNameValid(implementsNames[i]) || fp.whiteList.contains(implementsNames[i])) {
 				continue;
 			}
-			c.addIArrow(new UMLArrow(className, implementsNames[i], "", "implements", "onormal", "dashed", ""));
+			c.addIArrow(new UMLArrow(className, implementsNames[i], "", "implements", "onormal", "dashed", "", false));
 		}
 		ArrayList<String> associatedList = getters.getClassAssociates();
 		ArrayList<String> fieldList = getters.getFieldNames();
@@ -69,7 +69,7 @@ public class DotGraphDesign implements IGraphDesign {
 				continue;
 			}
 			if (!type.equals("") && !fp.whiteList.contains(type) && !usedList.contains(type) && !type.equals(className)) {
-				c.addIArrow(new UMLArrow(className, type, "", "associated", "open", "solid", ""));
+				c.addIArrow(new UMLArrow(className, type, "", "associated", "open", "solid", "", false));
 				usedList.add(type);
 			}
 		}
@@ -81,7 +81,7 @@ public class DotGraphDesign implements IGraphDesign {
 			}
 			if (!signature.equals("EMPTY")) {
 				if (!signature.equals("") && !fp.whiteList.contains(signature) && !usedList.contains(signature)) {
-					c.addIArrow(new UMLArrow(className, signature, "", "associated", "open", "solid", ""));
+					c.addIArrow(new UMLArrow(className, signature, "", "associated", "open", "solid", "", false));
 					usedList.add(signature);
 				}
 			}
@@ -104,7 +104,7 @@ public class DotGraphDesign implements IGraphDesign {
 					continue;
 				}
 				if (!argType.equals("") && !fp.whiteList.contains(argType) && !usedList.contains(argType)) {
-					c.addIArrow(new UMLArrow(className, argType, "", "uses", "open", "dashed", ""));
+					c.addIArrow(new UMLArrow(className, argType, "", "uses", "open", "dashed", "", false));
 					usedList.add(argType);
 				}
 			}
@@ -117,7 +117,7 @@ public class DotGraphDesign implements IGraphDesign {
 				continue;
 			}
 			if (!owner.equals("") && !fp.whiteList.contains(owner) && !usedList.contains(owner) && !owner.equals(className)) {
-				c.addIArrow(new UMLArrow(className, owner, "", "uses", "open", "dashed", ""));
+				c.addIArrow(new UMLArrow(className, owner, "", "uses", "open", "dashed", "", false));
 				usedList.add(owner);
 			}
 		}

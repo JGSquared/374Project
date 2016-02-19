@@ -14,16 +14,18 @@ public class UMLClass implements IClass {
 	private String className;
 	private int access;
 	private String patternLabel;
+	private boolean canLabel;
 	private List<IClass> related;
 	private List<IField> fields;
 	private List<IMethod> methods;
 	private List<IArrow> arrows;
 
-	public UMLClass(String color, String className, int access, String patternLabel) {
+	public UMLClass(String color, String className, int access, String patternLabel, boolean canLabel) {
 		this.color = color;
 		this.className = className;
 		this.access = access;
 		this.patternLabel = patternLabel;
+		this.canLabel = canLabel;
 		this.related = new ArrayList<>();
 		this.fields = new ArrayList<>();
 		this.methods = new ArrayList<>();
@@ -138,6 +140,16 @@ public class UMLClass implements IClass {
 	@Override
 	public void addRelated(IClass related) {
 		this.related.add(related);
+	}
+
+	@Override
+	public boolean getCanLabel() {
+		return canLabel;
+	}
+
+	@Override
+	public void setCanLabel(boolean canLabel) {
+		this.canLabel = canLabel;
 	}
 
 }

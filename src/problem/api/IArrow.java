@@ -16,5 +16,7 @@ public interface IArrow extends ITraverser {
 	void setStyle(String style);
 	String getLabel();
 	void setLabel(String label);
+	boolean getCanLabel();
+	void setCanLabel(boolean canLabel);
 	
 }
