@@ -9,7 +9,7 @@ public interface IArrow extends ITraverser {
 	String getColor();
 	void setColor(String color);
 	String getType();
-	void setType();
+	void setType(String type);
 	String getArrowhead();
 	void setArrowhead(String arrowhead);
 	String getStyle();
