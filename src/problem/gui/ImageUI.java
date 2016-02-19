@@ -1,13 +1,15 @@
 package problem.gui;
 
 import java.awt.BorderLayout;
+import java.awt.image.ImageConsumer;
 
-import javax.swing.JButton;
+import javax.swing.Icon;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
+import problem.ImageComponent;
+import problem.ImageProxy;
 import problem.PhaseRunner;
 import problem.jfactory.AbstractCheckListFactory;
 import problem.jfactory.JCheckList;
@@ -17,6 +19,8 @@ public class ImageUI extends JPanel {
 	private PhaseRunner runner;
 	private JFrame frame;
 	private AbstractCheckListFactory factory;
+	ImageComponent imageComponent;
+	Icon icon;
 
 	public ImageUI(PhaseRunner runner) {
 		this.runner = runner;
@@ -41,11 +45,12 @@ public class ImageUI extends JPanel {
 		addCheckList(newPanel, singletonList);
 		addCheckList(newPanel, compositeList);
 		addCheckList(newPanel, adapterList);
-		newPanel.add(decoratorList);
+//		newPanel.add(decoratorList);
 		for (JCheckBox box : decoratorList.getSubCheckBoxes()) {
-			newPanel.add(box);
+			newPanel.add(box, BorderLayout.NORTH);
 		}
 		frame.setContentPane(newPanel);
+		icon = new ImageProxy(frame);
 		this.revalidate();
 		this.repaint();
 	}
@@ -61,7 +66,12 @@ public class ImageUI extends JPanel {
 	}
 	
 	private void createImage() {
-		
+		JPanel newPanel = new JPanel();
+		imageComponent = new ImageComponent(icon);
+		newPanel.add(imageComponent);
+		frame.getContentPane().add(newPanel);
+		this.revalidate();
+		this.repaint();
 	}
 
 }

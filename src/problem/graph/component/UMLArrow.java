@@ -26,8 +26,7 @@ public class UMLArrow implements IArrow {
 
 	@Override
 	public void accept(IVisitor v) {
-		// TODO Auto-generated method stub
-
+		v.visit(this);
 	}
 
 	@Override

@@ -56,7 +56,7 @@ public class UMLCodeWriter extends AbstractCodeWriter {
 				if (c.getAccess() == 1537) {
 					s += "\\<\\<interface\\>\\>\\n";
 				}
-				s += c.getClassName();
+				s += Helpers.getName(c.getClassName());
 				if (c.getCanLabel() && !c.getPatternLabel().equals("")) {
 					s += "\\n\\<\\<" + c.getPatternLabel() + "\\>\\>";
 				}
@@ -94,7 +94,7 @@ public class UMLCodeWriter extends AbstractCodeWriter {
 					return;
 				}
 				String s = Helpers.getAccessSymbol(m.getAccess()) + " " + m.getName() + m.getArgTypes().toString().replaceAll("\\[", "(").replaceAll("\\]", ")")
-						+ " : " + Helpers.getName(m.getReturnType());
+						+ " : " + Helpers.getName(m.getReturnType()) + "\\l";
 				write(s);
 			}
 		});

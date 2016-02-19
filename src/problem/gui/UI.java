@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import problem.ConfigProperties;
-import problem.ImageProxy;
 import problem.PhaseRunner;
 
 public class UI extends JPanel{

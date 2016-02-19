@@ -16,10 +16,12 @@ public class Helpers {
 		String intermediatePath = paths[paths.length - 1];
 		String[] intermediatePaths = intermediatePath.split("\\.");
 		String newPath = intermediatePaths[intermediatePaths.length - 1];
-		if (newPath.indexOf("<") != -1) {
-			newPath = newPath.substring(0, newPath.indexOf("<"));
+		String[] nextPaths = newPath.split("\\\\");
+		String finalPath = nextPaths[nextPaths.length - 1];
+		if (finalPath.indexOf("<") != -1) {
+			finalPath = finalPath.substring(0, finalPath.indexOf("<"));
 		}
-		return newPath;
+		return finalPath;
 	}
 	
 	public static String getAccessSymbol(int access) {
