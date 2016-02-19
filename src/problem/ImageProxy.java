@@ -56,4 +56,7 @@ public class ImageProxy {
 //						"cmd.exe", "/k", "\"" + fp.graphVizPath + "\" " + fp.flags + " " + fp.fileIn + " > " + fp.fileOut});
 //
 //	}
+//	JTextArea text = new JTextArea(0, 0);
+//	text.setText("Loading Image, please wait...");
+//	c.add(text, BorderLayout.CENTER);
 }

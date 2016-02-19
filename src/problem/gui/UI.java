@@ -14,6 +14,7 @@ import javax.swing.JProgressBar;
 
 import problem.ConfigProperties;
 import problem.ImageProxy;
+import problem.PhaseRunner;
 
 public class UI extends JPanel{
 	private static final long serialVersionUID = -3778143600831095610L;
@@ -23,7 +24,10 @@ public class UI extends JPanel{
 	
 	JFrame frame;
 	JProgressBar progressBar;
-	public UI() {
+	PhaseRunner runner;
+	
+	public UI(PhaseRunner runner) {
+		this.runner = runner;
 		JFrame frame = new JFrame("Pattern Detection");
 		frame.setContentPane(this);
 		frame.setSize(500, 250);
@@ -57,6 +61,7 @@ public class UI extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					ConfigProperties.getInstance().setupConfig(fileSelected);
+					runner.run();
 					clearScreen();
 					createDisplay();
 				} catch (IOException e1) {
@@ -65,7 +70,6 @@ public class UI extends JPanel{
 			}
 		});
 		buttonPanel.add(analyzeButton);
-		this.
 		progressBar = new JProgressBar(0, 100);
         progressBar.setValue(0);
         progressBar.setStringPainted(true);

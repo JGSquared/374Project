@@ -21,8 +21,9 @@ public class App {
 		runner.addPhase("Loader", new LoaderPhase());
 		runner.addPhase("Decorator-Detector", new DecoratorPhase());
 		runner.addPhase("Singleton-Detector", new SingletonPhase());
-		ConfigProperties.getInstance().setupConfig("C:\\Users\\greenjm\\Documents\\Classes\\CS374\\Project\\374Project\\input_output\\config.txt");
-		runner.run();
+//		ConfigProperties.getInstance().setupConfig("C:\\Users\\greenjm\\Documents\\Classes\\CS374\\Project\\374Project\\input_output\\config.txt");
+		UI ui = new UI(runner);
+//		runner.run();
 //		IDesignParser dp = new ClassDesignParser();
 //		IGraphDesign graphDesigner = new DotGraphDesign();
 //		
@@ -47,7 +48,6 @@ public class App {
 ////			}
 ////		}
 //		
-//		UI ui = new UI();
 	}
 	
 }
