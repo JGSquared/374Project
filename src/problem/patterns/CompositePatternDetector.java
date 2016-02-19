@@ -89,6 +89,9 @@ public class CompositePatternDetector implements IPatternDetector {
 		for (IMethod method : methods) {
 			name = method.getName();
 			argTypes = method.getArgTypes();
+			for (int i = 0; i < argTypes.size(); i++) {
+				argTypes.set(i, Helpers.getName(argTypes.get(i)));
+			}
 			returnType = method.getReturnType();
 //			argTypes = new ArrayList<String>();
 //			for (int i = 0; i < argTypesArray.length; i++) {
@@ -143,6 +146,9 @@ public class CompositePatternDetector implements IPatternDetector {
 		for (IMethod method : methods) {
 			name = method.getName();
 			argTypes = method.getArgTypes();
+			for (int i = 0; i < argTypes.size(); i++) {
+				argTypes.set(i, Helpers.getName(argTypes.get(i)));
+			}
 			returnType = method.getReturnType();
 //			argTypes = new ArrayList<>();
 //			for (int i = 0; i < argTypesArray.length; i++) {
@@ -188,6 +194,9 @@ public class CompositePatternDetector implements IPatternDetector {
 		for (IMethod cMethod : componentMethods) {
 			cMethodName = cMethod.getName();
 			cArgtypes = cMethod.getArgTypes();
+			for (int i = 0; i < cArgtypes.size(); i++) {
+				cArgtypes.set(i, Helpers.getName(cArgtypes.get(i)));
+			}
 			cReturnType = cMethod.getReturnType();
 			if (cMethodName.equals(methodName) && cArgtypes.equals(argTypes) && cReturnType.equals(returnType)) {
 				return true;
@@ -218,6 +227,9 @@ public class CompositePatternDetector implements IPatternDetector {
 			List<String> argTypes;
 			for (IMethod method : methods) {
 				argTypes = method.getArgTypes();
+				for (int i = 0; i < argTypes.size(); i++) {
+					argTypes.set(i, Helpers.getName(argTypes.get(i)));
+				}
 //				argTypesArray = getter.getMethodArgTypes(methodName);
 //				argTypes = new ArrayList<>();
 //				for (int i = 0; i < argTypesArray.length; i++) {

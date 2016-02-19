@@ -48,11 +48,12 @@ public class DecoratorPatternDetector implements IPatternDetector {
 					if (Helpers.getName(ic.getClassName()).equals(this.componentName)) {
 						ic.setColor(colorString);
 						ic.setPatternLabel(componentLabel);
-						for (IArrow a : ic.getArrows()) {
-							if (Helpers.getName(a.getTo()).equals(this.componentName) && a.getType().equals("associated")) {
-								a.setLabel(arrowLabel);
-							}
-						}
+						c.addRelated(ic);
+					}
+				}
+				for (IArrow a : c.getArrows()) {
+					if (Helpers.getName(a.getTo()).equals(this.componentName) && a.getType().equals("associated")) {
+						a.setLabel(arrowLabel);
 					}
 				}
 //				labelDecorator(getter);
@@ -161,6 +162,9 @@ public class DecoratorPatternDetector implements IPatternDetector {
 //				for (int i = 0; i < argTypesArray.length; i++) {
 //					argTypes.add(Helpers.getName(argTypesArray[i].trim()));
 //				}
+				for (int i = 0; i < argTypes.size(); i++) {
+					argTypes.set(i, Helpers.getName(argTypes.get(i)));
+				}
 				if (argTypes.contains(name)) {
 					return true;
 				}
