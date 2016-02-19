@@ -21,17 +21,20 @@ public class ImageProxy implements Icon {
 	ImageIcon imageIcon;
 	Thread retrievalThread;
 	boolean retrieving = false;
+	boolean changed = false;
 	JFrame frame;
 	JLabel label;
 	JScrollPane pane;
 	JPanel newPanel;
 	boolean completedLoading = false;
 	JTextArea text;
+	PhaseRunner runner;
      
-	public ImageProxy(JFrame frame) {
+	public ImageProxy(JFrame frame, PhaseRunner runner) {
 		text = new JTextArea(0, 0);
 		newPanel = new JPanel();
 		this.frame = frame;
+		this.runner = runner;
 		label = new JLabel();
 		newPanel.add(label);
 		pane = new JScrollPane(newPanel);
@@ -59,23 +62,30 @@ public class ImageProxy implements Icon {
 	}
      
 	public void paintIcon(final Component c, Graphics  g, int x,  int y) {
-		if (imageIcon != null) {
-			frame.getContentPane().remove(text);
+		if (imageIcon != null && !changed) {
+			frame.getContentPane().remove(text);			
 			label.setIcon(imageIcon);
 			frame.revalidate();
 			frame.repaint();
 //			completedLoading = true;
 		} else {
+			imageIcon = null;
+			label.setIcon(imageIcon);
+			frame.revalidate();
+			frame.repaint();
 //			JTextArea text = new JTextArea(0, 0);
 			text.setText("Loading Image, please wait...");
 			frame.getContentPane().add(text);
 			if (!retrieving) {
+				System.out.println("retrieving");
 				retrieving = true;
+				changed = false;
 
 				retrievalThread = new Thread(new Runnable() {
 					public void run() {
 						try {
 //							imageIcon = new ImageIcon(imageURL, "CD Cover");
+							runner.createGraph();
 							
 							Runtime rt = Runtime.getRuntime();
 							Process pr = rt
@@ -87,6 +97,7 @@ public class ImageProxy implements Icon {
 							InputStream in = new FileInputStream(ConfigProperties.getInstance().getOutputFolder() + "\\" + "output.png");
 							byte[] data = IOUtils.readFully(in, -1, false);
 							imageIcon = new ImageIcon(data);
+							retrieving = false;
 							c.repaint();
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -97,10 +108,11 @@ public class ImageProxy implements Icon {
 			}
 		}
 	}
-	
-	public boolean isCompleted() {
-		return completedLoading;
+
+	public void setChanged() {
+		changed = true;
 	}
+	
 //	public void generateGraph() throws IOException {
 //		File newOutFile = new File("./input_output/newOutput");
 //		OutputStream out = new FileOutputStream(newOutFile);
