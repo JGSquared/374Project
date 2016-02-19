@@ -27,7 +27,7 @@ public class ImageUI extends JPanel {
 		this.factory = new StandardCheckListFactory();
 		frame = new JFrame("Pattern Detection");
 //		frame.setContentPane(this);
-		frame.setSize(800, 500);
+		frame.setSize(1500, 1200);
 		createCheckLists();
 		createImage();
 		this.setLayout(new BorderLayout());
@@ -46,9 +46,9 @@ public class ImageUI extends JPanel {
 		addCheckList(newPanel, compositeList);
 		addCheckList(newPanel, adapterList);
 //		newPanel.add(decoratorList);
-		for (JCheckBox box : decoratorList.getSubCheckBoxes()) {
-			newPanel.add(box, BorderLayout.NORTH);
-		}
+//		for (JCheckBox box : decoratorList.getSubCheckBoxes()) {
+//			newPanel.add(box, BorderLayout.NORTH);
+//		}
 		frame.setContentPane(newPanel);
 		icon = new ImageProxy(frame);
 		this.revalidate();

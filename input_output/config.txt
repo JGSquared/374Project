@@ -1,4 +1,4 @@
-Input-Folder: C:\\Users\\greenjm\\Documents\\Classes\\CS374\\Project\\374Project\\src
+Input-Folder: C:\\Users\\gaysojj\\git\\374Project\\src
 
 Input-Classes: java.util.List
 

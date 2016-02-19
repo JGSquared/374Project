@@ -1,17 +1,17 @@
 package problem;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.nio.file.Files;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import sun.misc.IOUtils;
 
@@ -21,9 +21,21 @@ public class ImageProxy implements Icon {
 	Thread retrievalThread;
 	boolean retrieving = false;
 	JFrame frame;
+	JLabel label;
+	JScrollPane pane;
+	JPanel newPanel;
      
 	public ImageProxy(JFrame frame) {
+		newPanel = new JPanel();
 		this.frame = frame;
+		label = new JLabel();
+		newPanel.add(label);
+		pane = new JScrollPane(newPanel);
+		pane.setPreferredSize(new Dimension(1200, 900));
+		frame.getContentPane().add(pane);
+//		frame.getContentPane().setPreferredSize(new Dimension(600, 400));
+		pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	}
      
 	public int getIconWidth() {
@@ -45,8 +57,7 @@ public class ImageProxy implements Icon {
 	public void paintIcon(final Component c, Graphics  g, int x,  int y) {
 		if (imageIcon != null) {
 			System.out.println("HERE");
-			imageIcon.paintIcon(c, g, x, y);
-			frame.getContentPane().add(c);
+			label.setIcon(imageIcon);
 			frame.revalidate();
 			frame.repaint();
 		} else {
