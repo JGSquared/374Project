@@ -61,4 +61,12 @@ public class Helpers {
 		// Performs necessary checks to ensure the className follows correct syntax
 		return !className.contains("$");
 	}
+	
+	public static String getPackageFromPath(String filePath, String basePath) {
+		// Given a filepath and base path, returns a package name that could be used by ASM
+		// i.e. c:/src/problem/App.java, c:/src becomes problem.App
+		String packagePath = filePath.substring(basePath.length() + 1, filePath.length() - 5); //Strips base path and .java
+		packagePath = packagePath.replaceAll("\\\\", "\\.");
+		return packagePath;
+	}
 }
