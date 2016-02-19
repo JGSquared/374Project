@@ -61,7 +61,7 @@ public class UI extends JPanel{
 				try {
 					ConfigProperties.getInstance().setupConfig(fileSelected);
 					runner.run();
-					clearScreen();
+//					clearScreen();
 					createDisplay();
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -83,8 +83,10 @@ public class UI extends JPanel{
 	}
 	
 	public void createDisplay() {
-		frame.setVisible(false);
-		ImageUI nextUI = new ImageUI(runner);
+		ImageUI nextUI = new ImageUI(runner, progressBar);
+		while (progressBar.getValue() != 100) {
+		}
+//		frame.setVisible(false);
 //		JPanel imagePanel = new JPanel();
 //		imagePanel.setLayout(new BorderLayout());
 //		ImageProxy image = new ImageProxy();

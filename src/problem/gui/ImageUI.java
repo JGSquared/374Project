@@ -1,7 +1,6 @@
 package problem.gui;
 
 import java.awt.BorderLayout;
-import java.awt.image.ImageConsumer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import javax.swing.Icon;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 import problem.ClassStorage;
 import problem.ImageComponent;
@@ -25,8 +25,10 @@ public class ImageUI extends JPanel {
 	private List<JCheckList> lists = new ArrayList<>();
 	ImageComponent imageComponent;
 	Icon icon;
+	JProgressBar progressBar;
 
-	public ImageUI(PhaseRunner runner) {
+	public ImageUI(PhaseRunner runner, JProgressBar progressBar) {
+		this.progressBar = progressBar;
 		this.runner = runner;
 		this.factory = new StandardCheckListFactory();
 		frame = new JFrame("Pattern Detection");
@@ -46,16 +48,23 @@ public class ImageUI extends JPanel {
 		JCheckList singletonList = this.factory.createCheckList("Singleton");
 		JCheckList compositeList = this.factory.createCheckList("Composite");
 		JCheckList adapterList = this.factory.createCheckList("Adapter");
+		progressBar.setValue(progressBar.getValue() + 15);
 		addCheckList(newPanel, decoratorList);
+		progressBar.setValue(progressBar.getValue() + 15);
 		addCheckList(newPanel, singletonList);
+		progressBar.setValue(progressBar.getValue() + 15);
 		addCheckList(newPanel, compositeList);
+		progressBar.setValue(progressBar.getValue() + 15);
 		addCheckList(newPanel, adapterList);
-		// newPanel.add(decoratorList);
-		// for (JCheckBox box : decoratorList.getSubCheckBoxes()) {
-		// newPanel.add(box, BorderLayout.NORTH);
-		// }
+		progressBar.setValue(progressBar.getValue() + 15);
+//		newPanel.add(decoratorList);
+//		for (JCheckBox box : decoratorList.getSubCheckBoxes()) {
+//			newPanel.add(box, BorderLayout.NORTH);
+//		}
 		frame.setContentPane(newPanel);
 		icon = new ImageProxy(frame, runner);
+		progressBar.setValue(progressBar.getValue() + 15);
+//		this.frame.setVisible(true);
 		this.revalidate();
 		this.repaint();
 	}
@@ -78,6 +87,12 @@ public class ImageUI extends JPanel {
 		frame.getContentPane().add(newPanel);
 		this.revalidate();
 		this.repaint();
+//		while (true) {
+//			if (((ImageProxy) icon).isCompleted()) {
+//				break;
+//			}
+//		}
+		progressBar.setValue(progressBar.getValue() + 10);
 	}
 
 	private void startLiveUpdateThread() {

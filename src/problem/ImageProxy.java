@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import sun.misc.IOUtils;
 
@@ -25,9 +26,12 @@ public class ImageProxy implements Icon {
 	JLabel label;
 	JScrollPane pane;
 	JPanel newPanel;
+	boolean completedLoading = false;
+	JTextArea text;
 	PhaseRunner runner;
      
 	public ImageProxy(JFrame frame, PhaseRunner runner) {
+		text = new JTextArea(0, 0);
 		newPanel = new JPanel();
 		this.frame = frame;
 		this.runner = runner;
@@ -59,17 +63,19 @@ public class ImageProxy implements Icon {
      
 	public void paintIcon(final Component c, Graphics  g, int x,  int y) {
 		if (imageIcon != null && !changed) {
+			frame.getContentPane().remove(text);			
 			label.setIcon(imageIcon);
 			frame.revalidate();
 			frame.repaint();
+//			completedLoading = true;
 		} else {
 			imageIcon = null;
 			label.setIcon(imageIcon);
 			frame.revalidate();
 			frame.repaint();
 //			JTextArea text = new JTextArea(0, 0);
-//			text.setText("Loading Image, please wait...");
-//			frame.getContentPane().add(text);
+			text.setText("Loading Image, please wait...");
+			frame.getContentPane().add(text);
 			if (!retrieving) {
 				System.out.println("retrieving");
 				retrieving = true;
@@ -102,7 +108,7 @@ public class ImageProxy implements Icon {
 			}
 		}
 	}
-	
+
 	public void setChanged() {
 		changed = true;
 	}
