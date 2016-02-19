@@ -32,6 +32,10 @@ public class PhaseRunner {
 			}
 		}
 		
+		createGraph();
+	}
+	
+	public void createGraph() {
 		new IPhase() {
 			
 			@Override

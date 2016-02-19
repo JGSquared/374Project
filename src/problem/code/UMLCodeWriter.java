@@ -33,6 +33,11 @@ public class UMLCodeWriter extends AbstractCodeWriter {
 		}
 		
 		write("}");
+		try {
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void write(String s) {
