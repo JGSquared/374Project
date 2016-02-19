@@ -13,16 +13,19 @@ import problem.api.IGraphDesign;
 import problem.api.IPhase;
 
 public class LoaderPhase implements IPhase {
+	private String baseDirectory = "";
 
 	@Override
 	public void execute() {
 		ConfigProperties props = ConfigProperties.getInstance();
 		ArrayList<String> classes = new ArrayList<>();
+		this.baseDirectory = props.getInputFolder();
 		listf(props.getInputFolder(), classes);
 		for (String s : props.getInputClasses()) {
 			classes.add(s);
 		}
-		String[] args = (String[]) classes.toArray();
+		String[] args = new String[classes.size()];
+		args = classes.toArray(args);
 		IDesignParser dp = new ClassDesignParser();
 		IGraphDesign graphDesigner = new DotGraphDesign();
 		try {
@@ -32,14 +35,14 @@ public class LoaderPhase implements IPhase {
 		}
 	}
 	
-	private static void listf(String directoryName, ArrayList<String> classes) {
+	private void listf(String directoryName, ArrayList<String> classes) {
 	    File directory = new File(directoryName);
 
 	    // get all the files from a directory
 	    File[] fList = directory.listFiles();
 	    for (File file : fList) {
 	        if (file.isFile() && isJavaFile(file)) {
-	            classes.add(Helpers.getPackageFromPath(file.getAbsolutePath(), directoryName));
+	            classes.add(Helpers.getPackageFromPath(file.getAbsolutePath(), this.baseDirectory));
 	        } else if (file.isDirectory()) {
 	            listf(file.getAbsolutePath(), classes);
 	        }

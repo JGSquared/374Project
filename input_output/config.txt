@@ -1,8 +1,8 @@
-Input-Folder: c:\\User1\\Documents\\Lab2-1\\bin
+Input-Folder: C:\\Users\\greenjm\\Documents\\Classes\\CS374\\Project\\374Project\\src
 
-Input-Classes: java.io.Reader,java.io.BufferedReader,java.lang.Runtime,org.asm.ClassVisitor
+Input-Classes: java.util.List
 
-Output-Directory: c:\\User1\\Documents\\Lab2-1\\input-output
+Output-Directory: .
 
 Dot-Path: C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe
 
