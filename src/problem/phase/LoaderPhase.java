@@ -38,12 +38,19 @@ public class LoaderPhase implements IPhase {
 	    // get all the files from a directory
 	    File[] fList = directory.listFiles();
 	    for (File file : fList) {
-	        if (file.isFile()) {
+	        if (file.isFile() && isJavaFile(file)) {
 	            classes.add(Helpers.getPackageFromPath(file.getAbsolutePath(), directoryName));
 	        } else if (file.isDirectory()) {
 	            listf(file.getAbsolutePath(), classes);
 	        }
 	    }
+	}
+	
+	private static boolean isJavaFile(File file) {
+		if (file.getAbsolutePath().split("\\.")[1].equals("java")) {
+			return true;
+		}
+		return false;
 	}
 
 }
