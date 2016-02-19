@@ -6,11 +6,12 @@ import java.util.Properties;
 
 public class ConfigProperties {
 	private volatile static ConfigProperties uniqueController;
-	private static String inputFolder;
-	private static String[] inputClasses;
-	private static String outputFolder;
-	private static String dotPath;
-	private static String[] phases;
+	private Properties props;
+	private String inputFolder;
+	private String[] inputClasses;
+	private String outputFolder;
+	private String dotPath;
+	private String[] phases;
 	private ConfigProperties() {
 	}
 	
@@ -26,7 +27,7 @@ public class ConfigProperties {
 	}
 	
 	public void setupConfig(String path) throws IOException {
-		Properties props = new Properties();
+		props = new Properties();
 		FileInputStream in = new FileInputStream(path);
 		props.load(in);
 		in.close();
@@ -36,4 +37,29 @@ public class ConfigProperties {
 		dotPath = props.get("Dot-Path").toString();
 		phases = props.get("Phases").toString().split(",");
 	}
+
+	public String getInputFolder() {
+		return inputFolder;
+	}
+
+	public String[] getInputClasses() {
+		return inputClasses;
+	}
+
+	public String getOutputFolder() {
+		return outputFolder;
+	}
+
+	public String getDotPath() {
+		return dotPath;
+	}
+
+	public String[] getPhases() {
+		return phases;
+	}
+	
+	public String getProperty(String key) {
+		return props.getProperty(key, "");
+	}
+	
 }
