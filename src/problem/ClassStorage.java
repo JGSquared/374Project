@@ -44,6 +44,12 @@ public class ClassStorage {
 				for (IArrow a : c.getArrows()) {
 					a.setCanLabel(true);
 				}
+				for (IClass ic : c.getRelated()) {
+					c.setCanLabel(true);
+					for (IArrow a : ic.getArrows()) {
+						a.setCanLabel(true);
+					}
+				}
 			}
 		}
 	}
