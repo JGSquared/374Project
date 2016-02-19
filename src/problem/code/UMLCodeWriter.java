@@ -50,12 +50,14 @@ public class UMLCodeWriter extends AbstractCodeWriter {
 			@Override
 			public void execute(ITraverser traverser) {
 				UMLClass c = (UMLClass) traverser;
-				String s = Helpers.getName(c.getClassName()) + "[ shape=\"record\", color=\"" + c.getColor() + "\", label=\"{";
+				String s = Helpers.getName(c.getClassName()) + "[ shape=\"record\", color=\"";
+				s += c.getCanLabel() ? c.getColor() : "";
+				s += "\", label=\"{";
 				if (c.getAccess() == 1537) {
 					s += "\\<\\<interface\\>\\>\\n";
 				}
 				s += c.getClassName();
-				if (!c.getPatternLabel().equals("")) {
+				if (c.getCanLabel() && !c.getPatternLabel().equals("")) {
 					s += "\\n\\<\\<" + c.getPatternLabel() + "\\>\\>";
 				}
 				write(s);
@@ -102,7 +104,11 @@ public class UMLCodeWriter extends AbstractCodeWriter {
 			public void execute(ITraverser traverser) {
 				UMLArrow a = (UMLArrow) traverser;
 				String s = Helpers.getName(a.getFrom()) + " -> " + Helpers.getName(a.getTo());
-				s += " [arrowhead=\"" + a.getArrowhead() + "\", style=\"" + a.getStyle() + "\", label=\"" + a.getLabel() + "\", color=\"" + a.getColor() + "\"";
+				s += " [arrowhead=\"" + a.getArrowhead() + "\", style=\"" + a.getStyle() + "\", label=\"";
+				s += a.getCanLabel() ? a.getLabel() : "";
+				s += "\", color=\"";
+				s += a.getCanLabel() ? a.getColor() : "";
+				s += "\"";
 				s += "];";
 				write(s);
 			}

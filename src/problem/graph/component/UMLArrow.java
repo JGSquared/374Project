@@ -11,8 +11,9 @@ public class UMLArrow implements IArrow {
 	private String arrowhead;
 	private String style;
 	private String label;
+	private boolean canLabel;
 
-	public UMLArrow(String from, String to, String color, String type, String arrowhead, String style, String label) {
+	public UMLArrow(String from, String to, String color, String type, String arrowhead, String style, String label, boolean canLabel) {
 		this.from = from;
 		this.to = to;
 		this.color = color;
@@ -20,6 +21,7 @@ public class UMLArrow implements IArrow {
 		this.arrowhead = arrowhead;
 		this.style = style;
 		this.label = label;
+		this.canLabel = canLabel;
 	}
 
 	@Override
@@ -96,6 +98,16 @@ public class UMLArrow implements IArrow {
 	@Override
 	public void setLabel(String label) {
 		this.label = label;
+	}
+	
+	@Override
+	public boolean getCanLabel() {
+		return canLabel;
+	}
+
+	@Override
+	public void setCanLabel(boolean canLabel) {
+		this.canLabel = canLabel;
 	}
 
 }
