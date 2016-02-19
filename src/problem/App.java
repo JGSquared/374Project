@@ -2,18 +2,32 @@ package problem;
 
 import java.io.IOException;
 
-import problem.gui.UI;
+import problem.api.IClass;
+import problem.api.IDesignParser;
+import problem.api.IGraphDesign;
+import problem.api.IPatternDetector;
+import problem.patterns.AdapterPatternDetector;
+import problem.patterns.DecoratorPatternDetector;
+import problem.patterns.SingletonPatternDetector;
 
 public class App {
 	
 	public static void main(String[] args) throws IOException {
 		
-//		IDesignParser dp = new ClassDesignParser();
-//		IGraphDesign graphDesigner = new DotGraphDesign();
-//		
-//		graphDesigner.useDefaultCodeGetters();
-//		graphDesigner.useDefaultPatternDetectors();
-//		dp.parse(args, graphDesigner);
+		IDesignParser dp = new ClassDesignParser();
+		IGraphDesign graphDesigner = new DotGraphDesign();
+		
+		dp.parse(args, graphDesigner);
+		IPatternDetector newPattern = new AdapterPatternDetector();
+		IPatternDetector otherPattern = new SingletonPatternDetector();
+		IPatternDetector detPattern = new DecoratorPatternDetector();
+		detPattern.detectPattern();
+		newPattern.detectPattern();
+		otherPattern.detectPattern();
+		for (IClass className : ClassStorage.getClasses()) {
+			System.out.println(className.getClassName());
+			System.out.println(className.getPatternLabel());
+		}
 //		
 //		for (Pattern p : PatternStorage.getPatterns()) {
 //			System.out.println("Class name: " + p.getClassName());
@@ -23,7 +37,7 @@ public class App {
 //			}
 //		}
 		
-		UI ui = new UI();
+//		UI ui = new UI();
 	}
 	
 }

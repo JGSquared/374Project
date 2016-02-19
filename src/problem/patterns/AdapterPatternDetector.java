@@ -1,12 +1,9 @@
 package problem.patterns;
 
-import java.util.HashMap;
 import java.util.List;
 
 import problem.ClassStorage;
-import problem.Constants;
 import problem.Helpers;
-import problem.api.CodeMapGetters;
 import problem.api.IArrow;
 import problem.api.IClass;
 import problem.api.IField;
@@ -35,6 +32,9 @@ public class AdapterPatternDetector implements IPatternDetector{
 			String classKey = Helpers.getName(c.getClassName());
 //			this.sb = new StringBuilder(classCode.get(classKey));
 			isAdapter(c);
+//			System.out.println("Adaptee: " + adaptee);
+//			System.out.println("Adapter: " + adapter);
+//			System.out.println("Target: " + target);
 			if ((!adaptee.equals("")) && (!adapter.equals("")) && (!target.equals(""))) {
 				// TODO: Register pattern instead of labeling
 //				Pattern adapt = new Pattern(patternLabelAdapter, colorString, "", adapter);
@@ -55,7 +55,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 						}
 						c.addRelated(ic);
 					} else if (Helpers.getName(ic.getClassName()).equals(target)) {
-						ic.setClassName(colorString);
+						ic.setColor(colorString);
 						ic.setPatternLabel(patternLabelTarget);
 						c.addRelated(ic);
 					}
@@ -64,6 +64,9 @@ public class AdapterPatternDetector implements IPatternDetector{
 //				labelAdapter(adapter);
 //				labelTarget(target);
 //				labelArrow(adapter, adaptee);
+//				System.out.println("Adaptee: " + adaptee);
+//				System.out.println("Adapter: " + adapter);
+//				System.out.println("Target: " + target);
 				adaptee = "";
 				adapter = "";
 				target = "";
@@ -76,7 +79,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 		String currentImplements = Helpers.getName(c.getRelatedClassNames("implements").toString());
 		currentImplements = currentImplements.equals("[]") ? "" : currentImplements.substring(0, currentImplements.length() - 1);
 		for (IClass ic : classes) {
-			String otherClass = ic.getClassName();
+			String otherClass = Helpers.getName(ic.getClassName());
 			if (currentClass.equals(otherClass)) {
 				continue;
 			} else {
@@ -102,7 +105,6 @@ public class AdapterPatternDetector implements IPatternDetector{
 	 
 	private void containsInterfaceField(IClass c, String adaptee) {
 		adaptee = Helpers.getName(adaptee);
-		
 		List<IField> fields = c.getFields();
 		String type;
 //		CodeMapGetters newGetter;
@@ -110,7 +112,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 		String currentClass;
 		int access;
 		for (IField field : fields) {
-			type = Helpers.getName(field.getName());
+			type = Helpers.getName(field.getType());
 			if (type.equals(adaptee)) {
 				for (IClass ic : this.classes) {
 //					newGetter = new CodeMapGetters(c);
