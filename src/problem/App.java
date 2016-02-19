@@ -25,9 +25,10 @@ public class App {
 		newPattern.detectPattern();
 		otherPattern.detectPattern();
 		for (IClass className : ClassStorage.getClasses()) {
-			System.out.println(className.getClassName());
-			System.out.println(className.getPatternLabel());
+//			System.out.println(className.getClassName());
+//			System.out.println(className.getPatternLabel());
 		}
+		ConfigProperties.getInstance().setupConfig("./input_output/config.txt");
 //		
 //		for (Pattern p : PatternStorage.getPatterns()) {
 //			System.out.println("Class name: " + p.getClassName());
