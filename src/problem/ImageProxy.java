@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import sun.misc.IOUtils;
 
@@ -24,8 +25,11 @@ public class ImageProxy implements Icon {
 	JLabel label;
 	JScrollPane pane;
 	JPanel newPanel;
+	boolean completedLoading = false;
+	JTextArea text;
      
 	public ImageProxy(JFrame frame) {
+		text = new JTextArea(0, 0);
 		newPanel = new JPanel();
 		this.frame = frame;
 		label = new JLabel();
@@ -56,14 +60,15 @@ public class ImageProxy implements Icon {
      
 	public void paintIcon(final Component c, Graphics  g, int x,  int y) {
 		if (imageIcon != null) {
-			System.out.println("HERE");
+			frame.getContentPane().remove(text);
 			label.setIcon(imageIcon);
 			frame.revalidate();
 			frame.repaint();
+//			completedLoading = true;
 		} else {
 //			JTextArea text = new JTextArea(0, 0);
-//			text.setText("Loading Image, please wait...");
-//			frame.getContentPane().add(text);
+			text.setText("Loading Image, please wait...");
+			frame.getContentPane().add(text);
 			if (!retrieving) {
 				retrieving = true;
 
@@ -93,6 +98,9 @@ public class ImageProxy implements Icon {
 		}
 	}
 	
+	public boolean isCompleted() {
+		return completedLoading;
+	}
 //	public void generateGraph() throws IOException {
 //		File newOutFile = new File("./input_output/newOutput");
 //		OutputStream out = new FileOutputStream(newOutFile);
