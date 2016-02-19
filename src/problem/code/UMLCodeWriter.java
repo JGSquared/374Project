@@ -28,7 +28,7 @@ public class UMLCodeWriter extends AbstractCodeWriter {
 		
 		write("digraph G{rankdir=BT;");
 		
-		for (IClass c : ClassStorage.getClasses()) {
+		for (IClass c : ClassStorage.getInstance().getClasses()) {
 			c.accept(this);
 		}
 		

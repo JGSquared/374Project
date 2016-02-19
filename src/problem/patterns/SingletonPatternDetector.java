@@ -22,7 +22,7 @@ public class SingletonPatternDetector implements IPatternDetector {
 	@Override
 	public void detectPattern() {
 //		CodeMapGetters getter;
-		this.classes = ClassStorage.getClasses();
+		this.classes = ClassStorage.getInstance().getClasses();
 		for (IClass c : classes) {
 //			getter = new CodeMapGetters(parsedCode);
 			if (checkStatus(c) && checkForGetInstance(c) && checkForPrivateConstructor(c)) {

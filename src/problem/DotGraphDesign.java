@@ -122,7 +122,7 @@ public class DotGraphDesign implements IGraphDesign {
 			}
 		}
 		
-		ClassStorage.addIClass(c);
+		ClassStorage.getInstance().addIClass(c);
 	}
 }
 

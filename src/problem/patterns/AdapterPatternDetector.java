@@ -26,7 +26,7 @@ public class AdapterPatternDetector implements IPatternDetector{
 //		this.classProperties = classProperties;
 //		this.classCode = classCode;
 //		CodeMapGetters getter;
-		classes = ClassStorage.getClasses();
+		classes = ClassStorage.getInstance().getClasses();
 		for (IClass c : classes) {
 //			getter = new CodeMapGetters(parsedCode);
 			String classKey = Helpers.getName(c.getClassName());

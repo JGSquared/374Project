@@ -29,7 +29,7 @@ public class CompositePatternDetector implements IPatternDetector {
 	public void detectPattern() {
 //		this.classProperties = classProperties;
 //		this.classCode = classCode;
-		classes = ClassStorage.getClasses();
+		classes = ClassStorage.getInstance().getClasses();
 //		CodeMapGetters getter;
 		for (IClass c : classes) {
 //			getter = new CodeMapGetters(classProps);

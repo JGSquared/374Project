@@ -25,7 +25,7 @@ public class App {
 		detPattern.detectPattern();
 		newPattern.detectPattern();
 		otherPattern.detectPattern();
-		for (IClass className : ClassStorage.getClasses()) {
+		for (IClass className : ClassStorage.getInstance().getClasses()) {
 //			System.out.println(className.getClassName());
 //			System.out.println(className.getPatternLabel());
 		}
