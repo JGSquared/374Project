@@ -14,6 +14,7 @@ public class UMLClass implements IClass {
 	private String className;
 	private int access;
 	private String patternLabel;
+	private List<IClass> related;
 	private List<IField> fields;
 	private List<IMethod> methods;
 	private List<IArrow> arrows;
@@ -23,6 +24,7 @@ public class UMLClass implements IClass {
 		this.className = className;
 		this.access = access;
 		this.patternLabel = patternLabel;
+		this.related = new ArrayList<>();
 		this.fields = new ArrayList<>();
 		this.methods = new ArrayList<>();
 		this.arrows = new ArrayList<>();
@@ -126,6 +128,16 @@ public class UMLClass implements IClass {
 			}
 		}
 		return relatedClasses;
+	}
+
+	@Override
+	public List<IClass> getRelated() {
+		return related;
+	}
+
+	@Override
+	public void addRelated(IClass related) {
+		this.related.add(related);
 	}
 
 }

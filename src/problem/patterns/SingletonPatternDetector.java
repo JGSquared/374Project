@@ -1,38 +1,36 @@
 package problem.patterns;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.objectweb.asm.Opcodes;
 
-import com.sun.xml.internal.bind.v2.runtime.Name;
-
-import problem.Constants;
+import problem.ClassStorage;
 import problem.Helpers;
-import problem.Pattern;
-import problem.PatternStorage;
-import problem.api.CodeMapGetters;
+import problem.api.IClass;
+import problem.api.IField;
+import problem.api.IMethod;
 import problem.api.IPatternDetector;
 
 public class SingletonPatternDetector implements IPatternDetector {
 	private static final String colorString = "blue";
-	private static final String patternLabel = "\\n\\<\\<Singleton\\>\\>";
+	private static final String patternLabel = "Singleton";
+	private List<IClass> classes;
 
 	public SingletonPatternDetector() {
 	}
 
 	@Override
-	public void detectPattern(List<HashMap<String, String>> classProperties, HashMap<String, String> classCode) {
-		CodeMapGetters getter;
-		for (HashMap<String, String> parsedCode : classProperties) {
-			getter = new CodeMapGetters(parsedCode);
-			if (checkStatus(getter) && checkForGetInstance(getter) && checkForPrivateConstructor(getter)) {
-				// TODO: Register pattern instead of labeling
-				String className = Helpers.getName(parsedCode.get("className"));
-				Pattern singleton = new Pattern(patternLabel, colorString, "", className);
-				PatternStorage.addIClass(singleton);
+	public void detectPattern() {
+//		CodeMapGetters getter;
+		this.classes = ClassStorage.getClasses();
+		for (IClass c : classes) {
+//			getter = new CodeMapGetters(parsedCode);
+			if (checkStatus(c) && checkForGetInstance(c) && checkForPrivateConstructor(c)) {
+				String className = Helpers.getName(c.getClassName());
+//				Pattern singleton = new Pattern(patternLabel, colorString, "", className);
+//				PatternStorage.addIClass(singleton);
+				c.setColor(colorString);
+				c.setPatternLabel(patternLabel);
 //				StringBuilder sb = new StringBuilder(classCode.get(className));
 //				// int fromIndex = Helpers.getClassDeclarationIndex(className,
 //				// sb);
@@ -45,19 +43,18 @@ public class SingletonPatternDetector implements IPatternDetector {
 		}
 	}
 
-	public boolean checkStatus(CodeMapGetters getter) {
-		String[] items;
-		String className = Helpers.getName(getter.getClassName());
+	public boolean checkStatus(IClass c) {
+		String className = Helpers.getName(c.getClassName());
 		int privateOp = Opcodes.ACC_PRIVATE;
 		int staticOp = Opcodes.ACC_STATIC;
 		int volatileOp = Opcodes.ACC_VOLATILE;
 
-		ArrayList<String> fields = getter.getFieldNames();
+		List<IField> fields = c.getFields();
 		String fieldType;
 		int access;
-		for (String fieldName : fields) {
-			fieldType = Helpers.getName(getter.getFieldType(fieldName));
-			access = getter.getFieldAccess(fieldName);
+		for (IField field : fields) {
+			fieldType = Helpers.getName(field.getType());
+			access = field.getAccess();
 			if (fieldType.equals(className)
 					&& ((privateOp + staticOp == access) || (privateOp + staticOp + volatileOp == access))) {
 				return true;
@@ -82,19 +79,18 @@ public class SingletonPatternDetector implements IPatternDetector {
 		return false;
 	}
 
-	public boolean checkForGetInstance(CodeMapGetters getter) {
-		String[] items;
-		String className = Helpers.getName(getter.getClassName());
+	public boolean checkForGetInstance(IClass c) {
+		String className = Helpers.getName(c.getClassName());
 		int publicOp = Opcodes.ACC_PUBLIC;
 		int staticOp = Opcodes.ACC_STATIC;
 		int syncOp = Opcodes.ACC_SYNCHRONIZED;
 
-		ArrayList<String> methods = getter.getMethodNames();
+		List<IMethod> methods = c.getMethods();
 		String returnType;
 		int access;
-		for (String methodName : methods) {
-			returnType = Helpers.getName(getter.getMethodReturnType(methodName));
-			access = getter.getMethodAccess(methodName);
+		for (IMethod method : methods) {
+			returnType = Helpers.getName(method.getReturnType());
+			access = method.getAccess();
 			if (returnType.equals(className)
 					&& ((publicOp + staticOp == access) || (publicOp + staticOp + syncOp == access))) {
 				return true;
@@ -117,17 +113,18 @@ public class SingletonPatternDetector implements IPatternDetector {
 		return false;
 	}
 
-	public boolean checkForPrivateConstructor(CodeMapGetters getter) {
-		String[] items;
+	public boolean checkForPrivateConstructor(IClass c) {
 		int privateOp = Opcodes.ACC_PRIVATE;
 		int countedConstructors = 0;
 		int countedPrivateConstructors = 0;
 		
-		ArrayList<String> methods = getter.getMethodNames();
+		List<IMethod> methods = c.getMethods();
+		String name;
 		int access;
-		for (String methodName : methods) {
-			access = getter.getMethodAccess(methodName);
-			if (methodName.equals("<init>")) {
+		for (IMethod method : methods) {
+			name = method.getName();
+			access = method.getAccess();
+			if (name.equals("<init>")) {
 				countedConstructors++;
 				if (privateOp == access) {
 					countedPrivateConstructors++;

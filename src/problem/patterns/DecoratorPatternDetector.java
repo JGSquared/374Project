@@ -1,46 +1,60 @@
 package problem.patterns;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import problem.Constants;
-import problem.FileProperties;
+import problem.ClassStorage;
 import problem.Helpers;
-import problem.Pattern;
-import problem.PatternStorage;
 import problem.api.CodeMapGetters;
+import problem.api.IArrow;
+import problem.api.IClass;
+import problem.api.IMethod;
 import problem.api.IPatternDetector;
 
 public class DecoratorPatternDetector implements IPatternDetector {
 	private static final String colorString = "green";
-	private static final String decoratorLabel = "\\n\\<\\<Decorator\\>\\>";
-	private static final String componentLabel = "\\n\\<\\<Component\\>\\>";
+	private static final String decoratorLabel = "Decorator";
+	private static final String componentLabel = "Component";
 	private static final String arrowLabel = "decorates";
 	private String componentName;
 	private boolean componentLabeled = false;
-	private List<HashMap<String, String>> classProperties = new ArrayList<>();
-	private HashMap<String, String> classCode = new HashMap<>();
+	private List<IClass> classes;
+//	private List<HashMap<String, String>> classProperties = new ArrayList<>();
+//	private HashMap<String, String> classCode = new HashMap<>();
 
 	public DecoratorPatternDetector() {
 	}
 
 	@Override
-	public void detectPattern(List<HashMap<String, String>> classProperties, HashMap<String, String> classCode) {
-		this.classProperties = classProperties;
-		this.classCode = classCode;
-		CodeMapGetters getter;
-		for (HashMap<String, String> code : classProperties) {
-			getter = new CodeMapGetters(code);
-			if (checkDecorator(getter)) {
-				// TODO: Store decorator
+	public void detectPattern() {
+//		this.classProperties = classProperties;
+//		this.classCode = classCode;
+//		CodeMapGetters getter;
+		classes = ClassStorage.getClasses();
+		
+		for (IClass c : classes) {
+//			getter = new CodeMapGetters(code);
+			if (checkDecorator(c)) {
 				String label = decoratorLabel;
 				String color = colorString;
 				String arrow = "";
-				String className = Helpers.getName(getter.getClassName());
-				Pattern decorator = new Pattern(label, color, arrow, className);
-				decorator.addRelatedClass(new Pattern(componentLabel, colorString, arrowLabel, this.componentName));
-				PatternStorage.addIClass(decorator);
+				String className = Helpers.getName(c.getClassName());
+//				Pattern decorator = new Pattern(label, color, arrow, className);
+//				decorator.addRelatedClass(new Pattern(componentLabel, colorString, arrowLabel, this.componentName));
+//				PatternStorage.addIClass(decorator);
+				c.setColor(color);
+				c.setPatternLabel(label);
+				for (IClass ic : classes) {
+					if (Helpers.getName(ic.getClassName()).equals(this.componentName)) {
+						ic.setColor(colorString);
+						ic.setPatternLabel(componentLabel);
+						for (IArrow a : ic.getArrows()) {
+							if (Helpers.getName(a.getTo()).equals(this.componentName) && a.getType().equals("associated")) {
+								a.setLabel(arrowLabel);
+							}
+						}
+					}
+				}
 //				labelDecorator(getter);
 //				labelComponent();
 //				if (isAssociated(getter)) {
@@ -50,17 +64,17 @@ public class DecoratorPatternDetector implements IPatternDetector {
 		}
 	}
 
-	private boolean checkDecorator(CodeMapGetters getter) {
-		this.componentName = getComponent(getter, getter);
+	private boolean checkDecorator(IClass c) {
+		this.componentName = getComponent(c, c);
 		if (this.componentName.equals("")
-				|| Helpers.getName(this.componentName).equals(Helpers.getName(getter.getClassName()))) {
+				|| Helpers.getName(this.componentName).equals(Helpers.getName(c.getClassName()))) {
 			return false;
 		}
 
 		return true;
 	}
 
-	private String getComponent(CodeMapGetters original, CodeMapGetters possibleComponent) {
+	private String getComponent(IClass original, IClass possibleComponent) {
 
 		String componentName = Helpers.getName(possibleComponent.getClassName());
 		int access = possibleComponent.getAccess();
@@ -71,15 +85,13 @@ public class DecoratorPatternDetector implements IPatternDetector {
 			}
 		}
 
-		String extendsName = possibleComponent.getClassExtends();
-		if (extendsName != null) {
-			extendsName = Helpers.getName(extendsName);
-			for (int i = 0; i < this.classProperties.size(); i++) {
-				HashMap<String, String> nextClassProps = this.classProperties.get(i);
-				CodeMapGetters newGetter = new CodeMapGetters(nextClassProps);
-				String extender = Helpers.getName(newGetter.getClassName());
+		List<String> extendsClass = possibleComponent.getRelatedClassNames("extends");
+		if (extendsClass != null) {
+			String extendsName = Helpers.getName(extendsClass.get(0));
+			for (IClass ic : this.classes) {
+				String extender = Helpers.getName(ic.getClassName());
 				if (extendsName.equals(extender)) {
-					String component = getComponent(original, newGetter);
+					String component = getComponent(original, ic);
 					if (!component.equals("")) {
 						return component;
 					}
@@ -87,18 +99,29 @@ public class DecoratorPatternDetector implements IPatternDetector {
 					return extendsName;
 				}
 			}
+//			for (int i = 0; i < this.classProperties.size(); i++) {
+//				HashMap<String, String> nextClassProps = this.classProperties.get(i);
+//				CodeMapGetters newGetter = new CodeMapGetters(nextClassProps);
+//				String extender = Helpers.getName(newGetter.getClassName());
+//				if (extendsName.equals(extender)) {
+//					String component = getComponent(original, newGetter);
+//					if (!component.equals("")) {
+//						return component;
+//					}
+//				} else if (checkConstructor(original, extendsName)) {
+//					return extendsName;
+//				}
+//			}
 		}
 
 		String implementsName;
-		String[] interFaces = possibleComponent.getClassImplements();
-		if (interFaces.length == 1) {
-			implementsName = Helpers.getName(interFaces[0]);
-			for (int i = 0; i < this.classProperties.size(); i++) {
-				HashMap<String, String> nextClassProps = this.classProperties.get(i);
-				CodeMapGetters newGetter = new CodeMapGetters(nextClassProps);
-				String implementer = Helpers.getName(newGetter.getClassName());
+		List<String> interFaces = possibleComponent.getRelatedClassNames("implements");
+		if (interFaces.size() == 1) {
+			implementsName = Helpers.getName(interFaces.get(0));
+			for (IClass ic : this.classes) {
+				String implementer = Helpers.getName(ic.getClassName());
 				if (implementsName.equals(implementer)) {
-					String component = getComponent(original, newGetter);
+					String component = getComponent(original, ic);
 					if (!component.equals("")) {
 						return component;
 					}
@@ -106,23 +129,38 @@ public class DecoratorPatternDetector implements IPatternDetector {
 					return implementsName;
 				}
 			}
+//			for (int i = 0; i < this.classProperties.size(); i++) {
+//				HashMap<String, String> nextClassProps = this.classProperties.get(i);
+//				CodeMapGetters newGetter = new CodeMapGetters(nextClassProps);
+//				String implementer = Helpers.getName(newGetter.getClassName());
+//				if (implementsName.equals(implementer)) {
+//					String component = getComponent(original, newGetter);
+//					if (!component.equals("")) {
+//						return component;
+//					}
+//				} else if (checkConstructor(original, implementsName)) {
+//					return implementsName;
+//				}
+//			}
 		}
 
 		return "";
 	}
 	
-	private boolean checkConstructor(CodeMapGetters getter, String className) {
+	private boolean checkConstructor(IClass c, String className) {
 		String name = Helpers.getName(className);
-		ArrayList<String> methods = getter.getMethodNames();
-		String[] argTypesArray;
-		ArrayList<String> argTypes;
-		for (String methodName : methods) {
+		List<IMethod> methods = c.getMethods();
+		String methodName;
+//		String[] argTypesArray;
+		List<String> argTypes;
+		for (IMethod method : methods) {
+			methodName = method.getName();
 			if (methodName.equals("<init>")) {
-				argTypesArray = getter.getMethodArgTypes(methodName);
-				argTypes = new ArrayList<>();
-				for (int i = 0; i < argTypesArray.length; i++) {
-					argTypes.add(Helpers.getName(argTypesArray[i].trim()));
-				}
+				argTypes = method.getArgTypes();
+//				argTypes = new ArrayList<>();
+//				for (int i = 0; i < argTypesArray.length; i++) {
+//					argTypes.add(Helpers.getName(argTypesArray[i].trim()));
+//				}
 				if (argTypes.contains(name)) {
 					return true;
 				}
@@ -131,18 +169,18 @@ public class DecoratorPatternDetector implements IPatternDetector {
 		return false;
 	}
 	
-	private boolean isAssociated(CodeMapGetters getter) {
-		String otherClassName = Helpers.getName(this.componentName);
-
-		for (String a : getter.getClassAssociates()) {
-			String associatedName = Helpers.getName(a);
-			if (associatedName.equals(otherClassName)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
+//	private boolean isAssociated(CodeMapGetters getter) {
+//		String otherClassName = Helpers.getName(this.componentName);
+//
+//		for (String a : getter.getClassAssociates()) {
+//			String associatedName = Helpers.getName(a);
+//			if (associatedName.equals(otherClassName)) {
+//				return true;
+//			}
+//		}
+//
+//		return false;
+//	}
 
 //	private void labelDecorator(CodeMapGetters getter) {
 //		// given a className, finds that class and labels it as a decorator

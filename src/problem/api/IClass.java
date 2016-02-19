@@ -11,6 +11,8 @@ public interface IClass extends ITraverser {
 	void setAccess(int access);
 	String getPatternLabel();
 	void setPatternLabel(String patternLabel);
+	List<IClass> getRelated();
+	void addRelated(IClass related);
 	List<IField> getFields();
 	void addIField(IField field);
 	List<IMethod> getMethods();
