@@ -21,7 +21,7 @@ public class ClassDesignParser implements IDesignParser {
 	
 	@Override
 	public void parse(String[] args, IGraphDesign graphDesigner) throws IOException{
-		graphDesigner.initializeGraph();
+//		graphDesigner.initializeGraph();
 		
 		for(String className : args) {
 			parsedCode = new HashMap<>();
@@ -43,8 +43,8 @@ public class ClassDesignParser implements IDesignParser {
 			graphDesigner.addGraphCode(parsedCode);
 		}
 	
-		graphDesigner.closeGraph();
-		graphDesigner.generateGraph();
+//		graphDesigner.closeGraph();
+//		graphDesigner.generateGraph();
 	}
 
 }

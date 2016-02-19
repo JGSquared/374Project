@@ -38,7 +38,9 @@ public class CodeMapGetters {
 		/**
 		 * @return full path to the class that this class extends, or an empty String if none.
 		 */
-		return items.get("extends");
+		if (items.get("extends") != null)
+			return items.get("extends");
+		return "";
 	}
 	
 	public String[] getClassImplements() {
@@ -349,6 +351,21 @@ public class CodeMapGetters {
 			return types;
 		}
 		return ifEmpty;
+	}
+	
+	// Method for getting any other field not handled above
+	public String getFieldFromMap(String key) {
+		/**
+		 * This method is available in case new values are added to the HashMap that are not covered normally.
+		 * Should only be used if the other getters do not satisfy the user's needs.
+		 * @param key:a key to some value in the HashMap
+		 * @return The String value from that key, or an empty string if it is not found
+		 */
+		String val = items.get(key);
+		if (val != null) {
+			return val;
+		}
+		return "";
 	}
 
 }
