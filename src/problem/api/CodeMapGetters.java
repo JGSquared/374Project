@@ -38,7 +38,9 @@ public class CodeMapGetters {
 		/**
 		 * @return full path to the class that this class extends, or an empty String if none.
 		 */
-		return items.get("extends");
+		if (items.get("extends") != null)
+			return items.get("extends");
+		return "";
 	}
 	
 	public String[] getClassImplements() {
